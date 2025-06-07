@@ -4,8 +4,12 @@ import FormLabel from "../components/molecules/formLabel";
 import Title from "../components/molecules/title";
 import FormButton from "../components/molecules/formButton";
 import Description from "../components/molecules/description";
+import Navbar from "../components/molecules/navbar";
+
 const ResetPass = () => {
   return (
+    <>
+    <Navbar />
     <div>
       <GlobalStyles
         styles={{
@@ -47,6 +51,7 @@ const ResetPass = () => {
         </Grid>
       </Grid>
     </div>
+    </>
   );
 };
 export default ResetPass;

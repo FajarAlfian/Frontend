@@ -3,8 +3,12 @@ import { Grid, Stack, GlobalStyles } from "@mui/material";
 import FormLabel from "../components/molecules/formLabel";
 import Title from "../components/molecules/title";
 import FormButton from "../components/molecules/formButton";
+import Navbar from "../components/molecules/navbar";
+
 const NewPass = () => {
   return (
+    <>
+    <Navbar />
     <div>
       <GlobalStyles
         styles={{
@@ -40,6 +44,7 @@ const NewPass = () => {
         </Grid>
       </Grid>
     </div>
+    </>
   );
 };
 export default NewPass;
