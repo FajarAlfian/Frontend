@@ -1,4 +1,3 @@
-// src/components/molecules/formLabel.jsx
 import React from "react";
 import { Box, TextField, Typography } from "@mui/material";
 
