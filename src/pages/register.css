@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap');
+
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Montserrat', sans-serif;
+  background: #FFFFFF;
+}
+
+.register-page {
+  max-width: 616px;
+  margin: 146px auto 0;
+  padding: 60px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.register-title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+  color: #226957;
+  text-align: left;
+}
+
+.register-title span {
+  color: #ffa000;
+  font-size: 36px;
+}
+
+.register-desc {
+  margin: 0;
+  font-size: 1rem;
+  color: #555;
+  text-align: left;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.register-form input {
+  width: 100%;
+  height: 48px;
+  padding: 0 16px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+}
+
+.register-form input:focus {
+  border-color:  #226957;
+}
+
+.btn--submit {
+  width: 160px;
+  height: 48px;
+  align-self: flex-end;
+  background-color:  #226957;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.btn--submit:hover {
+  opacity: 0.85;
+}
+
+.register-footer {
+  margin: 0;
+  font-size: 1rem;
+  color: #333;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.register-link {
+  margin-left: 4px;
+  color: #1e88e5;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.register-link:hover {
+  text-decoration: underline;
+}

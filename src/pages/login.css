@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap');
+
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Montserrat', sans-serif;
+  background: #FFFFFF;
+}
+
+.login-page {
+  max-width: 616px;
+  margin: 146px auto 0;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-sizing: border-box;
+}
+
+.login-title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 500;
+  color: #2e7d32;
+  text-align: left;
+}
+
+.login-desc {
+  margin: 0 0 24px;
+  font-size: 1rem;
+  color: #4F4F4F;
+  text-align: left;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.login-form input {
+  width: 100%;
+  height: 48px;
+  padding: 0 16px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.login-form input:focus {
+  border-color: #2e7d32;
+}
+
+.login-forgot {
+  margin: 0;
+  font-size: 16px;
+  color: #4F4F4F;
+  margin-bottom: 30px;
+}
+
+.login-forgot .login-link {
+  color: #1e88e5;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.login-forgot .login-link:hover {
+  text-decoration: underline;
+}
+
+.btn--submit {
+  width: 160px;
+  height: 48px;
+  align-self: flex-end;
+  background-color: #226957;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  margin-bottom: 40px;
+}
+
+.btn--submit:hover {
+  opacity: 0.85;
+}
+
+.login-footer {
+  margin: 0;
+  font-size: 16px;
+  color: #4F4F4F;
+  text-align: center;
+}
+
+.login-footer .login-link {
+  margin-left: 4px;
+  color: #1e88e5;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.login-footer .login-link:hover {
+  text-decoration: underline;
+}
