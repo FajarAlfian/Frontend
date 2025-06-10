@@ -1,13 +1,16 @@
 import React from "react";
-import { Box, TextField, Typography } from "@mui/material";
+import { Box, TextField } from "@mui/material";
 
 const FormLabel = ({ name, inputProps }) => {
   return (
-    <Box mb={2}>
-      <Typography variant="subtitle1" gutterBottom>
-        {name}
-      </Typography>
-      <TextField fullWidth {...inputProps} />
+    <Box
+      sx={{ "& .MuiTextField-root": { marginY: 2, width: "100ch" } }}
+      noValidate
+      autoComplete="off"
+    >
+      <div>
+        <TextField id={name} label={name} maxRows={1} {...inputProps} />
+      </div>
     </Box>
   );
 };
