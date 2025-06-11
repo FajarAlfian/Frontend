@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, TextField } from "@mui/material";
 
-const FormLabel = ({ name, inputProps }) => {
+const FormLabel = ({ name, inputProps, error, helperText }) => {
   return (
     <Box
       sx={{ "& .MuiTextField-root": { marginY: 2, width: "100ch" } }}
@@ -9,7 +9,14 @@ const FormLabel = ({ name, inputProps }) => {
       autoComplete="off"
     >
       <div>
-        <TextField id={name} label={name} maxRows={1} {...inputProps} />
+        <TextField
+          id={name}
+          label={name}
+          maxRows={1}
+          error={error} 
+          helperText={helperText} 
+          {...inputProps} 
+        />
       </div>
     </Box>
   );
