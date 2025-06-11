@@ -1,25 +1,18 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-const FormLabel = ({ name }) => {
+import React from "react";
+import { Box, TextField } from "@mui/material";
+
+const FormLabel = ({ name, inputProps }) => {
   return (
-    <>
-      <Box
-        component="form"
-        sx={{ "& .MuiTextField-root": { marginY: 2, width: "100ch" } }}
-        noValidate
-        autoComplete="off"
-      >
-        <div>
-          <TextField
-            id="outlined-multiline-flexible"
-            label={name}
-            multiline
-            maxRows={8}
-          />
-        </div>
-      </Box>
-    </>
+    <Box
+      sx={{ "& .MuiTextField-root": { marginY: 2, width: "100ch" } }}
+      noValidate
+      autoComplete="off"
+    >
+      <div>
+        <TextField id={name} label={name} maxRows={1} {...inputProps} />
+      </div>
+    </Box>
   );
 };
+
 export default FormLabel;
