@@ -6,12 +6,14 @@ import Theme from "./theme";
 import Register from "./pages/register";
 import NewPass from "./pages/newPass";
 import ResetPass from "./pages/resetPass";
+import Home from "./pages/home";
 function App() {
   return (
     <>
       <ThemeProvider theme={Theme}>
         <Router>
           <Routes>
+            <Route path={"/"} element={<Home />} />
             <Route path={"/login"} element={<Login />} />
             <Route path={"/register"} element={<Register />} />
             <Route path={"/new-password"} element={<NewPass />} />
