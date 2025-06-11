@@ -47,7 +47,7 @@ const courses = [
   },
 ];
 
-const CourseList = ({ limit = 6 }) => (
+const CourseList = ({ limit = 6, name }) => (
   <Box
     component="section"
     sx={{
@@ -61,7 +61,7 @@ const CourseList = ({ limit = 6 }) => (
       fontWeight="bold"
       sx={{ mb: "24px", color: "#226957" }}
     >
-      Recommended Class
+      {name}
     </Typography>
 
     <Box

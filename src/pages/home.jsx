@@ -8,7 +8,7 @@ const Home = () => {
     <>
       <Navbar />
       <Banner />
-      <CourseList />
+      <CourseList name="Recommended Class" />
       <Statistics />
       <Footer />
     </>
