@@ -1,5 +1,8 @@
 import * as React from "react";
-import { Grid, Stack, GlobalStyles } from "@mui/material";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import Stack from "@mui/material/Stack";
+import GlobalStyles from "@mui/material/GlobalStyles";
 import FormLabel from "../components/molecules/formLabel";
 import Title from "../components/molecules/title";
 import FormButton from "../components/molecules/formButton";
@@ -7,10 +10,25 @@ import Description from "../components/molecules/description";
 import Navbar from "../components/molecules/navbar";
 
 const ResetPass = () => {
+  const [formData, setFormData] = React.useState({
+    email: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Form data is valid, sending to API:", formData);
+  };
   return (
-    <>
-    <Navbar />
-    <div>
+    <Box>
+      <Navbar />
       <GlobalStyles
         styles={{
           html: { margin: 0, padding: 0, height: "100%", overflow: "hidden" },
@@ -23,13 +41,13 @@ const ResetPass = () => {
         justifyContent="center"
         alignItems="center"
         sx={{
-          height: "100dvh", // Lebih akurat dari 100vh di mobile
+          height: "100vh",
           margin: 0,
           padding: 0,
           overflow: "hidden",
         }}
       >
-        <Grid>
+        <Grid component="form" onSubmit={handleSubmit}>
           <Grid>
             <Title name="Reset Password" colorTitle="dlang.black" />
           </Grid>
@@ -37,7 +55,15 @@ const ResetPass = () => {
             <Description descriptionText="Please enter your email address" />
           </Grid>
           <Grid sx={{ marginY: 5 }}>
-            <FormLabel name="Email" />
+            <FormLabel
+              name="Email"
+              inputProps={{
+                name: "email",
+                type: "email",
+                value: formData.email,
+                onChange: handleChange,
+              }}
+            />
           </Grid>
           <Stack
             display="flex"
@@ -46,12 +72,11 @@ const ResetPass = () => {
             spacing={2}
           >
             <FormButton name="Cancel" colorButton="dlang.orange" />
-            <FormButton name="Confirm" />
+            <FormButton name="Confirm" type="submit" />
           </Stack>
         </Grid>
       </Grid>
-    </div>
-    </>
+    </Box>
   );
 };
 export default ResetPass;
