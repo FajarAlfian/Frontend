@@ -3,13 +3,17 @@ import Footer from "../components/molecules/footer";
 import Banner from "../components/molecules/banner";
 import Statistics from "../components/molecules/statistics";
 import CourseList from "../components/molecules/courseList";
+import CategoryCourse from "../components/molecules/category";
+import Benefit from "../components/molecules/benefit";
 const Home = () => {
   return (
     <>
       <Navbar />
       <Banner />
-      <CourseList name="Recommended Class" />
       <Statistics />
+      <CourseList name="Recommended Class" />
+      <Benefit />
+      <CategoryCourse />
       <Footer />
     </>
   );

@@ -5,6 +5,43 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import SendIcon from "@mui/icons-material/Send";
 
+const country = [
+  {
+    name: "Deutsch",
+    flagImage: "src/assets/category/deutsch.png",
+  },
+
+  {
+    name: "English",
+    flagImage: "src/assets/category/english.png",
+  },
+
+  {
+    name: "French",
+    flagImage: "src/assets/category/french.png",
+  },
+
+  {
+    name: "Indonesia",
+    flagImage: "src/assets/category/indonesia.png",
+  },
+
+  {
+    name: "Japan",
+    flagImage: "src/assets/category/japan.png",
+  },
+
+  {
+    name: "Melayu",
+    flagImage: "src/assets/category/melayu.png",
+  },
+
+  {
+    name: "Mandarin",
+    flagImage: "src/assets/category/mandarin.png",
+  },
+];
+
 const Footer = () => {
   return (
     <Grid sx={{ p: 1, backgroundColor: "dlang.green" }}>
@@ -33,21 +70,18 @@ const Footer = () => {
         </Grid>
         <Grid size={3} p={3}>
           <Typography variant="h6">Product</Typography>
-          <Box component="ul">
-            <Stack direction="row" spacing={8}>
-              <Stack spacing={2}>
-                <Box component="li">First item</Box>
-                <Box component="li">Second item</Box>
-                <Box component="li">Third item</Box>
-                <Box component="li">Third item</Box>
-              </Stack>
-              <Stack spacing={2}>
-                <Box component="li">Fifth item</Box>
-                <Box component="li">Sixth item</Box>
-                <Box component="li">Fifth item</Box>
-                <Box component="li">Sixth item</Box>
-              </Stack>
-            </Stack>
+          <Box component="ul" sx={{ flexGrow: 1 }}>
+            <Grid
+              container
+              rowSpacing={1}
+              columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+            >
+              {country.map((country, idx) => (
+                <Grid size={6} component="li">
+                  {country.name}
+                </Grid>
+              ))}
+            </Grid>
           </Box>
         </Grid>
         <Grid size={4.5} p={3}>
