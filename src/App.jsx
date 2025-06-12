@@ -8,6 +8,7 @@ import NewPass from "./pages/newPass";
 import ResetPass from "./pages/resetPass";
 import Home from "./pages/home";
 import MenuClass from "./pages/menuClass";
+import  "./styles/app.css"
 
 function App() {
   return (

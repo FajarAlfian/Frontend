@@ -20,11 +20,7 @@ const CourseListWithSeeMore = ({ limit = 6, name }) => {
  
       <Box
         sx={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
-          gap: "16px",
-          mx: "auto",
-          maxWidth: "1200px",
+          textAlign: "left"
         }}
       >
         <CourseList limit={limit * page} />
@@ -36,7 +32,8 @@ const CourseListWithSeeMore = ({ limit = 6, name }) => {
           onClick={handleSeeMore}
           endIcon={<ArrowDownward />}
           sx={{
-            padding: "8px 24px",
+            alignContent: "center",
+            padding: "5px 200px",
             fontSize: "16px",
             color: "#226957",
             borderColor: "#226957",
