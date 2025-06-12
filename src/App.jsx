@@ -7,6 +7,8 @@ import Register from "./pages/register";
 import NewPass from "./pages/newPass";
 import ResetPass from "./pages/resetPass";
 import Home from "./pages/home";
+import MenuClass from "./pages/menuClass";
+
 function App() {
   return (
     <>
@@ -14,6 +16,7 @@ function App() {
         <Router>
           <Routes>
             <Route path={"/"} element={<Home />} />
+            <Route path={"/menuClass"} element={<MenuClass />} />
             <Route path={"/login"} element={<Login />} />
             <Route path={"/register"} element={<Register />} />
             <Route path={"/new-password"} element={<NewPass />} />
