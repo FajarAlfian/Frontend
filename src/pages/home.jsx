@@ -8,13 +8,11 @@ import Benefit from "../components/molecules/benefit";
 const Home = () => {
   return (
     <>
-      <Navbar />
       <Banner />
       <Statistics />
       <CourseList name="Recommended Class" />
       <Benefit />
       <CategoryCourse />
-      <Footer />
     </>
   );
 };

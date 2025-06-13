@@ -8,7 +8,8 @@ import NewPass from "./pages/newPass";
 import ResetPass from "./pages/resetPass";
 import Home from "./pages/home";
 import MenuClass from "./pages/menuClass";
-import  "./styles/app.css"
+import Layout from "./pages/layout";
+import "./styles/app.css";
 
 function App() {
   return (
@@ -16,12 +17,14 @@ function App() {
       <ThemeProvider theme={Theme}>
         <Router>
           <Routes>
-            <Route path={"/"} element={<Home />} />
-            <Route path={"/menuClass"} element={<MenuClass />} />
             <Route path={"/login"} element={<Login />} />
             <Route path={"/register"} element={<Register />} />
             <Route path={"/new-password"} element={<NewPass />} />
             <Route path={"/reset-password"} element={<ResetPass />} />
+            <Route element={<Layout />}>
+              <Route path={"/"} element={<Home />} />
+              <Route path={"/menuClass"} element={<MenuClass />} />
+            </Route>
           </Routes>
         </Router>
       </ThemeProvider>
