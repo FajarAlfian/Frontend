@@ -2,17 +2,18 @@ import React from "react";
 import { Card, CardMedia, CardContent, Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 
+
 const CourseCard = ({ image, category, title, price, link }) => (
   <Card
     elevation={0}
     sx={{
-      border: "1px solid #E0E0E0",
+      border: "1px solid grey",
       borderRadius: "20px",
       overflow: "hidden",
       display: "flex",
       flexDirection: "column",
-      width: "100%",
-      height: "100%",
+      width: "350px",
+      height: "399px",
       backgroundColor: "#fff",
     }}
   >
@@ -24,13 +25,14 @@ const CourseCard = ({ image, category, title, price, link }) => (
         width: "100%",
         aspectRatio: "16/9",
         objectFit: "cover",
+        height: "200px"
       }}
     />
 
-    <CardContent sx={{ flexGrow: 1, p: 2 }}>
+    <CardContent sx={{ display: "flex", padding: 2, flexDirection:"column", justifyContent: "space-between", height: "100%" }}>
       <Typography
         variant="caption"
-        color="text.secondary"
+        color="dlang.black"
         gutterBottom
         sx={{ display: "block" }}
       >
@@ -45,18 +47,20 @@ const CourseCard = ({ image, category, title, price, link }) => (
         gutterBottom
         sx={{
           display: "block",
-          color: "text.primary",
+          color: "dlang.black",
           textDecoration: "none",
-          "&:hover": { color: "primary.main" },
+          "&:hover": { color: "dlang.main" },
+         
         }}
       >
         {title}
       </Typography>
 
       <Typography
-        variant="subtitle2"
+        variant="subtitle1"
         fontWeight="bold"
-        color="success.main"
+        color="dlang.green"
+        sx={{marginTop:"auto"}}
       >
         {price}
       </Typography>

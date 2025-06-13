@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
 import CourseCard from "./courseCard";
+import { Link } from "react-router";
 
 const courses = [
   {
@@ -8,7 +9,7 @@ const courses = [
     category: "English",
     title: "Basic English for Junior",
     price: "IDR 400.000",
-    link: "",
+    link: "/detail",
   },
   {
     image: "/assets/courseimage/english_expert.png",
@@ -56,10 +57,12 @@ const CourseList = ({ limit = 6, name }) => (
     }}
   >
     <Typography
+      component={Link}
+      to= "/menuClass"
       variant="h4"
       align="center"
       fontWeight="bold"
-      sx={{ mb: "24px", color: "#226957" }}
+      sx={{ mb: "24px", color: "dlang.green", textDecoration:"none",display: "block" }}
     >
       {name}
     </Typography>

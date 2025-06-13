@@ -13,7 +13,10 @@ const Navbar = () => (
           alt="D Language"
           sx={{ width: 40, height: 40, mr: 1 }}
         />
-        <Typography variant="h6" sx={{ fontWeight: 500, color: "text.primary" }}>
+        <Typography
+          component={Link}
+          to= "/"     
+          variant="h6" sx={{ fontWeight: 500, color: "dlang.black", textDecoration: "none", display: "block" }}>
           Language
         </Typography>
       </Box>
