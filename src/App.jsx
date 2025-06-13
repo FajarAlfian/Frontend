@@ -9,6 +9,7 @@ import ResetPass from "./pages/resetPass";
 import Home from "./pages/home";
 import MenuClass from "./pages/menuClass";
 import Layout from "./pages/layout";
+import Detail from "./pages/detail";
 import "./styles/app.css";
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
             <Route element={<Layout />}>
               <Route path={"/"} element={<Home />} />
               <Route path={"/menuClass"} element={<MenuClass />} />
+              <Route path={"/detail"} element={<Detail />} />
             </Route>
           </Routes>
         </Router>
