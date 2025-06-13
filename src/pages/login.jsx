@@ -32,8 +32,8 @@ const Login = () => {
     }
   };
 
-  const checkPassword = formData.password.length >= 8;
-  const minCharacter = formData.password.length === 8;
+  const checkPassword = formData.password.length > 0;
+  const minCharacter = formData.password.length >= 8;
   return (
     <Box>
       <Navbar />
@@ -77,7 +77,7 @@ const Login = () => {
             />
             <FormLabel
               name="Password"
-              error={!checkPassword}
+              error={checkPassword && !minCharacter}
               type="password"
               helperText={minCharacter ? "" : "minimal 8 character"}
               inputProps={{

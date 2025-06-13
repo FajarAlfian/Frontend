@@ -35,10 +35,11 @@ const NewPass = () => {
     }
   };
 
-  const checkPassword1 = formData.password1.length >= 8;
-  const checkPassword2 = formData.password2.length >= 8;
-  const minCharacter1 = formData.password1.length === 8;
-  const minCharacter2 = formData.password1.length === 8;
+  const checkPassword1 = formData.password1.length > 0;
+  const checkPassword2 = formData.password2.length > 0;
+
+  const minCharacterPassword = formData.password1.length >= 8;
+  const checkMatchPassword = formData.password1 === formData.password2;
 
   return (
     <Box>
@@ -65,9 +66,9 @@ const NewPass = () => {
           <Title name="Create Password" />
           <FormLabel
             name="New Password"
-            error={!checkPassword1}
+            error={checkPassword1 && !minCharacterPassword}
             type="password"
-            helperText={minCharacter1 ? "" : "minimal 8 character"}
+            helperText={minCharacterPassword ? "" : "minimal 8 character"}
             inputProps={{
               name: "password1",
               type: "password",
@@ -77,9 +78,9 @@ const NewPass = () => {
           />
           <FormLabel
             name="Confirm New Password"
-            error={!checkPassword2}
+            error={checkPassword2 && !checkMatchPassword}
             type="password"
-            helperText={minCharacter2 ? "" : "minimal 8 character"}
+            helperText={checkMatchPassword ? "" : "password does not match"}
             inputProps={{
               name: "password2",
               type: "password",
