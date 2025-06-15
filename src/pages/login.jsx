@@ -57,7 +57,7 @@ const Login = () => {
       >
         <Grid component="form" onSubmit={handleSubmit}>
           <Grid>
-            <Title name="Welcome Back!" />
+            <Title name="Welcome Back!" boldness="500" />
           </Grid>
           <Grid sx={{ marginY: 2 }}>
             <Description

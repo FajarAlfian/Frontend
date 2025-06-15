@@ -1,7 +1,12 @@
 import { Typography, Link } from "@mui/material";
-const Description = ({ descriptionText, align = "left", hyperlinkText, linkTo }) => {
+const Description = ({
+  descriptionText,
+  align = "left",
+  hyperlinkText,
+  linkTo,
+}) => {
   return (
-    <Typography sx={{ textAlign: align, color: "dlang.grey" }} variant="h6">
+    <Typography sx={{ textAlign: align, color: "dlang.grey" }} variant="body1">
       {descriptionText}
       <Link href={linkTo} underline="none">
         {hyperlinkText}
