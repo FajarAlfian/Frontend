@@ -63,7 +63,9 @@ const NewPass = () => {
         }}
       >
         <Grid component="form" onSubmit={handleSubmit}>
-          <Title name="Create Password" />
+          <Box marginBottom={5}>
+            <Title name="Create Password" colorTitle="#333333" boldness="400" />
+          </Box>
           <FormLabel
             name="New Password"
             error={checkPassword1 && !minCharacterPassword}
@@ -93,6 +95,7 @@ const NewPass = () => {
             justifyContent="flex-end"
             direction="row"
             spacing={2}
+            marginTop={5}
           >
             <FormButton name="Cancel" colorButton="dlang.orange" />
             <FormButton type="submit" name="Submit" />

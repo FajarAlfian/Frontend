@@ -106,6 +106,8 @@ const Login = () => {
           </Stack>
           <Grid sx={{ marginY: 5 }}>
             <Description
+              colorText="black"
+              boldness="400"
               descriptionText="Dont have account? "
               linkTo="/register"
               hyperlinkText="Sign Up Here"

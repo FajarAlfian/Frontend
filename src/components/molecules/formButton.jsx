@@ -5,30 +5,24 @@ import Button from "@mui/material/Button";
 const FormButton = ({
   name,
   colorButton = "dlang.green",
-  type = "button",      
-  ...buttonProps       
+  type = "button",
+  ...buttonProps
 }) => {
   return (
-    <Stack
-      spacing={4}
-      direction="row"
-      marginY={4}
-     
-      justifyContent="flex-end"
-    >
+    <Stack spacing={4} direction="row" marginY={4} justifyContent="flex-end">
       <Button
-        type={type}                 
-        {...buttonProps}             
+        type={type}
+        {...buttonProps}
         variant="contained"
         sx={{
-          borderRadius: "10px",
+          borderRadius: "8px",
           color: "white",
           backgroundColor: colorButton,
           textTransform: "none",
-          fontSize: { xs: "16px", md: "20px" },
-          whiteSpace: "nowrap"
+          width: "140px",
+          height: "38px",
+          fontSize: { xs: "13px", md: "15px" },
         }}
-        fullWidth
       >
         {name}
       </Button>
