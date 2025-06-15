@@ -1,13 +1,14 @@
 import * as React from "react";
 import Typography from "@mui/material/Typography";
-import { Box, Grid } from "@mui/material";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
 import bannerImage from "../../../src/assets/banner.png";
 
 const Banner = () => {
   return (
     <Box
       sx={{
-        backgroundImage: `url(${bannerImage})` ,
+        backgroundImage: `url(${bannerImage})`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
         backgroundPosition: "center",

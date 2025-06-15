@@ -1,5 +1,4 @@
-import { Typography } from "@mui/material";
-
+import Typography from "@mui/material/Typography";
 const Title = ({
   name,
   align = "left",

@@ -1,4 +1,7 @@
-import { Box, Stack, Typography, Grid } from "@mui/material";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import InstagramIcon from "@mui/icons-material/Instagram";

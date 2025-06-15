@@ -1,6 +1,9 @@
 import * as React from "react";
 import { useState } from "react";
-import { Grid, Stack, GlobalStyles, Typography } from "@mui/material";
+import Grid from "@mui/material/Grid";
+import GlobalStyles from "@mui/material/GlobalStyles";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
 import FormLabel from "../components/molecules/formLabel";
 import Title from "../components/molecules/title";
 import FormButton from "../components/molecules/formButton";
@@ -55,7 +58,7 @@ const Register = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-      console.log("Form data is valid, sending to API:", formData); 
+      console.log("Form data is valid, sending to API:", formData);
     } else {
       console.log("Form data is invalid, validation failed");
     }
@@ -104,8 +107,8 @@ const Register = () => {
                 <Grid>
                   <FormLabel
                     name="Name"
-                    error={!!errors.name} 
-                    helperText={errors.name} 
+                    error={!!errors.name}
+                    helperText={errors.name}
                     inputProps={{
                       name: "name",
                       value: formData.name,
@@ -127,8 +130,8 @@ const Register = () => {
                 <Grid item>
                   <FormLabel
                     name="Password"
-                    error={!!errors.password} 
-                    helperText={errors.password} 
+                    error={!!errors.password}
+                    helperText={errors.password}
                     inputProps={{
                       name: "password",
                       type: "password",
@@ -140,7 +143,7 @@ const Register = () => {
                 <Grid item>
                   <FormLabel
                     name="Confirm Password"
-                    error={!!errors.confirmPassword} 
+                    error={!!errors.confirmPassword}
                     helperText={errors.confirmPassword}
                     inputProps={{
                       name: "confirmPassword",

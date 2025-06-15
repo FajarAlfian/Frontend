@@ -1,5 +1,6 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 import CourseCard from "./courseCard";
 import { Link } from "react-router";
 
@@ -58,11 +59,16 @@ const CourseList = ({ limit = 6, name }) => (
   >
     <Typography
       component={Link}
-      to= "/menuClass"
+      to="/menuClass"
       variant="h4"
       align="center"
       fontWeight="bold"
-      sx={{ mb: "24px", color: "dlang.green", textDecoration:"none",display: "block" }}
+      sx={{
+        mb: "24px",
+        color: "dlang.green",
+        textDecoration: "none",
+        display: "block",
+      }}
     >
       {name}
     </Typography>
@@ -74,7 +80,6 @@ const CourseList = ({ limit = 6, name }) => (
         mx: "auto",
       }}
     >
- 
       <Box
         sx={{
           display: "grid",
@@ -83,8 +88,8 @@ const CourseList = ({ limit = 6, name }) => (
             sm: "repeat(2,1fr)",
             md: "repeat(3,350px)",
           },
-          columnGap: "24px",  
-          rowGap: "24px",     
+          columnGap: "24px",
+          rowGap: "24px",
         }}
       >
         {courses.slice(0, limit).map((course, idx) => (
