@@ -1,23 +1,15 @@
-import {
-  Stack,
-  Checkbox,
-  Grid,
-  Typography,
-  CardMedia,
-  Card,
-  Divider,
-  Button,
-  Modal,
-  Box,
-  FormControlLabel,
-  Radio,
-  FormControl,
-  RadioGroup,
-  Paper,
-} from "@mui/material";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import Stack from "@mui/material/Stack";
+import Checkbox from "@mui/material/Checkbox";
+import Typography from "@mui/material/Typography";
+import CardMedia from "@mui/material/CardMedia";
+import Card from "@mui/material/Card";
+import Divider from "@mui/material/Divider";
+import Button from "@mui/material/Button";
+import Modal from "@mui/material/Modal";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
-import FormButton from "../components/molecules/formButton";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { NavLink } from "react-router";
 import { React, useState } from "react";
@@ -93,19 +85,6 @@ const courses = [
     link: "",
   },
 ];
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  borderRadius: "3",
-  pt: 2,
-  px: 4,
-  pb: 3,
-};
 
 const Checkout = () => {
   const [open, setOpen] = useState(false);
@@ -232,7 +211,6 @@ const Checkout = () => {
             <Typography variant="h6" textAlign="center" mb={2}>
               Select Payment Method
             </Typography>
-
             <Stack spacing={1}>
               {paymentMethods.map((method) => {
                 const isSelected = selected === method.id;

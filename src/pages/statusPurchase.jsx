@@ -1,11 +1,8 @@
-import {
-  Typography,
-  GlobalStyles,
-  Grid,
-  Box,
-  Stack,
-  Button,
-} from "@mui/material";
+import Box from "@mui/material/Box";
+import Stack from "@mui/material/Stack";
+import GlobalStyles from "@mui/material/GlobalStyles";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 import Navbar from "../components/molecules/navbar";
 import HomeIcon from "@mui/icons-material/Home";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
