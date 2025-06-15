@@ -11,6 +11,7 @@ import MenuClass from "./pages/menuClass";
 import Layout from "./pages/layout";
 import Detail from "./pages/detail";
 import Checkout from "./pages/checkout";
+import StatusPurchase from "./pages/statusPurchase";
 import "./styles/app.css";
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
             <Route path={"/register"} element={<Register />} />
             <Route path={"/new-password"} element={<NewPass />} />
             <Route path={"/reset-password"} element={<ResetPass />} />
+            <Route path={"/purchase-status"} element={<StatusPurchase />} />
             <Route element={<Layout />}>
               <Route path={"/"} element={<Home />} />
               <Route path={"/menuClass"} element={<MenuClass />} />

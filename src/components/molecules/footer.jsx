@@ -78,7 +78,7 @@ const Footer = () => {
             >
               {country.map((country, idx) => (
                 <Grid size={6} component="li">
-                  {country.name}
+                  <Typography>{country.name}</Typography>
                 </Grid>
               ))}
             </Grid>
