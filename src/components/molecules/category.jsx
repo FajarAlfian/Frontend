@@ -1,6 +1,9 @@
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import Card from "@mui/material/Card";
+import CardMedia from "@mui/material/CardMedia";
+import CardContent from "@mui/material/CardContent";
 const country = [
   {
     name: "Arabic",
@@ -44,34 +47,51 @@ const country = [
 
 const CategoryCourse = () => {
   return (
-    <Box textAlign="center" justifyContent="center" m={10} mt={20}>
+    <Box textAlign="center" justifycontent="center" m={8} mt={20}>
       <Box mb={10}>
         <Typography variant="h4" color="dlang.green" fontWeight="bold">
           Available Language Course
         </Typography>
       </Box>
 
-      <Grid container px={20} spacing={4}>
-        {country.map((country, idx) => (
-          <Grid
-            key={idx}
-            p={2}
-            border={1}
-            color="dlang.grey"
-            borderRadius={2}
-            size={3}
-          >
-            <img src={country.flagImage} alt={country.name}
-              style={{
-                width: '100%',
-                maxWidth: '200px',
-                height: 'auto',
-                display: 'block',
-                margin: '0 auto',
-              }} color="dlang.grey" />
-            <Typography variant="h5" color="dlang.grey" m={1} align="center">
-              {country.name}
-            </Typography>
+      <Grid
+        container
+        px={{ xs: 0, sm: 20 }}
+        spacing={{ xs: 10, sm: 2 }}
+        columns={{ xs: 4, sm: 12 }}
+      >
+        {country.map((country) => (
+          <Grid size={{ xs: 2, sm: 3 }} alignContent="center">
+            <Card
+              // fullwidth
+              sx={{
+                width: { xs: 75, sm: 250 },
+                border: "1px solid #ccc",
+                borderRadius: 2,
+                boxShadow: "none",
+                textAlign: "center",
+                p: 3,
+              }}
+            >
+              <CardMedia
+                component="img"
+                image={country.flagImage}
+                alt={country.name}
+                sx={{
+                  width: "100%",
+                  height: "auto",
+                  borderRadius: 1,
+                }}
+              />
+              <Typography
+                marginTop={2}
+                fontSize={{ xs: "18px", sm: "24px" }}
+                color=" #000000"
+                fontWeight={400}
+              >
+                {country.name}
+              </Typography>
+            </Card>
           </Grid>
         ))}
       </Grid>
