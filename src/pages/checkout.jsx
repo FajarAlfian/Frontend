@@ -8,7 +8,7 @@ import Card from "@mui/material/Card";
 import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
-import DeleteIcon from "@mui/icons-material/Delete";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import IconButton from "@mui/material/IconButton";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { NavLink } from "react-router";
@@ -111,27 +111,36 @@ const Checkout = () => {
         p={10}
         spacing={2}
       >
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="left"
-          spacing={5}
-          paddingY={2}
-        >
-          <Checkbox />
-          <Typography color="dlang.grey" variant="h6" m={1}>
+        <Stack direction="row" justifyContent="left" spacing={5} paddingY={2}>
+          <Checkbox
+            sx={{
+              color: "#226957",
+              "&.Mui-checked": {
+                color: "#226957",
+              },
+            }}
+          />
+          <Typography
+            sx={{
+              fontSize: "20px",
+              fontWeight: "400",
+              color: " #333333",
+            }}
+            m={1}
+          >
             Pilih Semua
           </Typography>
         </Stack>
-        {courses.map((courses, idx) => (
-          <Stack
-            direction="row"
-            alignItems="center"
-            justifyContent="center"
-            spacing={5}
-            paddingY={2}
-          >
-            <Checkbox />
+        {courses.map((courses) => (
+          <Stack direction="row" alignItems="center" spacing={5} paddingY={2}>
+            <Checkbox
+              sx={{
+                color: "#226957",
+                "&.Mui-checked": {
+                  color: "#226957",
+                },
+              }}
+            />
             <Card>
               <CardMedia
                 component="img"
@@ -140,27 +149,37 @@ const Checkout = () => {
               />
             </Card>
             <Grid direction="column" p={5} width="60%">
-              <Typography color="dlang.grey" m={1}>
+              <Typography
+                sx={{ fontWeight: "400", fontSize: "16px", color: "#828282" }}
+                m={1}
+              >
                 {courses.category}
               </Typography>
-              <Typography color="black" variant="h5" fontWeight="bold" m={1}>
+              <Typography
+                sx={{ fontWeight: "600", fontSize: "24px", color: "#333333" }}
+                m={1}
+              >
                 {courses.title}
               </Typography>
-              <Typography color="dlang.grey" m={1}>
+              <Typography
+                sx={{ fontWeight: "400", fontSize: "16px", color: "#4F4F4F" }}
+                m={1}
+              >
                 Schedule: Friday, 29 Juli 2022
               </Typography>
               <Typography
-                color="dlang.orange"
-                variant="h6"
-                fontWeight="bold"
+                sx={{ fontWeight: "600", fontSize: "20px", color: "#EA9E1F" }}
                 m={1}
               >
                 {courses.price}
               </Typography>
             </Grid>
-            <IconButton>
-              <DeleteIcon />
-            </IconButton>
+            <Grid>
+              <DeleteForeverIcon
+                sx={{ color: "#EB5757", width: "24px", height: "30px" }}
+                end
+              />
+            </Grid>
           </Stack>
         ))}
       </Stack>
@@ -176,10 +195,16 @@ const Checkout = () => {
           direction="row"
           size={{ xs: 6, md: 2 }}
           offset={{ xs: 3, md: 0 }}
-          spacing={6}
+          spacing={3}
         >
-          <Typography color="dlang.grey">Total Price</Typography>
-          <Typography color="dlang.green" fontWeight="bold" variant="h5">
+          <Typography
+            sx={{ fontSize: "18px", fontWeight: "400", color: "#333333" }}
+          >
+            Total Price
+          </Typography>
+          <Typography
+            sx={{ fontSize: "24px", fontWeight: "600", color: "#226957" }}
+          >
             IDR 700.000
           </Typography>
         </Stack>
