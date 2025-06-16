@@ -47,14 +47,13 @@ const country = [
 
 const Footer = () => {
   return (
-    <Grid sx={{ p: 1, backgroundColor: "dlang.green" }}>
+    <Grid sx={{ p: 1, backgroundColor: " #226957" }}>
       <Grid
         container
         spacing={{ xs: 2, md: 3 }}
         columns={{ xs: 4, sm: 8, md: 12 }}
         sx={{
           p: 4,
-          backgroundColor: "dlang.green",
           color: "white",
         }}
       >
@@ -139,7 +138,7 @@ const Footer = () => {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    color: "dlang.orange",
+                    color: " #EA9E1F",
                   }}
                 >
                   <Icon fontSize="small" />
