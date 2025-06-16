@@ -108,31 +108,16 @@ const Checkout = () => {
       <Stack
         direction="column"
         divider={<Divider orientation="horizontal" />}
-        p={10}
+        px={{ xs: 2, sm: 10 }}
         spacing={2}
       >
-        <Stack direction="row" justifyContent="left" spacing={5} paddingY={2}>
-          <Checkbox
-            sx={{
-              color: "#226957",
-              "&.Mui-checked": {
-                color: "#226957",
-              },
-            }}
-          />
-          <Typography
-            sx={{
-              fontSize: "20px",
-              fontWeight: "400",
-              color: " #333333",
-            }}
-            m={1}
-          >
-            Pilih Semua
-          </Typography>
-        </Stack>
-        {courses.map((courses) => (
-          <Stack direction="row" alignItems="center" spacing={5} paddingY={2}>
+        <Grid
+          container
+          columns={{ xs: 5, sm: 8, md: 12 }}
+          spacing={{ xs: 0, sm: 4 }}
+          paddingY={2}
+        >
+          <Grid size={{ xs: 1, sm: 1, md: 1 }}>
             <Checkbox
               sx={{
                 color: "#226957",
@@ -141,46 +126,96 @@ const Checkout = () => {
                 },
               }}
             />
-            <Card>
-              <CardMedia
-                component="img"
-                image={courses.image}
-                alt={courses.title}
+          </Grid>
+          <Grid size={{ xs: 2, sm: 2, md: 3 }}>
+            <Typography
+              sx={{
+                fontSize: "20px",
+                fontWeight: "400",
+                color: " #333333",
+                textAlign: "center",
+              }}
+            >
+              Pilih Semua
+            </Typography>
+          </Grid>
+        </Grid>
+        {courses.map((courses) => (
+          <Grid
+            container
+            alignItems="center"
+            columns={{ xs: 5, sm: 8, md: 12 }}
+            spacing={{ xs: 1, sm: 4 }}
+          >
+            <Grid size={{ xs: 5, sm: 1, md: 1 }}>
+              <Checkbox
+                sx={{
+                  color: "#226957",
+                  "&.Mui-checked": {
+                    color: "#226957",
+                  },
+                }}
               />
-            </Card>
-            <Grid direction="column" p={5} width="60%">
-              <Typography
-                sx={{ fontWeight: "400", fontSize: "16px", color: "#828282" }}
-                m={1}
-              >
-                {courses.category}
-              </Typography>
-              <Typography
-                sx={{ fontWeight: "600", fontSize: "24px", color: "#333333" }}
-                m={1}
-              >
-                {courses.title}
-              </Typography>
-              <Typography
-                sx={{ fontWeight: "400", fontSize: "16px", color: "#4F4F4F" }}
-                m={1}
-              >
-                Schedule: Friday, 29 Juli 2022
-              </Typography>
-              <Typography
-                sx={{ fontWeight: "600", fontSize: "20px", color: "#EA9E1F" }}
-                m={1}
-              >
-                {courses.price}
-              </Typography>
             </Grid>
-            <Grid>
+            <Grid size={{ xs: 2, sm: 2, md: 3 }}>
+              <Card
+                sx={{
+                  width: { xs: "100%", sm: 200 },
+                  height: { xs: "100%", sm: 133 },
+                }}
+              >
+                <CardMedia
+                  component="img"
+                  image={courses.image}
+                  alt={courses.title}
+                />
+              </Card>
+            </Grid>
+            <Grid size={{ xs: 3, sm: 2, md: 7 }}>
+              <Stack direction="column">
+                <Typography
+                  fontSize={{ xs: "8", sm: "16px" }}
+                  sx={{ fontWeight: "400", color: "#828282" }}
+                >
+                  {courses.category}
+                </Typography>
+                <Typography
+                  fontSize={{ xs: "12", sm: "24px" }}
+                  sx={{ fontWeight: "600", color: "#333333" }}
+                >
+                  {courses.title}
+                </Typography>
+                <Typography
+                  fontSize={{ xs: "8", sm: "16px" }}
+                  sx={{ fontWeight: "400", color: "#4F4F4F" }}
+                >
+                  Schedule: Friday, 29 Juli 2022
+                </Typography>
+                <Typography
+                  fontSize={{ xs: "10", sm: "20px" }}
+                  sx={{ fontWeight: "600", color: "#EA9E1F" }}
+                >
+                  {courses.price}
+                </Typography>
+              </Stack>
+            </Grid>
+            <Grid
+              size={{ xs: 5, sm: 1, md: 1 }}
+              sx={{
+                display: "flex",
+                justifyContent: "flex-end",
+                alignItems: "center",
+              }}
+            >
               <DeleteForeverIcon
-                sx={{ color: "#EB5757", width: "24px", height: "30px" }}
-                end
+                sx={{
+                  color: "#EB5757",
+                  width: { xs: "35px", sm: "40px" },
+                  height: { xs: "35px", sm: "40px" },
+                }}
               />
             </Grid>
-          </Stack>
+          </Grid>
         ))}
       </Stack>
       <Divider />
@@ -188,42 +223,39 @@ const Checkout = () => {
         container
         spacing={3}
         sx={{ flexGrow: 1 }}
-        paddingX={12}
+        paddingX={{ xs: 2, md: 12 }}
+        py={{ xs: 4, md: 0 }}
         alignItems="center"
       >
-        <Stack
-          direction="row"
-          size={{ xs: 6, md: 2 }}
-          offset={{ xs: 3, md: 0 }}
-          spacing={3}
-        >
+        <Grid size={{ xs: 4, md: 1 }} offset={{ xs: 1, md: 0 }}>
           <Typography
-            sx={{ fontSize: "18px", fontWeight: "400", color: "#333333" }}
+            sx={{ fontWeight: "400", color: "#333333" }}
+            fontSize={{ xs: "20px", sm: "18px" }}
           >
             Total Price
           </Typography>
+        </Grid>
+        <Grid size={{ xs: 5, md: 2 }} offset={{ xs: 1, md: 0 }}>
           <Typography
-            sx={{ fontSize: "24px", fontWeight: "600", color: "#226957" }}
+            sx={{ fontWeight: "600", color: "#226957" }}
+            fontSize={{ xs: "23px", sm: "24px" }}
           >
             IDR 700.000
           </Typography>
-        </Stack>
+        </Grid>
         <Grid
-          size={{ xs: 4, md: 2 }}
+          size={{ xs: 12, md: 2 }}
           offset={{ md: "auto" }}
           spacing={4}
-          direction="row"
-          marginY={4}
-          justifyContent="flex-end"
+          marginY={3}
         >
           <Button
             sx={{
               borderRadius: "10px",
               color: "white",
-              backgroundColor: "dlang.green",
+              backgroundColor: " #226957",
               textTransform: "none",
               fontSize: { xs: "16px", md: "20px" },
-              whiteSpace: "nowrap",
             }}
             fullWidth
             onClick={handleOpen}
