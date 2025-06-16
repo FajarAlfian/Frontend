@@ -16,10 +16,15 @@ const CourseDetail = ({ course }) => {
     >
       <Grid container spacing={4} sx={{ justifyContent: "flex-start" }}>
         <Grid item xs={12} md={6}>
-          <img 
+          <img
             src={course.image}
             alt={course.title}
-            style={{ width: "400px", overflow: "hidden", borderRadius: "0" }}
+            style={{
+              width: "100%",
+              height: "auto",
+              borderRadius: "0",
+              overflow: "hidden",
+            }}
           />
         </Grid>
         <Grid item xs={12} md={6}>
@@ -100,7 +105,7 @@ const CourseDetail = ({ course }) => {
         </Typography>
       </Box>
 
-      <Divider sx={{ marginTop: "80px", marginBottom: "80px" }} />  
+      <Divider sx={{ marginTop: "80px", marginBottom: "80px" }} />
 
       <Box sx={{ marginTop: "60px" }}>
         <Typography
@@ -117,12 +122,11 @@ const CourseDetail = ({ course }) => {
         <Grid
           container
           spacing={3}
-          sx={{ marginLeft: "100px", marginRight: "100px", marginTop: "60px" }}
+          sx={{  marginX: { xs: 2, sm: 3, md: 10 },  // Responsif margin untuk lebar layar
+          marginTop: "60px",}}
         >
           {course.relatedCourses?.map((relatedCourse, id) => (
-            <Grid item xs={12} sm={6} md={4} key={id}>
-              <CourseCard {...relatedCourse} />
-            </Grid>
+              <CourseCard key={id} {...relatedCourse} />
           ))}
         </Grid>
       </Box>
