@@ -17,6 +17,7 @@ const CourseCard = ({ image, category, title, price, link }) => (
       width: "350px",
       height: "399px",
       backgroundColor: "#fff",
+      marginTop: "60px",
     }}
   >
     <CardMedia

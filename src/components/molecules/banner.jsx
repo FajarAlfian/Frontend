@@ -25,10 +25,22 @@ const Banner = () => {
         spacing={4}
         direction={{ xs: "column", sm: "column", md: "row" }}
       >
-        <Typography variant="h2" paddingX={50}>
+        <Typography
+          variant="h2"
+          sx={{
+            paddingX: { xs: 2, sm: 5, lg: 20 }, 
+            fontSize: { xs: "h5.fontSize", sm: "h2.fontSize" },  
+          }}
+        >
           Learn different languages to hone your communication skills
         </Typography>
-        <Typography variant="h4" paddingX={30}>
+        <Typography
+          variant="h4"
+          sx={{
+            paddingX: { xs: 2, sm: 5, lg: 20 },  
+            fontSize: { xs: "h6.fontSize", sm: "h4.fontSize" }, 
+          }}
+        >
           All the languages you are looking for are available here, so what are
           you waiting for and immediately improve your language skills
         </Typography>
@@ -36,4 +48,5 @@ const Banner = () => {
     </Box>
   );
 };
+
 export default Banner;
