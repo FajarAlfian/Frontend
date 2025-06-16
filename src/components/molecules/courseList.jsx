@@ -2,10 +2,11 @@ import React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import CourseCard from "./courseCard";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 
 const courses = [
-  {
+  { 
+    id: 1,
     image: "/assets/courseimage/english_junior.png",
     category: "English",
     title: "Basic English for Junior",
@@ -13,6 +14,7 @@ const courses = [
     link: "/detail",
   },
   {
+    id: 2,
     image: "/assets/courseimage/english_expert.png",
     category: "English",
     title: "Complit Package - Expert English, TOEFL and IELTS",
@@ -20,6 +22,7 @@ const courses = [
     link: "",
   },
   {
+    id: 3,
     image: "/assets/courseimage/mandarin.png",
     category: "Mandarin",
     title: "Level 1 Mandarin",
@@ -27,6 +30,7 @@ const courses = [
     link: "",
   },
   {
+    id: 4,
     image: "/assets/courseimage/arabic.png",
     category: "Arabic",
     title: "Arabic Course - Beginner to Middle",
@@ -34,6 +38,7 @@ const courses = [
     link: "",
   },
   {
+    id: 5,
     image: "/assets/courseimage/indonesia.png",
     category: "Indonesian",
     title: "Kursus Bahasa Indonesia",
@@ -41,6 +46,7 @@ const courses = [
     link: "",
   },
   {
+    id: 6,
     image: "/assets/courseimage/germany.png",
     category: "Deutsch",
     title: "Germany Language for Junior",
@@ -53,8 +59,8 @@ const CourseList = ({ limit = 6, name }) => (
   <Box
     component="section"
     sx={{
-      mt: "60px",
-      mb: "60px",
+      marginTop: "60px",
+      marginBottom: "60px",
     }}
   >
     <Typography
@@ -64,7 +70,7 @@ const CourseList = ({ limit = 6, name }) => (
       align="center"
       fontWeight="bold"
       sx={{
-        mb: "24px",
+        marginBottom: "24px",
         color: "dlang.green",
         textDecoration: "none",
         display: "block",
@@ -77,27 +83,29 @@ const CourseList = ({ limit = 6, name }) => (
       sx={{
         width: "100%",
         maxWidth: "1098px",
-        mx: "auto",
+        marginX: "auto",
       }}
     >
       <Box
         sx={{
           display: "grid",
           gridTemplateColumns: {
-            xs: "1fr",
-            sm: "repeat(2,1fr)",
-            md: "repeat(3,350px)",
+            xs: "1fr", 
+            sm: "repeat(2, 1fr)", 
+            md: "repeat(3, 1fr)", 
           },
           columnGap: "24px",
           rowGap: "24px",
         }}
       >
-        {courses.slice(0, limit).map((course, idx) => (
+        {courses.slice(0, limit).map((course, id) => (
           <Box
-            key={idx}
+            key={id}
             sx={{
-              width: { xs: "100%", md: "350px" },
-              height: { xs: "auto", md: "399.333px" },
+              width: "100%", 
+              height: "auto", 
+              maxWidth: "350px", 
+              margin: "0 auto", 
             }}
           >
             <CourseCard {...course} />

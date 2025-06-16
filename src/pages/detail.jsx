@@ -3,7 +3,8 @@ import React from "react";
 import CourseDetail from "../components/molecules/courseDetail";
 
 const courses = [
-    {
+    { 
+      id: 1,
       image: "/assets/courseimage/english_junior.png",
       category: "English",
       title: "Basic English for Junior",
@@ -24,7 +25,8 @@ const courses = [
         },
       ]
     },
-    {
+    {   
+        id: 2,
         image: "/assets/courseimage/indonesia.png",
         category: "Indonesian",
         title: "Kursus Bahasa Indonesia",
@@ -38,7 +40,8 @@ const courses = [
             price: "IDR 550.000",
             link: "",
           },
-          {
+          { 
+            id: 3,
             image: "/assets/courseimage/germany.png",
             category: "Deutsch",
             title: "Germany Language for Junior",

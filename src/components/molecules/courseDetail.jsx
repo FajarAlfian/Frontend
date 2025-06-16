@@ -5,8 +5,9 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
-
+import { Link } from "react-router";
 import CourseCard from "./courseCard";
+import Divider from "@mui/material/Divider";
 
 const CourseDetail = ({ course }) => {
   return (
@@ -15,10 +16,10 @@ const CourseDetail = ({ course }) => {
     >
       <Grid container spacing={4} sx={{ justifyContent: "flex-start" }}>
         <Grid item xs={12} md={6}>
-          <img
+          <img 
             src={course.image}
             alt={course.title}
-            style={{ width: "400px" }}
+            style={{ width: "400px", overflow: "hidden", borderRadius: "0" }}
           />
         </Grid>
         <Grid item xs={12} md={6}>
@@ -66,7 +67,7 @@ const CourseDetail = ({ course }) => {
             <MenuItem value="5">Friday, 29 July 2022</MenuItem>
             <MenuItem value="6">Saturday, 30 July 2022</MenuItem>
           </Select>
-          <Box sx={{ display: "flex", gap: "20px" }}>
+          <Box sx={{ display: "flex", gap: "16px" }}>
             <Button
               variant="contained"
               sx={{
@@ -78,15 +79,9 @@ const CourseDetail = ({ course }) => {
             >
               Add to Cart
             </Button>
-            <Button
-              variant="contained"
-              sx={{
-                width: "233px",
-                color: "white",
-                backgroundColor: "dlang.green",
-                borderRadius: "8px",
-              }}
-            >
+            <Button component={Link}
+              to="/checkout" variant="contained"
+              sx={{ width: "233px", color: "white", backgroundColor: "dlang.green", borderRadius: "8px" }}>
               Buy Now
             </Button>
           </Box>
@@ -105,6 +100,8 @@ const CourseDetail = ({ course }) => {
         </Typography>
       </Box>
 
+      <Divider sx={{ marginTop: "80px", marginBottom: "80px" }} />  
+
       <Box sx={{ marginTop: "60px" }}>
         <Typography
           variant="h6"
@@ -119,11 +116,11 @@ const CourseDetail = ({ course }) => {
         </Typography>
         <Grid
           container
-          spacing={4}
-          sx={{ marginLeft: "100px", marginRight: "100px", marginTop: "50px" }}
+          spacing={3}
+          sx={{ marginLeft: "100px", marginRight: "100px", marginTop: "60px" }}
         >
-          {course.relatedCourses?.map((relatedCourse, idx) => (
-            <Grid item xs={12} sm={6} md={4} key={idx}>
+          {course.relatedCourses?.map((relatedCourse, id) => (
+            <Grid item xs={12} sm={6} md={4} key={id}>
               <CourseCard {...relatedCourse} />
             </Grid>
           ))}

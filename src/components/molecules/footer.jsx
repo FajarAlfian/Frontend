@@ -10,6 +10,10 @@ import SendIcon from "@mui/icons-material/Send";
 
 const country = [
   {
+    name: "Arabic",
+    flagImage: "src/assets/category/arab.jpg",
+  },
+  {
     name: "Deutsch",
     flagImage: "src/assets/category/deutsch.png",
   },
