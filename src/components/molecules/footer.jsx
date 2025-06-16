@@ -50,18 +50,24 @@ const Footer = () => {
     <Grid sx={{ p: 1, backgroundColor: "dlang.green" }}>
       <Grid
         container
-        direction={{ xs: "column", md: "row" }}
-        spacing={1}
+        spacing={{ xs: 2, md: 3 }}
+        columns={{ xs: 4, sm: 8, md: 12 }}
         sx={{
           p: 4,
-          height: "100%",
           backgroundColor: "dlang.green",
           color: "white",
         }}
       >
         <Grid size={4.5} p={3}>
-          <Typography variant="h6">About Us</Typography>
-          <Typography variant="body2">
+          <Typography
+            marginBottom={2}
+            sx={{ fontSize: "16px", fontWeight: "500" }}
+          >
+            About Us
+          </Typography>
+          <Typography
+            sx={{ fontSize: "14px", fontWeight: "400", textAlign: "justify" }}
+          >
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio non
             consectetur quas, sunt adipisci assumenda similique vel aspernatur
             harum dolores fuga laborum sapiente ducimus esse quos tempore nisi!
@@ -72,7 +78,12 @@ const Footer = () => {
           </Typography>
         </Grid>
         <Grid size={3} p={3}>
-          <Typography variant="h6">Product</Typography>
+          <Typography
+            marginBottom={2}
+            sx={{ fontSize: "16px", fontWeight: "500" }}
+          >
+            Product
+          </Typography>
           <Box component="ul" sx={{ flexGrow: 1 }}>
             <Grid
               container
@@ -81,7 +92,9 @@ const Footer = () => {
             >
               {country.map((country, idx) => (
                 <Grid size={6} component="li">
-                  <Typography>{country.name}</Typography>
+                  <Typography sx={{ fontSize: "14px", fontWeight: "400" }}>
+                    {country.name}
+                  </Typography>
                 </Grid>
               ))}
             </Grid>
@@ -89,14 +102,23 @@ const Footer = () => {
         </Grid>
         <Grid size={4.5} p={3}>
           <Grid marginBottom={2}>
-            <Typography variant="h6">Address</Typography>
-            <Typography variant="body2">
+            <Typography
+              marginBottom={2}
+              sx={{ fontSize: "16px", fontWeight: "500" }}
+            >
+              Address
+            </Typography>
+            <Typography sx={{ fontSize: "14px", fontWeight: "400" }}>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
               efficitur risus non varius aliquet.
             </Typography>
           </Grid>
           <Grid>
-            <Typography variant="h6" component="div">
+            <Typography
+              marginBottom={2}
+              sx={{ fontSize: "16px", fontWeight: "500" }}
+              component="div"
+            >
               Contact Us
             </Typography>
             <Stack direction="row" spacing={2}>
@@ -109,11 +131,11 @@ const Footer = () => {
               ].map((Icon, index) => (
                 <Box
                   key={index}
+                  width={{ xs: "30px", sm: "40px" }}
+                  height={{ xs: "30px", sm: "40px" }}
                   sx={{
                     backgroundColor: "white",
                     borderRadius: "50%",
-                    width: 40,
-                    height: 40,
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
