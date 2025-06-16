@@ -1,14 +1,15 @@
 import React from "react";
-import CourseListWithPagination from "../components/molecules/courseListWithPagination";
-import ImageWithText from "../components/molecules/imageText";
-import Navbar from "../components/molecules/navbar";
-import Footer from "../components/molecules/footer";
+import CourseListDetail from "../components/molecules/courseListDetail";
+import ImageText from "../components/molecules/imageText";
+import Divider from '@mui/material/Divider';
+
 
 const MenuClass = () => {
   return (
     <div>
-      <ImageWithText />
-      <CourseListWithPagination limit={3} />
+      <ImageText />
+      <Divider sx={{marginTop:"80px", marginBottom:"80px"}} />
+      <CourseListDetail limit={3} />
     </div>
   );
 };

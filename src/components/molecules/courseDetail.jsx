@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Grid, Typography, Button, Select, MenuItem } from "@mui/material";
 import CourseCard from "./courseCard"; 
+import { Link } from "react-router";
 
 
 const CourseDetail = ({ course }) => {
@@ -38,7 +39,8 @@ const CourseDetail = ({ course }) => {
             <Button variant="contained" sx={{ width: "233px", color:"white", backgroundColor: "dlang.orange", borderRadius: "8px" }}>
               Add to Cart
             </Button>
-            <Button variant="contained"  sx={{ width: "233px", color:"white", backgroundColor: "dlang.green", borderRadius: "8px"}}>
+            <Button component={Link}
+          to="/checkout" variant="contained"  sx={{ width: "233px", color:"white", backgroundColor: "dlang.green", borderRadius: "8px"}}>
               Buy Now
             </Button>
           </Box>

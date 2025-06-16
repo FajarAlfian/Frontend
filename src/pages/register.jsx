@@ -63,8 +63,9 @@ const Register = () => {
 
   return (
     <>
-      <Navbar />
+      
       <div>
+      <Navbar />
         <GlobalStyles
           styles={{
             html: { margin: 0, padding: 0, height: "100%", overflow: "hidden" },
@@ -80,7 +81,7 @@ const Register = () => {
             height: "100dvh",
             margin: 0,
             padding: 0,
-            overflow: "hidden",
+          
           }}
         >
           <Grid>

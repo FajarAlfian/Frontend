@@ -7,6 +7,10 @@ import SendIcon from "@mui/icons-material/Send";
 
 const country = [
   {
+    name: "Arabic",
+    flagImage: "src/assets/category/arab.jpg",
+  },
+  {
     name: "Deutsch",
     flagImage: "src/assets/category/deutsch.png",
   },
@@ -44,7 +48,7 @@ const country = [
 
 const Footer = () => {
   return (
-    <Grid sx={{ p: 1, backgroundColor: "dlang.green" }}>
+    <Grid marginTop={"144px"} sx={{ p: 1, backgroundColor: "dlang.green" }}>
       <Grid
         container
         direction={{ xs: "column", md: "row" }}

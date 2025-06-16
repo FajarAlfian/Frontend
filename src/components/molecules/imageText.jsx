@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
 
-const ImageWithText = () => {
+const ImageText = () => {
   return (
     <Box sx={{ textAlign: "left" }}>
       <Box
@@ -26,4 +26,4 @@ const ImageWithText = () => {
   );
 };
 
-export default ImageWithText;
+export default ImageText;

@@ -11,6 +11,8 @@ const Benefit = () => {
       direction="row"
       spacing={10}
       alignItems="flex-start"
+      marginTop={"124px"}
+      marginBottom={"122px"}
     >
       <Grid color="white" size={8} textAlign="justify" alignContent="center">
         <Typography variant="h3" fontWeight="bold" marginY={4}>
