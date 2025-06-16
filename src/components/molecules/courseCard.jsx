@@ -1,7 +1,9 @@
 import React from "react";
-import { Card, CardMedia, CardContent, Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
-
+import Typography from "@mui/material/Typography";
+import CardMedia from "@mui/material/CardMedia";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
 
 const CourseCard = ({ image, category, title, price, link }) => (
   <Card
@@ -26,11 +28,19 @@ const CourseCard = ({ image, category, title, price, link }) => (
         width: "100%",
         aspectRatio: "16/9",
         objectFit: "cover",
-        height: "200px"
+        height: "200px",
       }}
     />
 
-    <CardContent sx={{ display: "flex", padding: 2, flexDirection:"column", justifyContent: "space-between", height: "100%" }}>
+    <CardContent
+      sx={{
+        display: "flex",
+        padding: 2,
+        flexDirection: "column",
+        justifyContent: "space-between",
+        height: "100%",
+      }}
+    >
       <Typography
         variant="caption"
         color="dlang.black"
@@ -51,7 +61,6 @@ const CourseCard = ({ image, category, title, price, link }) => (
           color: "dlang.black",
           textDecoration: "none",
           "&:hover": { color: "dlang.main" },
-         
         }}
       >
         {title}
@@ -61,7 +70,7 @@ const CourseCard = ({ image, category, title, price, link }) => (
         variant="subtitle1"
         fontWeight="bold"
         color="dlang.green"
-        sx={{marginTop:"auto"}}
+        sx={{ marginTop: "auto" }}
       >
         {price}
       </Typography>

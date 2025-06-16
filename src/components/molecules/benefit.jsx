@@ -1,4 +1,5 @@
-import { Grid, Typography } from "@mui/material";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
 
 import People from "../../assets/people.png";
 const Benefit = () => {

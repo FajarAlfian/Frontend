@@ -8,8 +8,8 @@ const Theme = createTheme({
   palette: {
     dlang: {
       main: "#E3D026",
-      orange: "#ec9f24",
-      green: "#246c54",
+      orange: "#EA9E1F",
+      green: "#226957",
       black: "#000000",
       grey: "#505050",
     },

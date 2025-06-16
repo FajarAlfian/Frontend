@@ -1,11 +1,15 @@
 import React from "react";
-import { AppBar, Toolbar, Box, Button, Typography } from "@mui/material";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import Toolbar from "@mui/material/Toolbar";
+import AppBar from "@mui/material/AppBar";
+
 import { Link } from "react-router-dom";
 import logo from "../../assets/Logo.png";
 const Navbar = () => (
   <AppBar position="static" color="transparent" elevation={0}>
     <Toolbar sx={{ justifyContent: "space-between" }}>
-  
       <Box display="flex" alignItems="center">
         <Box
           component="img"
@@ -15,13 +19,19 @@ const Navbar = () => (
         />
         <Typography
           component={Link}
-          to= "/"     
-          variant="h6" sx={{ fontWeight: 500, color: "dlang.black", textDecoration: "none", display: "block" }}>
+          to="/"
+          variant="h6"
+          sx={{
+            fontWeight: 500,
+            color: "dlang.black",
+            textDecoration: "none",
+            display: "block",
+          }}
+        >
           Language
         </Typography>
       </Box>
 
-   
       <Box>
         <Button
           component={Link}
@@ -32,7 +42,7 @@ const Navbar = () => (
             backgroundColor: "dlang.green",
             textTransform: "none",
             "&:hover": { backgroundColor: "darkgreen" },
-            borderRadius: '8px'
+            borderRadius: "8px",
           }}
         >
           Login
@@ -45,7 +55,7 @@ const Navbar = () => (
             backgroundColor: "dlang.orange",
             textTransform: "none",
             "&:hover": { backgroundColor: "darkorange" },
-            borderRadius: '8px'
+            borderRadius: "8px",
           }}
         >
           Sign Up

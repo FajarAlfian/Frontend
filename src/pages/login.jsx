@@ -57,7 +57,7 @@ const Login = () => {
       >
         <Grid component="form" onSubmit={handleSubmit}>
           <Grid>
-            <Title name="Welcome Back!" />
+            <Title name="Welcome Back!" boldness="500" />
           </Grid>
           <Grid sx={{ marginY: 2 }}>
             <Description
@@ -106,6 +106,8 @@ const Login = () => {
           </Stack>
           <Grid sx={{ marginY: 5 }}>
             <Description
+              colorText="black"
+              boldness="400"
               descriptionText="Dont have account? "
               linkTo="/register"
               hyperlinkText="Sign Up Here"
