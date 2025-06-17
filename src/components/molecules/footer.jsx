@@ -9,7 +9,7 @@ import YouTubeIcon from "@mui/icons-material/YouTube";
 import SendIcon from "@mui/icons-material/Send";
 
 const country = [
-  {
+  { 
     name: "Deutsch",
     flagImage: "src/assets/category/deutsch.png",
   },
@@ -89,9 +89,9 @@ const Footer = () => {
               rowSpacing={1}
               columnSpacing={{ xs: 1, sm: 2, md: 3 }}
             >
-              {country.map((country, idx) => (
-                <Grid size={6} component="li">
-                  <Typography sx={{ fontSize: "14px", fontWeight: "400" }}>
+              {country.map((country, index) => (
+                <Grid  key={index} size={6} component="li">
+                  <Typography  sx={{ fontSize: "14px", fontWeight: "400" }}>
                     {country.name}
                   </Typography>
                 </Grid>

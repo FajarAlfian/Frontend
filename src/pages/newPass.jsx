@@ -9,6 +9,7 @@ import FormButton from "../components/molecules/formButton";
 import Navbar from "../components/molecules/navbar";
 
 const NewPass = () => {
+  const [tokenData, setTokenData] = React.useState("");
   const [formData, setFormData] = React.useState({
     password1: "",
     password2: "",
@@ -43,7 +44,7 @@ const NewPass = () => {
 
   return (
     <Box>
-      <Navbar />
+      <Navbar token={tokenData} />
       <GlobalStyles
         styles={{
           html: { margin: 0, padding: 0, height: "100%", overflow: "hidden" },

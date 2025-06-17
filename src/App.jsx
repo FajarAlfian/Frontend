@@ -15,6 +15,7 @@ import StatusPurchase from "./pages/statusPurchase";
 import "./styles/app.css";
 
 function App() {
+  const activeLayout = true;
   return (
     <>
       <ThemeProvider theme={Theme}>
@@ -25,7 +26,7 @@ function App() {
             <Route path={"/new-password"} element={<NewPass />} />
             <Route path={"/reset-password"} element={<ResetPass />} />
             <Route path={"/purchase-status"} element={<StatusPurchase />} />
-            <Route element={<Layout />}>
+            <Route element={<Layout tokenLayout="asdasdsd" />}>
               <Route path={"/"} element={<Home />} />
               <Route path={"/menuClass"} element={<MenuClass />} />
               <Route path={"/detail"} element={<Detail />} />
