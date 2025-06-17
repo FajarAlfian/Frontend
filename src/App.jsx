@@ -9,12 +9,14 @@ import ResetPass from "./pages/resetPass";
 import Home from "./pages/home";
 import MenuClass from "./pages/menuClass";
 import Layout from "./pages/layout";
+import Layout2 from "./pages/layout2";
 import Detail from "./pages/detail";
 import Checkout from "./pages/checkout";
 import StatusPurchase from "./pages/statusPurchase";
 import "./styles/app.css";
 
 function App() {
+  const activeLayout = true;
   return (
     <>
       <ThemeProvider theme={Theme}>
@@ -25,12 +27,13 @@ function App() {
             <Route path={"/new-password"} element={<NewPass />} />
             <Route path={"/reset-password"} element={<ResetPass />} />
             <Route path={"/purchase-status"} element={<StatusPurchase />} />
-            <Route element={<Layout />}>
+            <Route element={activeLayout ? <Layout2 /> : <Layout />}>
               <Route path={"/"} element={<Home />} />
               <Route path={"/menuClass"} element={<MenuClass />} />
               <Route path={"/detail"} element={<Detail />} />
               <Route path={"/checkout"} element={<Checkout />} />
             </Route>
+            
           </Routes>
         </Router>
       </ThemeProvider>
