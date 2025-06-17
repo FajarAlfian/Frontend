@@ -8,6 +8,7 @@ import Title from "../components/molecules/title";
 import FormButton from "../components/molecules/formButton";
 import Description from "../components/molecules/description";
 import Navbar from "../components/molecules/navbar";
+import axios from "axios";
 
 const Login = () => {
   const [formData, setFormData] = React.useState({
@@ -32,6 +33,15 @@ const Login = () => {
     }
   };
 
+  axios
+    .post("https://jsonplaceholder.typicode.com/posts", formData)
+    .then((response) => {
+      console.log("Response dari JSONPlaceholder:", response.data);
+    })
+    .catch((error) => {
+      console.error("Error saat login:", error);
+    });
+    
   const checkPassword = formData.password.length > 0;
   const minCharacter = formData.password.length >= 8;
   return (
