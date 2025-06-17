@@ -1,11 +1,12 @@
 import Navbar from "../components/molecules/navbar";
-import Navbar2 from "../components/molecules/navbar2";
 import Footer from "../components/molecules/footer";
 import { Outlet } from "react-router";
-const Layout = () => {
+import { useState } from "react";
+const Layout = ({ tokenLayout = "" }) => {
+  const [tokenData, setTokenData] = useState(tokenLayout);
   return (
     <>
-      <Navbar />
+      <Navbar token={tokenData} />
       <Outlet />
       <Footer />
     </>

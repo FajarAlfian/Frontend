@@ -10,6 +10,7 @@ import Description from "../components/molecules/description";
 import Navbar from "../components/molecules/navbar";
 
 const ResetPass = () => {
+  const [tokenData, setTokenData] = React.useState("");
   const [formData, setFormData] = React.useState({
     email: "",
   });
@@ -28,7 +29,7 @@ const ResetPass = () => {
   };
   return (
     <Box>
-      <Navbar />
+      <Navbar token={tokenData} />
       <GlobalStyles
         styles={{
           html: { margin: 0, padding: 0, height: "100%", overflow: "hidden" },

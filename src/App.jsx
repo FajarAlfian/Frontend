@@ -9,7 +9,6 @@ import ResetPass from "./pages/resetPass";
 import Home from "./pages/home";
 import MenuClass from "./pages/menuClass";
 import Layout from "./pages/layout";
-import Layout2 from "./pages/layout2";
 import Detail from "./pages/detail";
 import Checkout from "./pages/checkout";
 import StatusPurchase from "./pages/statusPurchase";
@@ -27,13 +26,12 @@ function App() {
             <Route path={"/new-password"} element={<NewPass />} />
             <Route path={"/reset-password"} element={<ResetPass />} />
             <Route path={"/purchase-status"} element={<StatusPurchase />} />
-            <Route element={activeLayout ? <Layout2 /> : <Layout />}>
+            <Route element={<Layout tokenLayout="asdasdsd" />}>
               <Route path={"/"} element={<Home />} />
               <Route path={"/menuClass"} element={<MenuClass />} />
               <Route path={"/detail"} element={<Detail />} />
               <Route path={"/checkout"} element={<Checkout />} />
             </Route>
-            
           </Routes>
         </Router>
       </ThemeProvider>
