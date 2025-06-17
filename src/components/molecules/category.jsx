@@ -4,6 +4,7 @@ import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
+import { Link } from "react-router";
 const country = [
   {
     name: "Arabic",
@@ -61,37 +62,39 @@ const CategoryCourse = () => {
         columns={{ xs: 4, sm: 12 }}
       >
         {country.map((country, index) => (
-          <Grid  key={index} size={{ xs: 2, sm: 3 }} alignContent="center">
-            <Card
-              sx={{
-                width: { xs: 75, sm: 250 },
-                border: "1px solid #ccc",
-                borderRadius: 2,
-                boxShadow: "none",
-                textAlign: "center",
-                p: 3,
-              }}
-            >
-              <CardMedia
-                component="img"
-                image={country.flagImage}
-                alt={country.name}
+          <Link to="/menuClass" style={{ textDecoration: "none" }}>
+            <Grid key={index} size={{ xs: 2, sm: 3 }} alignContent="center">
+              <Card
                 sx={{
-                  width: "100%",
-                  height: "auto",
-                  borderRadius: 1,
+                  width: { xs: 75, sm: 250 },
+                  border: "1px solid #ccc",
+                  borderRadius: 2,
+                  boxShadow: "none",
+                  textAlign: "center",
+                  p: 3,
                 }}
-              />
-              <Typography
-                marginTop={2}
-                fontSize={{ xs: "18px", sm: "24px" }}
-                color=" #000000"
-                fontWeight={400}
               >
-                {country.name}
-              </Typography>
-            </Card>
-          </Grid>
+                <CardMedia
+                  component="img"
+                  image={country.flagImage}
+                  alt={country.name}
+                  sx={{
+                    width: "100%",
+                    height: "auto",
+                    borderRadius: 1,
+                  }}
+                />
+                <Typography
+                  marginTop={2}
+                  fontSize={{ xs: "18px", sm: "24px" }}
+                  color=" #000000"
+                  fontWeight={400}
+                >
+                  {country.name}
+                </Typography>
+              </Card>
+            </Grid>
+          </Link>
         ))}
       </Grid>
     </Box>
