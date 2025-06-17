@@ -60,10 +60,9 @@ const CategoryCourse = () => {
         spacing={{ xs: 10, sm: 2 }}
         columns={{ xs: 4, sm: 12 }}
       >
-        {country.map((country) => (
-          <Grid size={{ xs: 2, sm: 3 }} alignContent="center">
+        {country.map((country, index) => (
+          <Grid  key={index} size={{ xs: 2, sm: 3 }} alignContent="center">
             <Card
-              // fullwidth
               sx={{
                 width: { xs: 75, sm: 250 },
                 border: "1px solid #ccc",
