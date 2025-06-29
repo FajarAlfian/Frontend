@@ -12,6 +12,8 @@ import Layout from "./pages/layout";
 import Detail from "./pages/detail";
 import Checkout from "./pages/checkout";
 import StatusPurchase from "./pages/statusPurchase";
+import Invoice from "./pages/invoice";
+import DetailInvoice from "./pages/detailInvoice";
 import "./styles/app.css";
 
 function App() {
@@ -31,6 +33,8 @@ function App() {
               <Route path={"/menuClass"} element={<MenuClass />} />
               <Route path={"/detail"} element={<Detail />} />
               <Route path={"/checkout"} element={<Checkout />} />
+              <Route path={"/invoice"} element={<Invoice />} />
+              <Route path={"/detail-invoice"} element={<DetailInvoice />} />
             </Route>
           </Routes>
         </Router>
