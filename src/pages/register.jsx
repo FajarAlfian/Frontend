@@ -84,13 +84,7 @@ const Register = () => {
         })
         .catch((error) => {
           console.error("Error saat registrasi:", error);
-          if (error.response) {
-            alert(`Registrasi gagal: ${error.response.data.message || "Data tidak valid."}`);
-          } else if (error.request) {
-            alert("Registrasi gagal: Tidak dapat terhubung ke server. Pastikan API berjalan.");
-          } else {
-            alert("Registrasi gagal. Terjadi kesalahan tak terduga.");
-          }
+          alert("Registrasi gagal. Silakan coba lagi.");
         });
     } else {
       console.log("Form data is invalid, validation failed");
@@ -114,7 +108,7 @@ const Register = () => {
         alignItems="center"
         sx={{ height: "100dvh", margin: 0, padding: 0 }}
       >
-        <Grid item xs={11} sm={8} md={6} lg={4}>
+        <Grid>
           <Stack direction="row" spacing={2}>
             <Title name="Lets Join " />
             <Typography
@@ -133,7 +127,7 @@ const Register = () => {
 
           <form onSubmit={handleSubmit}>
             <Grid container direction="column" spacing={2}>
-              <Grid item>
+              <Grid>
                 <FormLabel
                   name="Name"
                   error={!!errors.username}
@@ -145,7 +139,7 @@ const Register = () => {
                   }}
                 />
               </Grid>
-              <Grid item>
+              <Grid>
                 <FormLabel
                   name="Email"
                   error={!!errors.email}
@@ -158,7 +152,7 @@ const Register = () => {
                   }}
                 />
               </Grid>
-              <Grid item>
+              <Grid>
                 <FormLabel
                   name="Password"
                   error={!!errors.password}
@@ -171,7 +165,7 @@ const Register = () => {
                   }}
                 />
               </Grid>
-              <Grid item>
+              <Grid>
                 <FormLabel
                   name="Confirm Password"
                   error={!!errors.confirmPassword}
