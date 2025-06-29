@@ -71,6 +71,7 @@ const Register = () => {
         username: formData.username,
         email: formData.email,
         password: formData.password,
+        role: "member"
       };
 
       console.log("Form data is valid, sending to API:", dataToSend);
