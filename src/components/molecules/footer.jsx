@@ -47,7 +47,12 @@ const country = [
 
 const Footer = () => {
   return (
-    <Grid sx={{ backgroundColor: " #226957" }}>
+    <Grid
+      component="footer"
+      sx={{
+        backgroundColor: " #226957",
+      }}
+    >
       <Grid mx={10}>
         <Grid
           container

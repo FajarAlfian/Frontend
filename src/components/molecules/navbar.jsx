@@ -28,11 +28,12 @@ const Navbar = ({ token = "" }) => {
               src={logo}
               alt="D Language"
               sx={{ width: 40, height: 40 }}
+              mr={2}
             />
             <Typography
               component={Link}
               to="/"
-              variant="h6"
+              variant="h5"
               sx={{
                 fontWeight: 500,
                 color: "dlang.black",
@@ -55,7 +56,7 @@ const Navbar = ({ token = "" }) => {
 
               <Button
                 component={Link}
-                to="/menuCLass"
+                to="/class"
                 variant="text"
                 sx={{
                   fontSize: "16px",
@@ -68,7 +69,7 @@ const Navbar = ({ token = "" }) => {
               </Button>
               <Button
                 component={Link}
-                to="/checkout"
+                to="/invoice"
                 variant="text"
                 sx={{
                   fontSize: "16px",
