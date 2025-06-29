@@ -13,121 +13,133 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import Divider from "@mui/material/Divider";
 const Navbar = ({ token = "" }) => {
   return (
-    <AppBar position="static" color="transparent" elevation={0}>
-      <Toolbar sx={{ justifyContent: "space-between" }}>
-        <Box display="flex" alignItems="center">
-          <Box
-            component="img"
-            src={logo}
-            alt="D Language"
-            sx={{ width: 40, height: 40, mr: 1 }}
-          />
-          <Typography
-            component={Link}
-            to="/"
-            variant="h6"
-            sx={{
-              fontWeight: 500,
-              color: "dlang.black",
-              textDecoration: "none",
-              display: "block",
-            }}
-          >
-            Language
-          </Typography>
-        </Box>
-        {!!token ? (
+    <Box mx={10}>
+      <AppBar position="static" color="transparent" elevation={0}>
+        <Toolbar
+          sx={{
+            justifyContent: "space-between",
+            paddingLeft: 0,
+            paddingRight: 0,
+          }}
+        >
           <Box display="flex" alignItems="center">
-            <IconButton
-              component={Link}
-              to="/checkout"
-              sx={{ color: "dlang.green", marginRight: 4 }}
-            >
-              <ShoppingCartIcon />
-            </IconButton>
-
-            <Button
-              component={Link}
-              to="/menuCLass"
-              variant="text"
-              sx={{
-                fontSize: "16px",
-                color: "dlang.green",
-                textTransform: "none",
-                marginRight: 5,
-              }}
-            >
-              My Class
-            </Button>
-            <Button
-              component={Link}
-              to="/checkout"
-              variant="text"
-              sx={{
-                fontSize: "16px",
-                color: "dlang.green",
-                textTransform: "none",
-                marginRight: 5,
-              }}
-            >
-              Invoice
-            </Button>
-            <Divider
-              orientation="vertical"
-              variant="middle"
-              flexItem
-              sx={{ color: "dlang.green", border: "1px solid", marginRight: 5 }}
+            <Box
+              component="img"
+              src={logo}
+              alt="D Language"
+              sx={{ width: 40, height: 40 }}
             />
-
-            <IconButton
+            <Typography
               component={Link}
               to="/"
-              sx={{ color: "dlang.green", mr: 2 }}
+              variant="h6"
+              sx={{
+                fontWeight: 500,
+                color: "dlang.black",
+                textDecoration: "none",
+                display: "block",
+              }}
             >
-              <PersonIcon />
-            </IconButton>
+              Language
+            </Typography>
+          </Box>
+          {!!token ? (
+            <Box display="flex" alignItems="center">
+              <IconButton
+                component={Link}
+                to="/checkout"
+                sx={{ color: "dlang.green", marginRight: 4 }}
+              >
+                <ShoppingCartIcon />
+              </IconButton>
 
-            <IconButton
-              component={Link}
-              to="/register"
-              sx={{ color: "#EB5757" }}
-            >
-              <LogoutIcon />
-            </IconButton>
-          </Box>
-        ) : (
-          <Box>
-            <Button
-              component={Link}
-              to="/login"
-              variant="contained"
-              sx={{
-                mr: 2,
-                backgroundColor: "dlang.green",
-                textTransform: "none",
-                "&:hover": { backgroundColor: "darkgreen" },
-                borderRadius: "8px",
-              }}
-            >
-              Login
-            </Button>
-            <Button
-              component={Link}
-              to="/register"
-              variant="contained"
-              sx={{
-                backgroundColor: "dlang.orange",
-                textTransform: "none",
-                "&:hover": { backgroundColor: "darkorange" },
-                borderRadius: "8px",
-              }}
-            >
-              Sign Up
-            </Button>
-          </Box>
-        )}
-      </Toolbar>
-    </AppBar>
+              <Button
+                component={Link}
+                to="/menuCLass"
+                variant="text"
+                sx={{
+                  fontSize: "16px",
+                  color: "dlang.green",
+                  textTransform: "none",
+                  marginRight: 5,
+                }}
+              >
+                My Class
+              </Button>
+              <Button
+                component={Link}
+                to="/checkout"
+                variant="text"
+                sx={{
+                  fontSize: "16px",
+                  color: "dlang.green",
+                  textTransform: "none",
+                  marginRight: 5,
+                }}
+              >
+                Invoice
+              </Button>
+              <Divider
+                orientation="vertical"
+                variant="middle"
+                flexItem
+                sx={{
+                  color: "dlang.green",
+                  border: "1px solid",
+                  marginRight: 5,
+                }}
+              />
+
+              <IconButton
+                component={Link}
+                to="/"
+                sx={{ color: "dlang.green", mr: 2 }}
+              >
+                <PersonIcon />
+              </IconButton>
+
+              <IconButton
+                component={Link}
+                to="/register"
+                sx={{ color: "#EB5757" }}
+              >
+                <LogoutIcon />
+              </IconButton>
+            </Box>
+          ) : (
+            <Box>
+              <Button
+                component={Link}
+                to="/login"
+                variant="contained"
+                sx={{
+                  mr: 2,
+                  backgroundColor: "dlang.green",
+                  textTransform: "none",
+                  "&:hover": { backgroundColor: "darkgreen" },
+                  borderRadius: "8px",
+                }}
+              >
+                Login
+              </Button>
+              <Button
+                component={Link}
+                to="/register"
+                variant="contained"
+                sx={{
+                  backgroundColor: "dlang.orange",
+                  textTransform: "none",
+                  "&:hover": { backgroundColor: "darkorange" },
+                  borderRadius: "8px",
+                }}
+              >
+                Sign Up
+              </Button>
+            </Box>
+          )}
+        </Toolbar>
+      </AppBar>
+    </Box>
   );
 };
 
