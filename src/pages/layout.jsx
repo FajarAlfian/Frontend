@@ -6,9 +6,15 @@ const Layout = ({ tokenLayout = "" }) => {
   const [tokenData, setTokenData] = useState(tokenLayout);
   return (
     <>
-      <Navbar token={tokenData} />
-      <Outlet />
-      <Footer />
+      <div
+        style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
+      >
+        <Navbar token={tokenData} />
+        <div style={{ flex: 1 }}>
+          <Outlet />
+        </div>
+        <Footer />
+      </div>
     </>
   );
 };
