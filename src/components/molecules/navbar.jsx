@@ -11,7 +11,13 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import PersonIcon from "@mui/icons-material/Person";
 import LogoutIcon from "@mui/icons-material/Logout";
 import Divider from "@mui/material/Divider";
-const Navbar = ({ token = "" }) => {
+import Cookies from "js-cookie";
+const Navbar = () => {
+  const isUserLoggedIn = Cookies.get("token") !== undefined;
+  const handleLogout = () => {
+    Cookies.remove("token");
+    navigate("/");
+  };
   return (
     <Box mx={10}>
       <AppBar position="static" color="transparent" elevation={0}>
@@ -44,7 +50,7 @@ const Navbar = ({ token = "" }) => {
               Language
             </Typography>
           </Box>
-          {!!token ? (
+          {isUserLoggedIn ? (
             <Box display="flex" alignItems="center">
               <IconButton
                 component={Link}
@@ -104,7 +110,7 @@ const Navbar = ({ token = "" }) => {
                 to="/register"
                 sx={{ color: "#EB5757" }}
               >
-                <LogoutIcon />
+                <LogoutIcon onClick={handleLogout} />
               </IconButton>
             </Box>
           ) : (

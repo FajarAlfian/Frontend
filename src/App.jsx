@@ -16,6 +16,18 @@ import Invoice from "./pages/invoice";
 import DetailInvoice from "./pages/detailInvoice";
 import MyClass from "./pages/myClass";
 import "./styles/app.css";
+import { Navigate } from "react-router-dom";
+import Cookies from "js-cookie";
+
+export const LoginRoute = ({ children }) => {
+  const isUserLoggedIn = Cookies.get("token") !== undefined;
+
+  if (!isUserLoggedIn) {
+    return <Navigate to="/" />;
+  }
+
+  return children;
+};
 
 function App() {
   const activeLayout = true;
@@ -29,7 +41,7 @@ function App() {
             <Route path={"/new-password"} element={<NewPass />} />
             <Route path={"/reset-password"} element={<ResetPass />} />
             <Route path={"/purchase-status"} element={<StatusPurchase />} />
-            <Route element={<Layout tokenLayout="asdasdsd" />}>
+            <Route element={<Layout />}>
               <Route path={"/"} element={<Home />} />
               <Route path={"/menuClass"} element={<MenuClass />} />
               <Route path={"/detail"} element={<Detail />} />
@@ -37,6 +49,18 @@ function App() {
               <Route path={"/invoice"} element={<Invoice />} />
               <Route path={"/detail-invoice"} element={<DetailInvoice />} />
               <Route path={"/class"} element={<MyClass />} />
+              {/* <Route
+                path={"/menuClass"}
+                element={
+                  <>
+                    <LoginRoute>
+                      <Layout>
+                        <MenuClass />
+                      </Layout>
+                    </LoginRoute>
+                  </>
+                }
+              /> */}
             </Route>
           </Routes>
         </Router>

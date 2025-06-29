@@ -10,7 +10,11 @@ import Description from "../components/molecules/description";
 import Navbar from "../components/molecules/navbar";
 import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 const Login = () => {
+  const navigate = useNavigate();
+
   const [tokenData, setTokenData] = useState("");
   const [formData, setFormData] = React.useState({
     email: "",
@@ -32,27 +36,27 @@ const Login = () => {
     } else {
       console.log("Form data is invalid, validation failed");
     }
-
-     axios
-    .post("http://localhost:5009/api/auth/login", {
-      email: formData.email,
-      password: formData.password,
-    })
-    .then(() => {
-      console.log("Login successful" );
-    })
-    .catch((error) => {
-      console.error("Login failed:", error);
-    });
+    axios
+      .post("http://localhost:5009/api/auth/login", {
+        email: formData.email,
+        password: formData.password,
+      })
+      .then((response) => {
+        setTokenData(response.data.data.token);
+        Cookies.set("token", tokenData);
+        alert("Login successful.", response.message);
+        navigate("/");
+      })
+      .catch((error) => {
+        console.error("Login failed:", error);
+      });
   };
-
- 
 
   const checkPassword = formData.password.length > 0;
   const minCharacter = formData.password.length >= 8;
   return (
     <Box>
-      <Navbar token={tokenData} />
+      <Navbar />
       <GlobalStyles
         styles={{
           html: { margin: 0, padding: 0, height: "100%", overflow: "hidden" },
