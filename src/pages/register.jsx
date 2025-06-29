@@ -10,33 +10,45 @@ import FormButton from "../components/molecules/formButton";
 import Description from "../components/molecules/description";
 import Navbar from "../components/molecules/navbar";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 const Register = () => {
+  const navigate = useNavigate();
   const [tokenData, setTokenData] = useState("");
   const [formData, setFormData] = useState({
-    name: "",
+    username: "",
     email: "",
     password: "",
     confirmPassword: "",
   });
 
   const [errors, setErrors] = useState({
-    name: "",
+    username: "",
+    email: "",
     password: "",
     confirmPassword: "",
   });
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    const { name, value } = e.target; 
+    setFormData((prev) => ({ ...prev, [name]: value })); 
   };
 
   const validateForm = () => {
     let formValid = true;
     const newErrors = {};
 
-    if (formData.name.length < 4) {
+    if (formData.username.length < 4) {
       formValid = false;
-      newErrors.name = "Name must be at least 4 characters.";
+      newErrors.username = "username must be at least 4 characters.";
+    }
+
+    if (!formData.email) {
+      formValid = false;
+      newErrors.email = "Email is required.";
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      formValid = false;
+      newErrors.email = "Email address is invalid.";
     }
     if (formData.password.length < 8) {
       formValid = false;
@@ -54,20 +66,30 @@ const Register = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-      console.log("Form data is valid, sending to API:", formData);
+    
+      const dataToSend = {
+        username: formData.username,
+        email: formData.email,
+        password: formData.password,
+        role: "member"
+      };
+
+      console.log("Form data is valid, sending to API:", dataToSend);
+      axios
+        .post("http://localhost:5009/api/auth/register", dataToSend)
+        .then((response) => {
+          console.log("Registrasi berhasil:", response.data);
+          alert("Registrasi berhasil! Anda akan diarahkan ke halaman login.");
+          navigate("/login"); 
+        })
+        .catch((error) => {
+          console.error("Error saat registrasi:", error);
+          alert("Registrasi gagal. Silakan coba lagi.");
+        });
     } else {
       console.log("Form data is invalid, validation failed");
     }
   };
-
-  axios
-    .post("https://jsonplaceholder.typicode.com/posts", formData)
-    .then((response) => {
-      console.log("Response dari JSONPlaceholder:", response.data);
-    })
-    .catch((error) => {
-      console.error("Error saat login:", error);
-    });
 
   return (
     <>
@@ -86,7 +108,7 @@ const Register = () => {
         alignItems="center"
         sx={{ height: "100dvh", margin: 0, padding: 0 }}
       >
-        <Grid item xs={11} sm={8} md={6} lg={4}>
+        <Grid>
           <Stack direction="row" spacing={2}>
             <Title name="Lets Join " />
             <Typography
@@ -105,21 +127,23 @@ const Register = () => {
 
           <form onSubmit={handleSubmit}>
             <Grid container direction="column" spacing={2}>
-              <Grid item>
+              <Grid>
                 <FormLabel
                   name="Name"
-                  error={!!errors.name}
-                  helperText={errors.name}
+                  error={!!errors.username}
+                  helperText={errors.username}
                   inputProps={{
-                    name: "name",
-                    value: formData.name,
+                    name: "username",
+                    value: formData.username,
                     onChange: handleChange,
                   }}
                 />
               </Grid>
-              <Grid item>
+              <Grid>
                 <FormLabel
                   name="Email"
+                  error={!!errors.email}
+                  helperText={errors.email}
                   inputProps={{
                     name: "email",
                     type: "email",
@@ -128,7 +152,7 @@ const Register = () => {
                   }}
                 />
               </Grid>
-              <Grid item>
+              <Grid>
                 <FormLabel
                   name="Password"
                   error={!!errors.password}
@@ -141,7 +165,7 @@ const Register = () => {
                   }}
                 />
               </Grid>
-              <Grid item>
+              <Grid>
                 <FormLabel
                   name="Confirm Password"
                   error={!!errors.confirmPassword}

@@ -32,16 +32,21 @@ const Login = () => {
     } else {
       console.log("Form data is invalid, validation failed");
     }
-  };
 
-  axios
-    .post("https://jsonplaceholder.typicode.com/posts", formData)
-    .then((response) => {
-      console.log("Response dari JSONPlaceholder:", response.data);
+     axios
+    .post("http://localhost:5009/api/auth/login", {
+      email: formData.email,
+      password: formData.password,
+    })
+    .then(() => {
+      console.log("Login successful" );
     })
     .catch((error) => {
-      console.error("Error saat login:", error);
+      console.error("Login failed:", error);
     });
+  };
+
+ 
 
   const checkPassword = formData.password.length > 0;
   const minCharacter = formData.password.length >= 8;
