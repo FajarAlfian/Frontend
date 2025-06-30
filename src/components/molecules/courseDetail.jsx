@@ -10,20 +10,32 @@ import CourseCard from "./courseCard";
 import Divider from "@mui/material/Divider";
 
 const CourseDetail = ({ course }) => {
+  const courseProps = {
+    image: course.course_image,
+    category: course.category_name || "",
+    title: course.course_name,
+    price: `IDR ${course.course_price}`,
+    description: course.course_description
+  };
+
   return (
+    <Grid container sx={{ justifyContent: "flex-start", alignItems: "center", marginLeft: "70px", marginRight: "70px" }}>
     <Box
-      sx={{ padding: "40px", backgroundColor: "white", borderRadius: "1px" }}
+      sx={{ padding: "40px", backgroundColor: "white", borderRadius: "0" }}
     >
       <Grid container spacing={4} sx={{ justifyContent: "flex-start" }}>
         <Grid item xs={12} md={6}>
           <img
-            src={course.image}
-            alt={course.title}
+            src={courseProps.image}
+            alt={courseProps.title}
             style={{
+              marginTop: "20px",
               width: "100%",
               height: "auto",
               borderRadius: "0",
               overflow: "hidden",
+              objectFit: "cover",
+              display: "block",
             }}
           />
         </Grid>
@@ -34,14 +46,14 @@ const CourseDetail = ({ course }) => {
             fontWeight={400}
             gutterBottom
           >
-            {course.category}
+            {courseProps.category}
           </Typography>
           <Typography
             variant="h4"
             gutterBottom
             sx={{ fontWeight: "600", color: "dlang.black" }}
           >
-            {course.title}
+            {courseProps.title}
           </Typography>
           <Typography
             variant="h5"
@@ -49,7 +61,7 @@ const CourseDetail = ({ course }) => {
             fontWeight={600}
             gutterBottom
           >
-            {course.price}
+            {courseProps.price}
           </Typography>
           <Select
             fullWidth
@@ -84,9 +96,17 @@ const CourseDetail = ({ course }) => {
             >
               Add to Cart
             </Button>
-            <Button component={Link}
-              to="/checkout" variant="contained"
-              sx={{ width: "233px", color: "white", backgroundColor: "dlang.green", borderRadius: "8px" }}>
+            <Button
+              component={Link}
+              to="/checkout"
+              variant="contained"
+              sx={{
+                width: "234px",
+                color: "white",
+                backgroundColor: "dlang.green",
+                borderRadius: "8px",
+              }}
+            >
               Buy Now
             </Button>
           </Box>
@@ -101,7 +121,7 @@ const CourseDetail = ({ course }) => {
           Description
         </Typography>
         <Typography variant="body1" sx={{ color: "dlang.gray" }}>
-          {course.description}
+          {courseProps.description}
         </Typography>
       </Box>
 
@@ -115,22 +135,14 @@ const CourseDetail = ({ course }) => {
             color: "dlang.green",
             textAlign: "center",
             fontSize: "24px",
+            marginBottom: "0px",
           }}
         >
           Another class for you
         </Typography>
-        <Grid
-          container
-          spacing={3}
-          sx={{  marginX: { xs: 2, sm: 3, md: 10 },  // Responsif margin untuk lebar layar
-          marginTop: "60px",}}
-        >
-          {course.relatedCourses?.map((relatedCourse, id) => (
-              <CourseCard key={id} {...relatedCourse} />
-          ))}
-        </Grid>
       </Box>
     </Box>
+    </Grid>
   );
 };
 
