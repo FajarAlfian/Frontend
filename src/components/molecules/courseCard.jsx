@@ -68,11 +68,10 @@ const CourseCard = ({ image, category, title, price, link }) => (
 
       <Typography
         variant="subtitle1"
-        fontWeight="bold"
+        fontWeight="600"
         color="dlang.green"
         sx={{ marginTop: "auto" }}
-      >
-        {price}
+      >IDR {price}
       </Typography>
     </CardContent>
   </Card>
