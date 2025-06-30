@@ -6,18 +6,25 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 
-const CourseList = ({ limit = 6, name }) => {
+const CourseList = ({ limit = 6, name, categoryId, excludeId }) => {
   const [courses, setCourses] = useState([]);
 
   useEffect(() => {
     axios.get("http://localhost:5009/api/courses")
       .then((response) => {
-        setCourses(response.data.data);
+        let data = response.data.data;
+        if (categoryId) {
+          data = data.filter(c => c.category_id === categoryId);
+        }
+        if (excludeId) {
+          data = data.filter(c => c.course_id !== excludeId);
+        }
+        setCourses(data);
       })
       .catch((error) => {
         console.error("Error fetching courses:", error);
       });
-  }, []); 
+  }, [categoryId, excludeId]); 
 
   return (
     <Box
