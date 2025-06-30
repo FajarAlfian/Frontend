@@ -8,7 +8,7 @@ export const ConvertDate = (dateString) => {
 };
 
 export const formatRupiah = (numberString) => {
-  const number = parseInt(numberString, 10); // Convert to number
+  const number = parseInt(numberString, 10);
   return new Intl.NumberFormat("id-ID", {
     style: "currency",
     currency: "IDR",

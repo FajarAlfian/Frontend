@@ -4,13 +4,10 @@ import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
-import { Link } from "react-router";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { NavLink } from "react-router";
 const CategoryCourse = () => {
-  const handleCategory = () => {};
-
   const [category, setCategory] = useState(null);
   useEffect(() => {
     axios
@@ -36,9 +33,13 @@ const CategoryCourse = () => {
           alignItems: "center",
         }}
         spacing={5}
+        mb={10}
       >
         {category?.map((item) => (
-          <NavLink to={`/category/${item.category_name}`}>
+          <NavLink
+            to={`/category/${item.category_name}`}
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
             <Grid
               item
               key={item.category_id}
@@ -47,7 +48,6 @@ const CategoryCourse = () => {
               md={4} // 4 items per row at md breakpoint
               display="flex"
               justifyContent="center"
-              onClick={handleCategory}
             >
               <Card
                 sx={{
