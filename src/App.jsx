@@ -30,7 +30,6 @@ export const LoginRoute = ({ children }) => {
 };
 
 function App() {
-  const activeLayout = true;
   return (
     <>
       <ThemeProvider theme={Theme}>
@@ -43,7 +42,8 @@ function App() {
             <Route path={"/purchase-status"} element={<StatusPurchase />} />
             <Route element={<Layout />}>
               <Route path={"/"} element={<Home />} />
-              <Route path={"/menuClass"} element={<MenuClass />} />
+              <Route path={"/category/:nama"} element={<MenuClass />} />
+              {/* <Route path={"/menuClass"} element={<MenuClass />} /> */}
               <Route path={"/detail/:id"} element={<Detail />} />
               <Route path={"/checkout"} element={<Checkout />} />
               <Route path={"/invoice"} element={<Invoice />} />
