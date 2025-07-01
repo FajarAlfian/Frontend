@@ -17,7 +17,6 @@ const Footer = () => {
       .get("http://localhost:5009/api/Categories")
       .then((response) => {
         setCategory(response.data.data);
-        console.log(category);
       })
       .catch((error) => {
         console.error("Error fetching category:", error);

@@ -14,7 +14,6 @@ import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const navigate = useNavigate();
-  const [tokenData, setTokenData] = useState("");
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -30,8 +29,8 @@ const Register = () => {
   });
 
   const handleChange = (e) => {
-    const { name, value } = e.target; 
-    setFormData((prev) => ({ ...prev, [name]: value })); 
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const validateForm = () => {
@@ -66,12 +65,11 @@ const Register = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-    
       const dataToSend = {
         username: formData.username,
         email: formData.email,
         password: formData.password,
-        role: "member"
+        role: "member",
       };
 
       console.log("Form data is valid, sending to API:", dataToSend);
@@ -80,7 +78,7 @@ const Register = () => {
         .then((response) => {
           console.log("Registrasi berhasil:", response.data);
           alert("Registrasi berhasil! Anda akan diarahkan ke halaman login.");
-          navigate("/login"); 
+          navigate("/login");
         })
         .catch((error) => {
           console.error("Error saat registrasi:", error);
@@ -93,7 +91,7 @@ const Register = () => {
 
   return (
     <>
-      <Navbar token={tokenData} />
+      <Navbar />
       <GlobalStyles
         styles={{
           html: { margin: 0, padding: 0, height: "100%", overflow: "hidden" },

@@ -9,8 +9,29 @@ import { Link } from "react-router";
 import Divider from "@mui/material/Divider";
 import axios from "axios";
 import { ConvertDate } from "../../utils/util";
-
+import { useNavigate } from "react-router";
 const CourseDetail = ({ course }) => {
+  const navigate = useNavigate();
+  const [selectedSchedule, setSelectedSchedule] = useState(null);
+  const handleChange = (event) => {
+    setSelectedSchedule(event.target.value);
+  };
+  const handleCart = async () => {
+    axios
+      .post("http://localhost:5009/api/Checkout/add", selectedSchedule)
+      .then((response) => {
+        console.log("Menambahkan cart berhasil:", response.data);
+        alert(
+          "Menambahkan cart berhasil! Anda akan diarahkan ke halaman cart."
+        );
+        navigate("/checkout");
+      })
+      .catch((error) => {
+        console.error("Error saat registrasi:", error);
+        alert("Registrasi gagal. Silakan coba lagi.");
+      });
+  };
+
   const courseProps = {
     image: course.course_image,
     category: course.category_name || "",
@@ -95,6 +116,7 @@ const CourseDetail = ({ course }) => {
                 marginTop: "20px",
               }}
               displayEmpty
+              onChange={handleChange}
             >
               <MenuItem value="" disabled>
                 Select Schedule
@@ -119,6 +141,7 @@ const CourseDetail = ({ course }) => {
                   backgroundColor: "dlang.orange",
                   borderRadius: "8px",
                 }}
+                onClick={handleCart}
               >
                 Add to Cart
               </Button>
