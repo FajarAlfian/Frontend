@@ -7,7 +7,6 @@ import axios from "axios";
 const MenuClass = () => {
   const { nama } = useParams();
   const [language, setLanguage] = useState(null);
-  // const [course, setCourse] = useState(null);
   useEffect(() => {
     axios
       .get(`http://localhost:5009/api/Categories/category/${nama}`)
@@ -19,18 +18,6 @@ const MenuClass = () => {
         console.error("Error fetching category:", error);
       });
   }, [nama]);
-
-  // useEffect(() => {
-  //   axios
-  //     .get(`http://localhost:5009/api/Courses/category/${language.category_id}`)
-  //     .then((response) => {
-  //       console.log(response);
-  //       setCourse(response.data.data);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching category:", error);
-  //     });
-  // }, [language.category_id]);
   return (
     <div>
       {language ? (
