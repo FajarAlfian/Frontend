@@ -4,97 +4,81 @@ import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
-import { Link } from "react-router";
-const country = [
-  {
-    name: "Arabic",
-    flagImage: "src/assets/category/arab.jpg",
-  },
-  {
-    name: "Deutsch",
-    flagImage: "src/assets/category/deutsch.png",
-  },
-
-  {
-    name: "English",
-    flagImage: "src/assets/category/english.png",
-  },
-
-  {
-    name: "French",
-    flagImage: "src/assets/category/french.png",
-  },
-
-  {
-    name: "Indonesia",
-    flagImage: "src/assets/category/indonesia.png",
-  },
-
-  {
-    name: "Japan",
-    flagImage: "src/assets/category/japan.png",
-  },
-
-  {
-    name: "Melayu",
-    flagImage: "src/assets/category/melayu.png",
-  },
-
-  {
-    name: "Mandarin",
-    flagImage: "src/assets/category/mandarin.png",
-  },
-];
-
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { NavLink } from "react-router";
 const CategoryCourse = () => {
+  const [category, setCategory] = useState(null);
+  useEffect(() => {
+    axios
+      .get("http://localhost:5009/api/Categories")
+      .then((response) => {
+        setCategory(response.data.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching category:", error);
+      });
+  });
   return (
-    <Box textAlign="center" justifycontent="center" m={8} mt={20}>
-      <Box mb={10}>
+    <Box mx={10} textAlign="center">
+      <Box mb={6}>
         <Typography variant="h4" color="dlang.green" fontWeight="bold">
           Available Language Course
         </Typography>
       </Box>
-
       <Grid
         container
-        px={{ xs: 0, sm: 20 }}
-        spacing={{ xs: 10, sm: 2 }}
-        columns={{ xs: 4, sm: 12 }}
+        sx={{
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+        spacing={5}
+        mb={10}
       >
-        {country.map((country, index) => (
-          <Link to="/menuClass" style={{ textDecoration: "none" }}>
-            <Grid key={index} size={{ xs: 2, sm: 3 }} alignContent="center">
+        {category?.map((item) => (
+          <NavLink
+            to={`/category/${item.category_name}`}
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
+            <Grid
+              item
+              key={item.category_id}
+              xs={12}
+              sm={6}
+              md={4} // 4 items per row at md breakpoint
+              display="flex"
+              justifyContent="center"
+            >
               <Card
                 sx={{
-                  width: { xs: 75, sm: 250 },
-                  border: "1px solid #ccc",
-                  borderRadius: 2,
-                  boxShadow: "none",
+                  width: 350,
+                  maxWidth: 300,
                   textAlign: "center",
-                  p: 3,
+                  border: "1px solid #ccc",
+                  padding: 1,
+                  boxShadow: 1,
+                  borderRadius: 2,
                 }}
               >
-                <CardMedia
+                <Box
                   component="img"
-                  image={country.flagImage}
-                  alt={country.name}
+                  src={item.category_image}
+                  alt={item.category_name}
                   sx={{
                     width: "100%",
-                    height: "auto",
+                    height: 150,
+                    objectFit: "cover",
                     borderRadius: 1,
                   }}
                 />
-                <Typography
-                  marginTop={2}
-                  fontSize={{ xs: "18px", sm: "24px" }}
-                  color=" #000000"
-                  fontWeight={400}
-                >
-                  {country.name}
-                </Typography>
+                <CardContent sx={{ padding: "8px" }}>
+                  <Typography variant="body1" fontWeight="medium">
+                    {item.category_name}
+                  </Typography>
+                </CardContent>
               </Card>
             </Grid>
-          </Link>
+          </NavLink>
         ))}
       </Grid>
     </Box>

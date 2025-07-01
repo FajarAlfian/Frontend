@@ -7,45 +7,21 @@ import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import SendIcon from "@mui/icons-material/Send";
-
-const country = [
-  {
-    name: "Deutsch",
-    flagImage: "src/assets/category/deutsch.png",
-  },
-
-  {
-    name: "English",
-    flagImage: "src/assets/category/english.png",
-  },
-
-  {
-    name: "French",
-    flagImage: "src/assets/category/french.png",
-  },
-
-  {
-    name: "Indonesia",
-    flagImage: "src/assets/category/indonesia.png",
-  },
-
-  {
-    name: "Japan",
-    flagImage: "src/assets/category/japan.png",
-  },
-
-  {
-    name: "Melayu",
-    flagImage: "src/assets/category/melayu.png",
-  },
-
-  {
-    name: "Mandarin",
-    flagImage: "src/assets/category/mandarin.png",
-  },
-];
-
+import { useState, useEffect } from "react";
+import { NavLink } from "react-router";
+import axios from "axios";
 const Footer = () => {
+  const [category, setCategory] = useState([]);
+  useEffect(() => {
+    axios
+      .get("http://localhost:5009/api/Categories")
+      .then((response) => {
+        setCategory(response.data.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching category:", error);
+      });
+  }, []);
   return (
     <Grid
       component="footer"
@@ -94,11 +70,16 @@ const Footer = () => {
                 rowSpacing={1}
                 columnSpacing={{ xs: 1, sm: 2, md: 3 }}
               >
-                {country.map((country, index) => (
+                {category.map((item, index) => (
                   <Grid key={index} size={6} component="li">
-                    <Typography sx={{ fontSize: "14px", fontWeight: "400" }}>
-                      {country.name}
-                    </Typography>
+                    <NavLink
+                      to={`/category/${item.category_name}`}
+                      style={{ textDecoration: "none", color: "inherit" }}
+                    >
+                      <Typography sx={{ fontSize: "14px", fontWeight: "400" }}>
+                        {item.category_name}
+                      </Typography>
+                    </NavLink>
                   </Grid>
                 ))}
               </Grid>

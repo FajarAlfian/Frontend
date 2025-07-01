@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Login from "./pages/login";
 import { ThemeProvider } from "@mui/material/styles";
@@ -30,7 +29,6 @@ export const LoginRoute = ({ children }) => {
 };
 
 function App() {
-  const activeLayout = true;
   return (
     <>
       <ThemeProvider theme={Theme}>
@@ -43,8 +41,9 @@ function App() {
             <Route path={"/purchase-status"} element={<StatusPurchase />} />
             <Route element={<Layout />}>
               <Route path={"/"} element={<Home />} />
-              <Route path={"/menuClass"} element={<MenuClass />} />
-              <Route path={"/detail"} element={<Detail />} />
+              <Route path={"/category/:nama"} element={<MenuClass />} />
+              {/* <Route path={"/menuClass"} element={<MenuClass />} /> */}
+              <Route path={"/detail/:id"} element={<Detail />} />
               <Route path={"/checkout"} element={<Checkout />} />
               <Route path={"/invoice"} element={<Invoice />} />
               <Route path={"/detail-invoice"} element={<DetailInvoice />} />

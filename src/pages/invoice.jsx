@@ -88,10 +88,6 @@ const Invoice = () => {
       Invoice
     </Typography>,
   ];
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
   return (
     <Box mx={10} my={3}>
       <Stack spacing={2} mb={3}>
