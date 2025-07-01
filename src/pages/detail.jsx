@@ -13,7 +13,7 @@ const Detail = () => {
       .get(`http://localhost:5009/api/courses/${id}`)
       .then((res) => setCourse(res.data.data));
   }, [id]);
-  const handleCart = () => {};
+
   return (
     <>
       {course ? (

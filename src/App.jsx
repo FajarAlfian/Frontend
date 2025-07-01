@@ -39,12 +39,12 @@ function App() {
             <Route path={"/new-password"} element={<NewPass />} />
             <Route path={"/reset-password"} element={<ResetPass />} />
             <Route path={"/purchase-status"} element={<StatusPurchase />} />
+            <Route path={"/checkout"} element={<Checkout />} />
             <Route element={<Layout />}>
               <Route path={"/"} element={<Home />} />
               <Route path={"/category/:nama"} element={<MenuClass />} />
               {/* <Route path={"/menuClass"} element={<MenuClass />} /> */}
               <Route path={"/detail/:id"} element={<Detail />} />
-              <Route path={"/checkout"} element={<Checkout />} />
               <Route path={"/invoice"} element={<Invoice />} />
               <Route path={"/detail-invoice"} element={<DetailInvoice />} />
               <Route path={"/class"} element={<MyClass />} />

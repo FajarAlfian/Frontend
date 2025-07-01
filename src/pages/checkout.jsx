@@ -15,6 +15,7 @@ import { React, useEffect, useState } from "react";
 import axios from "axios";
 import { ConvertDate, formatRupiah } from "../utils/util";
 import Cookies from "js-cookie";
+import Navbar from "../components/molecules/navbar";
 const modalStyle = {
   position: "absolute",
   top: "50%",
@@ -48,6 +49,7 @@ const Checkout = () => {
       });
   }, []);
   const [courses, setCourses] = useState([]);
+  const [total, setTotal] = useState(0);
   useEffect(() => {
     const token = Cookies.get("token");
     axios
@@ -58,6 +60,7 @@ const Checkout = () => {
       })
       .then((response) => {
         setCourses(response.data.data.items);
+        setTotal(response.data.data.total); 
       })
       .catch((error) => {
         console.error("Error fetching payment:", error);
@@ -96,13 +99,14 @@ const Checkout = () => {
       prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
     );
   };
-  const calculateTotal = () => {
-    return courses
-      .filter((item) => selectedItems.includes(item.cart_product_id))
-      .reduce((sum, item) => sum + item.course_price, 0);
-  };
+  // const calculateTotal = () => {
+  //   return courses
+  //     .filter((item) => selectedItems.includes(item.cart_product_id))
+  //     .reduce((sum, item) => sum + item.course_price, 0);
+  // };
   return (
     <>
+      <Navbar />
       <Stack
         direction="column"
         divider={<Divider orientation="horizontal" />}
@@ -226,7 +230,21 @@ const Checkout = () => {
           </Grid>
         ))}
       </Stack>
-      <Divider />
+      <Divider sx={{ marginTop: "24px"}} />
+
+      <Box
+        sx={{
+          position: "fixed",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          backgroundColor: "#FFFFFF",
+          padding: "16px",
+          borderTop: "3px solid #E0E0E0",
+          zIndex: 1000,
+        }}
+      >
+
       <Grid
         container
         spacing={3}
@@ -248,7 +266,7 @@ const Checkout = () => {
             sx={{ fontWeight: "600", color: "#226957" }}
             fontSize={{ xs: "23px", sm: "24px" }}
           >
-            {formatRupiah(calculateTotal())}
+            {formatRupiah(total)}
           </Typography>
         </Grid>
         <Grid
@@ -271,6 +289,7 @@ const Checkout = () => {
             Pay Now
           </Button>
         </Grid>
+       
         <Modal open={open} onClose={handleClose}>
           <Box sx={modalStyle}>
             <Typography variant="h6" textAlign="center" mb={2}>
@@ -337,6 +356,7 @@ const Checkout = () => {
           </Box>
         </Modal>
       </Grid>
+       </Box>
     </>
   );
 };

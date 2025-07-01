@@ -18,7 +18,7 @@ const CategoryCourse = () => {
       .catch((error) => {
         console.error("Error fetching category:", error);
       });
-  });
+  }, []);
   return (
     <Box mx={10} textAlign="center">
       <Box mb={6}>

@@ -10,27 +10,37 @@ import Divider from "@mui/material/Divider";
 import axios from "axios";
 import { ConvertDate } from "../../utils/util";
 import { useNavigate } from "react-router";
+import Cookies from "js-cookie";
+
 const CourseDetail = ({ course }) => {
   const navigate = useNavigate();
   const [selectedSchedule, setSelectedSchedule] = useState(null);
   const handleChange = (event) => {
     setSelectedSchedule(event.target.value);
   };
+
   const handleCart = async () => {
-    axios
-      .post("http://localhost:5009/api/Checkout/add", selectedSchedule)
-      .then((response) => {
-        console.log("Menambahkan cart berhasil:", response.data);
-        alert(
-          "Menambahkan cart berhasil! Anda akan diarahkan ke halaman cart."
-        );
-        navigate("/checkout");
-      })
-      .catch((error) => {
-        console.error("Error saat registrasi:", error);
-        alert("Registrasi gagal. Silakan coba lagi.");
-      });
-  };
+  const token = Cookies.get("token");
+  axios
+    .post(
+      `http://localhost:5009/api/Checkout/add?scheduleCourseId=${selectedSchedule}`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
+    .then((response) => {
+      console.log("Menambahkan cart berhasil:", response.data);
+      alert("Menambahkan cart berhasil! Anda akan diarahkan ke halaman cart.");
+      navigate("/checkout");
+    })
+    .catch((error) => {
+      console.error("Error saat registrasi:", error);
+      alert("Registrasi gagal. Silakan coba lagi.");
+    });
+};
 
   const courseProps = {
     image: course.course_image,
