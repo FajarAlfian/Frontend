@@ -14,8 +14,6 @@ import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 const Login = () => {
   const navigate = useNavigate();
-
-  const [tokenData, setTokenData] = useState("");
   const [formData, setFormData] = React.useState({
     email: "",
     password: "",
@@ -42,8 +40,7 @@ const Login = () => {
         password: formData.password,
       })
       .then((response) => {
-        setTokenData(response.data.data.token);
-        Cookies.set("token", tokenData);
+        Cookies.set("token", response.data.data.token, { path: "/" });
         alert("Login successful.", response.message);
         navigate("/");
       })

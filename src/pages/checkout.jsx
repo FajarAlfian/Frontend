@@ -9,20 +9,12 @@ import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import IconButton from "@mui/material/IconButton";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { NavLink } from "react-router";
-import { React, useState } from "react";
-
-const paymentMethods = [
-  { id: 1, nama: "Gopay", logo: "src/assets/payment-method/gopay.png" },
-  { id: 2, nama: "OVO", logo: "src/assets/payment-method/ovo.jpg" },
-  { id: 3, nama: "DANA", logo: "src/assets/payment-method/dana.jpg" },
-  { id: 4, nama: "Mandiri", logo: "src/assets/payment-method/mandiri.png" },
-  { id: 5, nama: "BCA", logo: "src/assets/payment-method/bca.svg" },
-  { id: 6, nama: "BNI", logo: "src/assets/payment-method/bni.png" },
-];
-
+import { React, useEffect, useState } from "react";
+import axios from "axios";
+import { ConvertDate, formatRupiah } from "../utils/util";
+import Cookies from "js-cookie";
 const modalStyle = {
   position: "absolute",
   top: "50%",
@@ -35,74 +27,80 @@ const modalStyle = {
   width: 360,
 };
 
-const courses = [
-  {
-    id: 1,
-    image: "/assets/courseimage/english_junior.png",
-    category: "English",
-    title: "Basic English for Junior",
-    price: "IDR 400.000",
-    link: "",
-  },
-  {
-    id: 2,
-    image: "/assets/courseimage/english_expert.png",
-    category: "English",
-    title: "Complit Package - Expert English, TOEFL and IELTS",
-    price: "IDR 2.000.000",
-    link: "",
-  },
-  {
-    id: 3,
-    image: "/assets/courseimage/mandarin.png",
-    category: "Mandarin",
-    title: "Level 1 Mandarin",
-    price: "IDR 200.000",
-    link: "",
-  },
-  {
-    id: 4,
-    image: "/assets/courseimage/arabic.png",
-    category: "Arabic",
-    title: "Arabic Course - Beginner to Middle",
-    price: "IDR 550.000",
-    link: "",
-  },
-  {
-    id: 5,
-    image: "/assets/courseimage/indonesia.png",
-    category: "Indonesian",
-    title: "Kursus Bahasa Indonesia",
-    price: "IDR 650.000",
-    link: "",
-  },
-  {
-    id: 6,
-    image: "/assets/courseimage/germany.png",
-    category: "Deutsch",
-    title: "Germany Language for Junior",
-    price: "IDR 450.000",
-    link: "",
-  },
-];
-
 const Checkout = () => {
+  const token = Cookies.get("token");
   const [open, setOpen] = useState(false);
-  const [selected, setSelected] = useState();
-
+  const [selected, setSelected] = useState(null);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
   const handleSelect = (id) => {
     setSelected(id);
   };
+  const [paymentMethods, setPaymentMethods] = useState([]);
+  useEffect(() => {
+    axios
+      .get("http://localhost:5009/api/PaymentMethod")
+      .then((response) => {
+        setPaymentMethods(response.data.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching payment:", error);
+      });
+  }, []);
+  const [courses, setCourses] = useState([]);
+  useEffect(() => {
+    const token = Cookies.get("token");
+    axios
+      .get("http://localhost:5009/api/Checkout/user", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        setCourses(response.data.data.items);
+      })
+      .catch((error) => {
+        console.error("Error fetching payment:", error);
+      });
+  }, []);
 
   const handlePay = () => {
     console.log("Bayar dengan:", selected);
     setOpen(false);
     <NavLink to="/message" />;
   };
-
+  const [selectedItems, setSelectedItems] = useState([]);
+  const handleSelectAll = () => {
+    if (selectedItems.length === courses.length) {
+      setSelectedItems([]); // uncheck all
+    } else {
+      setSelectedItems(courses.map((item) => item.cart_product_id)); // check all
+    }
+  };
+  const handleDeleteCourse = (id) => {
+    axios
+      .get(`http://localhost:5009/api/Checkout/remove/$`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        setCourses(response.data.data.items);
+      })
+      .catch((error) => {
+        console.error("Error fetching payment:", error);
+      });
+  };
+  const handleCheckboxChange = (id) => {
+    setSelectedItems((prev) =>
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+    );
+  };
+  const calculateTotal = () => {
+    return courses
+      .filter((item) => selectedItems.includes(item.cart_product_id))
+      .reduce((sum, item) => sum + item.course_price, 0);
+  };
   return (
     <>
       <Stack
@@ -119,6 +117,14 @@ const Checkout = () => {
         >
           <Grid size={{ xs: 1, sm: 1, md: 1 }}>
             <Checkbox
+              checked={
+                selectedItems.length === courses.length && courses.length > 0
+              }
+              indeterminate={
+                selectedItems.length > 0 &&
+                selectedItems.length < courses.length
+              }
+              onChange={handleSelectAll}
               sx={{
                 color: "#226957",
                 "&.Mui-checked": {
@@ -133,14 +139,13 @@ const Checkout = () => {
                 fontSize: "20px",
                 fontWeight: "400",
                 color: " #333333",
-                textAlign: "center",
               }}
             >
               Pilih Semua
             </Typography>
           </Grid>
         </Grid>
-        {courses.map((courses) => (
+        {courses.map((item) => (
           <Grid
             container
             alignItems="center"
@@ -149,6 +154,8 @@ const Checkout = () => {
           >
             <Grid size={{ xs: 5, sm: 1, md: 1 }}>
               <Checkbox
+                checked={selectedItems.includes(item.cart_product_id)}
+                onChange={() => handleCheckboxChange(item.cart_product_id)}
                 sx={{
                   color: "#226957",
                   "&.Mui-checked": {
@@ -166,8 +173,8 @@ const Checkout = () => {
               >
                 <CardMedia
                   component="img"
-                  image={courses.image}
-                  alt={courses.title}
+                  image={item.course_image}
+                  alt={item.course_name}
                 />
               </Card>
             </Grid>
@@ -177,25 +184,25 @@ const Checkout = () => {
                   fontSize={{ xs: "8", sm: "16px" }}
                   sx={{ fontWeight: "400", color: "#828282" }}
                 >
-                  {courses.category}
+                  {item.category_name}
                 </Typography>
                 <Typography
                   fontSize={{ xs: "12", sm: "24px" }}
                   sx={{ fontWeight: "600", color: "#333333" }}
                 >
-                  {courses.title}
+                  {item.course_name}
                 </Typography>
                 <Typography
                   fontSize={{ xs: "8", sm: "16px" }}
                   sx={{ fontWeight: "400", color: "#4F4F4F" }}
                 >
-                  Schedule: Friday, 29 Juli 2022
+                  {ConvertDate(item.schedule_date)}
                 </Typography>
                 <Typography
                   fontSize={{ xs: "10", sm: "20px" }}
                   sx={{ fontWeight: "600", color: "#EA9E1F" }}
                 >
-                  {courses.price}
+                  {formatRupiah(item.course_price)}
                 </Typography>
               </Stack>
             </Grid>
@@ -208,6 +215,7 @@ const Checkout = () => {
               }}
             >
               <DeleteForeverIcon
+                onClick={handleDeleteCourse(item.cart_product_id)}
                 sx={{
                   color: "#EB5757",
                   width: { xs: "35px", sm: "40px" },
@@ -240,7 +248,7 @@ const Checkout = () => {
             sx={{ fontWeight: "600", color: "#226957" }}
             fontSize={{ xs: "23px", sm: "24px" }}
           >
-            IDR 700.000
+            {formatRupiah(calculateTotal())}
           </Typography>
         </Grid>
         <Grid
@@ -270,11 +278,11 @@ const Checkout = () => {
             </Typography>
             <Stack spacing={1}>
               {paymentMethods.map((method) => {
-                const isSelected = selected === method.id;
+                const isSelected = selected === method.payment_method_id;
                 return (
                   <Box
-                    key={method.id}
-                    onClick={() => handleSelect(method.id)}
+                    key={method.payment_method_id}
+                    onClick={() => handleSelect(method.payment_method_id)}
                     sx={{
                       p: 1.5,
                       px: 2,
@@ -289,8 +297,8 @@ const Checkout = () => {
                     <Box sx={{ display: "flex", alignItems: "center" }}>
                       <Box
                         component="img"
-                        src={method.logo}
-                        alt={method.nama}
+                        src={method.payment_method_logo}
+                        alt={method.payment_method_name}
                         sx={{
                           width: 32,
                           height: 32,
@@ -298,7 +306,7 @@ const Checkout = () => {
                           mr: 2,
                         }}
                       />
-                      <Typography>{method.nama}</Typography>
+                      <Typography>{method.payment_method_name}</Typography>
                     </Box>
                     {isSelected && (
                       <CheckCircleIcon sx={{ color: "#006A61" }} />
