@@ -13,7 +13,7 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { NavLink } from "react-router";
 import { React, useEffect, useState } from "react";
 import axios from "axios";
-import { ConvertDate } from "../utils/util";
+import { ConvertDate, formatRupiah } from "../utils/util";
 import Cookies from "js-cookie";
 const modalStyle = {
   position: "absolute",
@@ -69,7 +69,38 @@ const Checkout = () => {
     setOpen(false);
     <NavLink to="/message" />;
   };
-
+  const [selectedItems, setSelectedItems] = useState([]);
+  const handleSelectAll = () => {
+    if (selectedItems.length === courses.length) {
+      setSelectedItems([]); // uncheck all
+    } else {
+      setSelectedItems(courses.map((item) => item.cart_product_id)); // check all
+    }
+  };
+  const handleDeleteCourse = (id) => {
+    axios
+      .get(`http://localhost:5009/api/Checkout/remove/$`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        setCourses(response.data.data.items);
+      })
+      .catch((error) => {
+        console.error("Error fetching payment:", error);
+      });
+  };
+  const handleCheckboxChange = (id) => {
+    setSelectedItems((prev) =>
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+    );
+  };
+  const calculateTotal = () => {
+    return courses
+      .filter((item) => selectedItems.includes(item.cart_product_id))
+      .reduce((sum, item) => sum + item.course_price, 0);
+  };
   return (
     <>
       <Stack
@@ -86,6 +117,14 @@ const Checkout = () => {
         >
           <Grid size={{ xs: 1, sm: 1, md: 1 }}>
             <Checkbox
+              checked={
+                selectedItems.length === courses.length && courses.length > 0
+              }
+              indeterminate={
+                selectedItems.length > 0 &&
+                selectedItems.length < courses.length
+              }
+              onChange={handleSelectAll}
               sx={{
                 color: "#226957",
                 "&.Mui-checked": {
@@ -100,7 +139,6 @@ const Checkout = () => {
                 fontSize: "20px",
                 fontWeight: "400",
                 color: " #333333",
-                textAlign: "center",
               }}
             >
               Pilih Semua
@@ -116,6 +154,8 @@ const Checkout = () => {
           >
             <Grid size={{ xs: 5, sm: 1, md: 1 }}>
               <Checkbox
+                checked={selectedItems.includes(item.cart_product_id)}
+                onChange={() => handleCheckboxChange(item.cart_product_id)}
                 sx={{
                   color: "#226957",
                   "&.Mui-checked": {
@@ -162,7 +202,7 @@ const Checkout = () => {
                   fontSize={{ xs: "10", sm: "20px" }}
                   sx={{ fontWeight: "600", color: "#EA9E1F" }}
                 >
-                  {item.course_price}
+                  {formatRupiah(item.course_price)}
                 </Typography>
               </Stack>
             </Grid>
@@ -175,6 +215,7 @@ const Checkout = () => {
               }}
             >
               <DeleteForeverIcon
+                onClick={handleDeleteCourse(item.cart_product_id)}
                 sx={{
                   color: "#EB5757",
                   width: { xs: "35px", sm: "40px" },
@@ -207,7 +248,7 @@ const Checkout = () => {
             sx={{ fontWeight: "600", color: "#226957" }}
             fontSize={{ xs: "23px", sm: "24px" }}
           >
-            IDR 700.000
+            {formatRupiah(calculateTotal())}
           </Typography>
         </Grid>
         <Grid
