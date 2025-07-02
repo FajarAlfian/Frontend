@@ -7,9 +7,11 @@ import FormLabel from "../components/molecules/formLabel";
 import Title from "../components/molecules/title";
 import FormButton from "../components/molecules/formButton";
 import Navbar from "../components/molecules/navbar";
-
+import { useSearchParams } from "react-router-dom";
+import axios from "axios";
 const NewPass = () => {
-  const [tokenData, setTokenData] = React.useState("");
+  const [searchParams] = useSearchParams();
+  const token = searchParams.get("token");
   const [formData, setFormData] = React.useState({
     password1: "",
     password2: "",
@@ -27,6 +29,20 @@ const NewPass = () => {
     e.preventDefault();
     if (formData.password1 === formData.password2) {
       if (checkPassword1 && checkPassword2) {
+        axios
+          .post("http://localhost:5009/api/Auth/reset-password", {
+            token: token,
+            newPassword: formData.password1,
+            confirmPassword: formData.password2,
+          })
+          .then((response) => {
+            alert("Reset password successful.", response.message);
+            navigate("/login");
+          })
+          .catch((error) => {
+            console.error("reset pass failed:", error);
+          });
+
         console.log("Form data is valid, sending to API:", formData);
       } else {
         console.log("Form data is invalid: validation failed");
@@ -44,7 +60,7 @@ const NewPass = () => {
 
   return (
     <Box>
-      <Navbar token={tokenData} />
+      <Navbar />
       <GlobalStyles
         styles={{
           html: { margin: 0, padding: 0, height: "100%", overflow: "hidden" },
