@@ -8,9 +8,8 @@ import Title from "../components/molecules/title";
 import FormButton from "../components/molecules/formButton";
 import Description from "../components/molecules/description";
 import Navbar from "../components/molecules/navbar";
-
+import axios from "axios";
 const ResetPass = () => {
-  const [tokenData, setTokenData] = React.useState("");
   const [formData, setFormData] = React.useState({
     email: "",
   });
@@ -25,11 +24,23 @@ const ResetPass = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form data is valid, sending to API:", formData);
+    axios
+      .post("http://localhost:5009/api/Auth/forgot-password", {
+        email: formData.email,
+      })
+      .then((response) => {
+        alert(
+          "forgot password successful, please check your inbox email",
+          response.message
+        );
+      })
+      .catch((error) => {
+        console.error("reset pass failed:", error);
+      });
   };
   return (
     <Box>
-      <Navbar token={tokenData} />
+      <Navbar />
       <GlobalStyles
         styles={{
           html: { margin: 0, padding: 0, height: "100%", overflow: "hidden" },
