@@ -33,8 +33,8 @@ const CourseDetail = ({ course }) => {
     )
     .then((response) => {
       console.log("Menambahkan cart berhasil:", response.data);
-      alert("Menambahkan cart berhasil! Anda akan diarahkan ke halaman cart.");
-      navigate("/checkout");
+      alert("Menambahkan cart berhasil!");
+      ;
     })
     .catch((error) => {
       console.error("Error saat registrasi:", error);
@@ -138,7 +138,7 @@ const CourseDetail = ({ course }) => {
                     key={item.schedule_course_id}
                     value={item.schedule_course_id}
                   >
-                    {ConvertDate(item.schedule_date)}
+                    {(item.schedule_date)}
                   </MenuItem>
                 ))}
             </Select>
