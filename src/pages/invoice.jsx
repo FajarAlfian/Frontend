@@ -27,7 +27,10 @@ const columns = [
 
 function DetailButton({ invoiceId }) {
   return (
-    <NavLink to={`/detail-invoice/${invoiceId}`} style={{ textDecoration: "none" }}>
+    <NavLink
+      to={`/detail-invoice/${invoiceId}`}
+      style={{ textDecoration: "none" }}
+    >
       <Button
         variant="contained"
         sx={{
@@ -78,10 +81,18 @@ export default function Invoice() {
   }, []);
 
   const breadcrumbs = [
-    <Link key="1" underline="hover" href="/" sx={{ color: "#828282", fontSize: 16, fontWeight: 600 }}>
+    <Link
+      key="1"
+      underline="hover"
+      href="/"
+      sx={{ color: "#828282", fontSize: 16, fontWeight: 600 }}
+    >
       Home
     </Link>,
-    <Typography key="2" sx={{ color: "#EA9E1F", fontSize: 16, fontWeight: 600 }}>
+    <Typography
+      key="2"
+      sx={{ color: "#EA9E1F", fontSize: 16, fontWeight: 600 }}
+    >
       Invoice
     </Typography>,
   ];
@@ -92,11 +103,21 @@ export default function Invoice() {
         <Breadcrumbs separator="›">{breadcrumbs}</Breadcrumbs>
       </Stack>
 
-      <Typography sx={{ color: "#4F4F4F", fontSize: 20, fontWeight: 600 }} mb={3}>
+      <Typography
+        sx={{ color: "#4F4F4F", fontSize: 20, fontWeight: 600 }}
+        mb={3}
+      >
         Menu Invoice
       </Typography>
 
-      <Paper sx={{ width: "100%", overflow: "hidden", boxShadow: "none", borderRadius: 0 }}>
+      <Paper
+        sx={{
+          width: "100%",
+          overflow: "hidden",
+          boxShadow: "none",
+          borderRadius: 0,
+        }}
+      >
         <TableContainer sx={{ maxHeight: 440 }}>
           <Table stickyHeader>
             <TableHead>
@@ -125,12 +146,16 @@ export default function Invoice() {
                   hover
                   tabIndex={-1}
                   sx={{
-                    backgroundColor: ri % 2 === 0 ? "#EA9E1F33" : "#fff",
+                    backgroundColor: ri % 2 === 0 ? "#fff" : "#EA9E1F33",
                     "&:hover": { backgroundColor: "#e0f7fa" },
                   }}
                 >
                   {columns.map((col) => (
-                    <TableCell key={col.id} align={col.align} sx={{ fontSize: 16 }}>
+                    <TableCell
+                      key={col.id}
+                      align={col.align}
+                      sx={{ fontSize: 16 }}
+                    >
                       {col.id === "action" ? row.action : row[col.id]}
                     </TableCell>
                   ))}

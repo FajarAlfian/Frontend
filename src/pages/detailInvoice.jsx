@@ -13,30 +13,17 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { NavLink } from "react-router";
-
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import Cookies from "js-cookie";
+import { ConvertDate, formatRupiah } from "../utils/util";
 const columns = [
   { id: "no", label: "No" },
   { id: "course_name", label: "Course Name" },
   { id: "language", label: "Language" },
   { id: "schedule", label: "Schedule" },
   { id: "price", label: "Price" },
-];
-
-const rows = [
-  {
-    no: "1",
-    course_name: "Basic English for Junior",
-    language: "English",
-    schedule: "Friday, 29 July 2022",
-    price: "IDR 400.000",
-  },
-  {
-    no: "2",
-    course_name: "Japanese Course: Kanji",
-    language: "Japanese",
-    schedule: "Saturday, 30 July 2022",
-    price: "IDR 300.000",
-  },
 ];
 function DetailButton() {
   return (
@@ -58,8 +45,38 @@ function DetailButton() {
     </NavLink>
   );
 }
+const DetailInvoice = () => {
+  const { id } = useParams();
+  const [rows, setRows] = useState([]);
+  const [invoiceDetail, setInvoiceDetail] = useState([]);
+  const [invoice, setInvoice] = useState([]);
+  const token = Cookies.get("token");
+  const [invoiceNumber, setInvoiceNumber] = useState("");
+  const [invoiceDate, setInvoiceDate] = useState("");
+  const [totalPrice, setTotalPrice] = useState("");
+  useEffect(() => {
+    axios
+      .get(`http://localhost:5009/api/Invoice/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => {
+        setInvoice(res.data.data);
+        setInvoiceDate(ConvertDate(res.data.data.invoice_date));
+        setTotalPrice(formatRupiah(res.data.data.total_price));
+        const detail = res.data.data.detail;
+        setInvoiceDetail(detail);
+        const mapped = detail.map((invd) => ({
+          no: invd.detail_no,
+          course_name: invd.course_name,
+          language: invd.language,
+          schedule: invd.schedule,
+          price: formatRupiah(invd.price),
+        }));
+        setRows(mapped);
+      })
+      .catch((err) => console.error("Fetch invoice detail error:", err));
+  }, [id]);
 
-const Invoice = () => {
   const breadcrumbs = [
     <Link
       underline="hover"
@@ -104,7 +121,7 @@ const Invoice = () => {
         <Grid size={2}>
           <Stack spacing={2}>
             <Typography color="#4F4F4F" fontSize="18px" fontWeight="500">
-              No. Invoice:{" "}
+              No. Invoice:
             </Typography>
             <Typography color="#4F4F4F" fontSize="18px" fontWeight="500">
               Date:
@@ -114,10 +131,10 @@ const Invoice = () => {
         <Grid size={4}>
           <Stack spacing={2}>
             <Typography color="#4F4F4F" fontSize="18px" fontWeight="500">
-              DLA00003
+              {invoice.invoice_number}
             </Typography>
             <Typography color="#4F4F4F" fontSize="18px" fontWeight="500">
-              12 Juni 2022
+              {invoiceDate}
             </Typography>
           </Stack>
         </Grid>
@@ -128,7 +145,7 @@ const Invoice = () => {
           size={6}
         >
           <Typography color="#4F4F4F" fontSize="18px" fontWeight="700">
-            Total Price : IDR 700.000
+            Total Price : IDR {totalPrice}
           </Typography>
         </Grid>
       </Grid>
@@ -163,34 +180,23 @@ const Invoice = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row, rowIndex) => (
+              {rows.map((row, ri) => (
                 <TableRow
+                  key={ri}
                   hover
-                  role="checkbox"
                   tabIndex={-1}
-                  key={rowIndex}
                   sx={{
-                    fontSize: "16px",
-                    backgroundColor:
-                      rowIndex % 2 === 0 ? "#EA9E1F33" : "#ffffff",
-                    "&:hover": {
-                      backgroundColor: "#e0f7fa",
-                    },
+                    backgroundColor: ri % 2 === 0 ? "#fff" : "#EA9E1F33",
+                    "&:hover": { backgroundColor: "#e0f7fa" },
                   }}
                 >
-                  {columns.map((column) => (
+                  {columns.map((col) => (
                     <TableCell
-                      key={column.id}
-                      align={column.align}
-                      sx={{
-                        fontSize: "16px",
-                      }}
+                      key={col.id}
+                      align={col.align}
+                      sx={{ fontSize: 16 }}
                     >
-                      {column.id === "action" ? (
-                        <DetailButton />
-                      ) : (
-                        row[column.id]
-                      )}
+                      {row[col.id]}
                     </TableCell>
                   ))}
                 </TableRow>
@@ -202,4 +208,4 @@ const Invoice = () => {
     </Box>
   );
 };
-export default Invoice;
+export default DetailInvoice;

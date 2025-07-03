@@ -46,7 +46,7 @@ function App() {
               {/* <Route path={"/menuClass"} element={<MenuClass />} /> */}
               <Route path={"/detail/:id"} element={<Detail />} />
               <Route path={"/invoice"} element={<Invoice />} />
-              <Route path={"/detail-invoice/:invoiceId"} element={<DetailInvoice />} />
+              <Route path={"/detail-invoice/:id"} element={<DetailInvoice />} />
               <Route path={"/class"} element={<MyClass />} />
               {/* <Route
                 path={"/menuClass"}
