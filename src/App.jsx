@@ -14,6 +14,7 @@ import StatusPurchase from "./pages/statusPurchase";
 import Invoice from "./pages/invoice";
 import DetailInvoice from "./pages/detailInvoice";
 import MyClass from "./pages/myClass";
+import VerifyEmail from "./pages/verifyEmail";
 import "./styles/app.css";
 import { Navigate } from "react-router-dom";
 import Cookies from "js-cookie";
@@ -40,6 +41,7 @@ function App() {
             <Route path={"/reset-password"} element={<ResetPass />} />
             <Route path={"/purchase-status"} element={<StatusPurchase />} />
             <Route path={"/checkout"} element={<Checkout />} />
+            <Route path={"/verify-email"} element={<VerifyEmail />} />
             <Route element={<Layout />}>
               <Route path={"/"} element={<Home />} />
               <Route path={"/category/:nama"} element={<MenuClass />} />

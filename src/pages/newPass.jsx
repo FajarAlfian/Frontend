@@ -9,7 +9,10 @@ import FormButton from "../components/molecules/formButton";
 import Navbar from "../components/molecules/navbar";
 import { useSearchParams } from "react-router-dom";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 const NewPass = () => {
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token");
   const [formData, setFormData] = React.useState({
