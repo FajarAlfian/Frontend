@@ -1,4 +1,4 @@
-export const ConvertDate = (dateString) => {
+export const ConvertDayDate = (dateString) => {
   const date = new Date(dateString);
   const weekday = date.toLocaleDateString("en-US", { weekday: "long" });
   const day = date.getDate();
@@ -7,11 +7,18 @@ export const ConvertDate = (dateString) => {
   return `${weekday}, ${day} ${month} ${year}`;
 };
 
+export const ConvertDate = (dateString) => {
+  const date = new Date(dateString);
+  const day = date.getDate();
+  const month = date.toLocaleDateString("en-US", { month: "long" });
+  const year = date.getFullYear();
+  return `${day} ${month} ${year}`;
+};
+
 export const formatRupiah = (numberString) => {
   const number = parseInt(numberString, 10);
   return new Intl.NumberFormat("id-ID", {
-    style: "currency",
-    currency: "IDR",
+    style: "decimal",
     minimumFractionDigits: 0,
   }).format(number);
 };
