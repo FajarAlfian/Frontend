@@ -11,7 +11,7 @@ import axios from "axios";
 import { ConvertDate } from "../../utils/util";
 import { useNavigate } from "react-router";
 import Cookies from "js-cookie";
-
+import { formatRupiah } from "../../utils/util";
 const CourseDetail = ({ course }) => {
   const navigate = useNavigate();
   const [selectedSchedule, setSelectedSchedule] = useState(null);
@@ -20,33 +20,32 @@ const CourseDetail = ({ course }) => {
   };
 
   const handleCart = async () => {
-  const token = Cookies.get("token");
-  axios
-    .post(
-      `http://localhost:5009/api/Checkout/add?scheduleCourseId=${selectedSchedule}`,
-      {},
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    )
-    .then((response) => {
-      console.log("Menambahkan cart berhasil:", response.data);
-      alert("Menambahkan cart berhasil!");
-      ;
-    })
-    .catch((error) => {
-      console.error("Error saat registrasi:", error);
-      alert("Registrasi gagal. Silakan coba lagi.");
-    });
-};
+    const token = Cookies.get("token");
+    axios
+      .post(
+        `http://localhost:5009/api/Checkout/add?scheduleCourseId=${selectedSchedule}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((response) => {
+        console.log("Menambahkan cart berhasil:", response.data);
+        alert("Menambahkan cart berhasil!");
+      })
+      .catch((error) => {
+        console.error("Error saat registrasi:", error);
+        alert("Registrasi gagal. Silakan coba lagi.");
+      });
+  };
 
   const courseProps = {
     image: course.course_image,
     category: course.category_name || "",
     title: course.course_name,
-    price: `IDR ${course.course_price}`,
+    price: `IDR ${formatRupiah(course.course_price)}`,
     description: course.course_description,
   };
   const [listSchedule, setListSchedule] = useState(null);
@@ -138,7 +137,7 @@ const CourseDetail = ({ course }) => {
                     key={item.schedule_course_id}
                     value={item.schedule_course_id}
                   >
-                    {(item.schedule_date)}
+                    {item.schedule_date}
                   </MenuItem>
                 ))}
             </Select>
