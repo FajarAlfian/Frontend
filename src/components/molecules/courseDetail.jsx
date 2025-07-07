@@ -40,6 +40,28 @@ const CourseDetail = ({ course }) => {
       });
   };
 
+  const handleBuyNow = async () => {
+    const token = Cookies.get("token");
+    axios
+      .post(
+        `http://localhost:5009/api/Checkout/add?scheduleCourseId=${selectedSchedule}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((response) => {
+        alert("Menambahkan cart berhasil!");
+        navigate("/checkout");
+      })
+      .catch((error) => {
+        console.error("Error saat Menambahkan cart:", error);
+        alert("Menambahkan cart gagal. Silakan coba lagi.");
+      });
+  };
+
   const courseProps = {
     image: course.course_image,
     category: course.category_name || "",
@@ -154,8 +176,6 @@ const CourseDetail = ({ course }) => {
                 Add to Cart
               </Button>
               <Button
-                component={Link}
-                to="/checkout"
                 variant="contained"
                 sx={{
                   width: "234px",
@@ -163,6 +183,7 @@ const CourseDetail = ({ course }) => {
                   backgroundColor: "dlang.green",
                   borderRadius: "8px",
                 }}
+                onClick={handleBuyNow}
               >
                 Buy Now
               </Button>
