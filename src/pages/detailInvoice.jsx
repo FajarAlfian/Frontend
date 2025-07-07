@@ -17,7 +17,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
-import { ConvertDate, formatRupiah } from "../utils/util";
+import { ConvertDayDate, ConvertDate, formatRupiah } from "../utils/util";
 const columns = [
   { id: "no", label: "No" },
   { id: "course_name", label: "Course Name" },
@@ -48,10 +48,8 @@ function DetailButton() {
 const DetailInvoice = () => {
   const { id } = useParams();
   const [rows, setRows] = useState([]);
-  const [invoiceDetail, setInvoiceDetail] = useState([]);
   const [invoice, setInvoice] = useState([]);
   const token = Cookies.get("token");
-  const [invoiceNumber, setInvoiceNumber] = useState("");
   const [invoiceDate, setInvoiceDate] = useState("");
   const [totalPrice, setTotalPrice] = useState("");
   useEffect(() => {
@@ -64,12 +62,11 @@ const DetailInvoice = () => {
         setInvoiceDate(ConvertDate(res.data.data.invoice_date));
         setTotalPrice(formatRupiah(res.data.data.total_price));
         const detail = res.data.data.detail;
-        setInvoiceDetail(detail);
         const mapped = detail.map((invd) => ({
           no: invd.detail_no,
           course_name: invd.course_name,
           language: invd.language,
-          schedule: invd.schedule,
+          schedule: ConvertDayDate(invd.schedule),
           price: formatRupiah(invd.price),
         }));
         setRows(mapped);
@@ -118,7 +115,7 @@ const DetailInvoice = () => {
         Details Invoice
       </Typography>
       <Grid container spacing={2} my={3}>
-        <Grid size={2}>
+        <Grid item xs={12} sm={4} md={2}>
           <Stack spacing={2}>
             <Typography color="#4F4F4F" fontSize="18px" fontWeight="500">
               No. Invoice:
@@ -128,7 +125,7 @@ const DetailInvoice = () => {
             </Typography>
           </Stack>
         </Grid>
-        <Grid size={4}>
+        <Grid item xs={12} sm={8} md={4}>
           <Stack spacing={2}>
             <Typography color="#4F4F4F" fontSize="18px" fontWeight="500">
               {invoice.invoice_number}
@@ -139,12 +136,20 @@ const DetailInvoice = () => {
           </Stack>
         </Grid>
         <Grid
+          size={{ sm: "grow" }}
+          item
+          xs={12}
+          md={6}
           display="flex"
           justifyContent="flex-end"
           alignItems="flex-end"
-          size={6}
         >
-          <Typography color="#4F4F4F" fontSize="18px" fontWeight="700">
+          <Typography
+            color="#4F4F4F"
+            fontSize="18px"
+            fontWeight="700"
+            textAlign={{ sm: "right" }}
+          >
             Total Price : IDR {totalPrice}
           </Typography>
         </Grid>
