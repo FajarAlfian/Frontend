@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { NavLink } from "react-router";
 import axios from "axios";
-import Cookies from "js-cookie";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
@@ -15,7 +14,7 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-
+import { AuthContext } from "../utils/authContext";
 const columns = [
   { id: "no", label: "No" },
   { id: "InvoiceID", label: "No.Invoice" },
@@ -50,11 +49,12 @@ function DetailButton({ invoiceId }) {
 }
 
 export default function Invoice() {
+  const { auth, setAuth } = useContext(AuthContext);
   // 3. State untuk menampung baris tabel
   const [rows, setRows] = useState([]);
 
   useEffect(() => {
-    const token = Cookies.get("token");
+    const token = auth.token;
     axios
       .get("http://localhost:5009/api/Invoice/user", {
         headers: { Authorization: `Bearer ${token}` },

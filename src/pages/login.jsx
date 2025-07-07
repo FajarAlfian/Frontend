@@ -9,10 +9,11 @@ import FormButton from "../components/molecules/formButton";
 import Description from "../components/molecules/description";
 import Navbar from "../components/molecules/navbar";
 import axios from "axios";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
+import { useContext } from "react";
+import { AuthContext } from "../utils/authContext";
 const Login = () => {
+  const { auth, setAuth } = useContext(AuthContext);
   const navigate = useNavigate();
   const [formData, setFormData] = React.useState({
     email: "",
@@ -40,7 +41,11 @@ const Login = () => {
         password: formData.password,
       })
       .then((response) => {
-        Cookies.set("token", response.data.data.token, { path: "/" });
+        setAuth({
+          id: response.data.data.userId,
+          token: response.data.data.token,
+          role: response.data.data.role,
+        });
         alert("Login successful.", response.message);
         navigate("/");
       })

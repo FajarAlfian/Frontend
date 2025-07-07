@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
@@ -16,7 +16,7 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import Navbar from "../components/molecules/navbar";
 import { ConvertDayDate, formatRupiah } from "../utils/util";
-
+import { AuthContext } from "../utils/authContext";
 const modalStyle = {
   position: "absolute",
   top: "50%",
@@ -36,12 +36,11 @@ const calculateTotal = (courses, selectedItems) =>
 
 const Checkout = () => {
   const navigate = useNavigate();
-  const token = Cookies.get("token");
-
+  const { auth, setAuth } = useContext(AuthContext);
+  const token = auth.token;
   const [open, setOpen] = useState(false);
   const [selectedPayment, setSelectedPayment] = useState(null);
   const [paymentMethods, setPaymentMethods] = useState([]);
-
   const [courses, setCourses] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
   const [total, setTotal] = useState(0);
@@ -56,6 +55,7 @@ const Checkout = () => {
   }, [token]);
 
   useEffect(() => {
+    if (!token) return;
     axios
       .get("http://localhost:5009/api/Checkout/user", {
         headers: { Authorization: `Bearer ${token}` },
@@ -106,7 +106,6 @@ const Checkout = () => {
   const handlePay = () => {
     if (!selectedPayment || selectedItems.length === 0) return;
     setOpen(false);
-
     axios
       .post(
         "http://localhost:5009/api/Invoice",
@@ -124,7 +123,7 @@ const Checkout = () => {
   };
 
   return (
-    <>
+    <Box display="flex" flexDirection="column" minHeight="100vh">
       <Navbar />
       {courses.length !== 0 ? (
         <>
@@ -252,7 +251,6 @@ const Checkout = () => {
           </Stack>
 
           <Divider sx={{ marginTop: "24px" }} />
-
           <Box
             sx={{
               position: "fixed",
@@ -398,7 +396,7 @@ const Checkout = () => {
           Looks like you haven't picked any courses yet.
         </Typography>
       )}
-    </>
+    </Box>
   );
 };
 

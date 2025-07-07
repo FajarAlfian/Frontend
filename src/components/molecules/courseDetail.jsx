@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -10,16 +10,17 @@ import axios from "axios";
 import { useNavigate } from "react-router";
 import Cookies from "js-cookie";
 import { ConvertDayDate, formatRupiah } from "../../utils/util";
-
+import { AuthContext } from "../../utils/authContext";
 const CourseDetail = ({ course }) => {
   const navigate = useNavigate();
+  const { auth, setAuth } = useContext(AuthContext);
+  const token = auth.token;
   const [selectedSchedule, setSelectedSchedule] = useState(null);
   const [listSchedule, setListSchedule] = useState([]);
   const handleChange = (event) => setSelectedSchedule(event.target.value);
 
   const handleCart = async () => {
     try {
-      const token = Cookies.get("token");
       await axios.post(
         `http://localhost:5009/api/Checkout/add?scheduleCourseId=${selectedSchedule}`,
         {},
@@ -34,7 +35,6 @@ const CourseDetail = ({ course }) => {
 
   const handleBuyNow = async () => {
     try {
-      const token = Cookies.get("token");
       await axios.post(
         `http://localhost:5009/api/Checkout/add?scheduleCourseId=${selectedSchedule}`,
         {},
@@ -50,7 +50,9 @@ const CourseDetail = ({ course }) => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5009/api/ScheduleCourse/course/${course.course_id}`)
+      .get(
+        `http://localhost:5009/api/ScheduleCourse/course/${course.course_id}`
+      )
       .then((res) => setListSchedule(res.data.data))
       .catch((err) => console.error(err));
   }, [course.course_id]);
@@ -74,7 +76,7 @@ const CourseDetail = ({ course }) => {
     >
       <Box
         sx={{
-          p: { xs: 2, md: '40px' },
+          p: { xs: 2, md: "40px" },
           backgroundColor: "white",
           borderRadius: 0,
         }}
@@ -128,16 +130,19 @@ const CourseDetail = ({ course }) => {
               onChange={handleChange}
               sx={{
                 height: 40,
-                width: { xs: '100%', md: '300px' },
-                mt: '20px',
-                mb: '40px',
+                width: { xs: "100%", md: "300px" },
+                mt: "20px",
+                mb: "40px",
               }}
             >
               <MenuItem value="" disabled>
                 Select Schedule
               </MenuItem>
               {listSchedule.map((item) => (
-                <MenuItem key={item.schedule_course_id} value={item.schedule_course_id}>
+                <MenuItem
+                  key={item.schedule_course_id}
+                  value={item.schedule_course_id}
+                >
                   {ConvertDayDate(item.schedule_date)}
                 </MenuItem>
               ))}
@@ -145,19 +150,19 @@ const CourseDetail = ({ course }) => {
 
             <Box
               sx={{
-                display: 'flex',
-                flexDirection: { xs: 'column', md: 'row' },
-                gap: { xs: 2, md: '16px' },
+                display: "flex",
+                flexDirection: { xs: "column", md: "row" },
+                gap: { xs: 2, md: "16px" },
               }}
             >
               <Button
                 variant="contained"
                 onClick={handleCart}
                 sx={{
-                  width: { xs: '100%', md: '233px' },
-                  color: 'white',
-                  backgroundColor: 'dlang.orange',
-                  borderRadius: '8px',
+                  width: { xs: "100%", md: "233px" },
+                  color: "white",
+                  backgroundColor: "dlang.orange",
+                  borderRadius: "8px",
                 }}
               >
                 Add to Cart
@@ -167,10 +172,10 @@ const CourseDetail = ({ course }) => {
                 variant="contained"
                 onClick={handleBuyNow}
                 sx={{
-                  width: { xs: '100%', md: '234px' },
-                  color: 'white',
-                  backgroundColor: 'dlang.green',
-                  borderRadius: '8px',
+                  width: { xs: "100%", md: "234px" },
+                  color: "white",
+                  backgroundColor: "dlang.green",
+                  borderRadius: "8px",
                 }}
               >
                 Buy Now
@@ -179,24 +184,27 @@ const CourseDetail = ({ course }) => {
           </Grid>
         </Grid>
 
-        <Box sx={{ mt: { xs: 2, md: '40px' } }}>
-          <Typography variant="h6" sx={{ fontWeight: 'bold', color: 'dlang.gray' }}>
+        <Box sx={{ mt: { xs: 2, md: "40px" } }}>
+          <Typography
+            variant="h6"
+            sx={{ fontWeight: "bold", color: "dlang.gray" }}
+          >
             Description
           </Typography>
-          <Typography variant="body1" sx={{ color: 'dlang.gray' }}>
+          <Typography variant="body1" sx={{ color: "dlang.gray" }}>
             {courseProps.description}
           </Typography>
         </Box>
 
-        <Divider sx={{ my: { xs: 4, md: '80px' } }} />
+        <Divider sx={{ my: { xs: 4, md: "80px" } }} />
 
-        <Box sx={{ mt: { xs: 2, md: '60px' } }}>
+        <Box sx={{ mt: { xs: 2, md: "60px" } }}>
           <Typography
             variant="h6"
             sx={{
-              fontWeight: 'bold',
-              color: 'dlang.green',
-              textAlign: 'center',
+              fontWeight: "bold",
+              color: "dlang.green",
+              textAlign: "center",
               fontSize: 24,
               mb: 0,
             }}

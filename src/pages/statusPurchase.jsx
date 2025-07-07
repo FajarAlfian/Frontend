@@ -6,6 +6,7 @@ import Button from "@mui/material/Button";
 import Navbar from "../components/molecules/navbar";
 import HomeIcon from "@mui/icons-material/Home";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import { NavLink } from "react-router";
 const StatusPurchase = () => {
   return (
     <>
@@ -40,40 +41,44 @@ const StatusPurchase = () => {
           </Typography>
         </Box>
         <Stack direction="row" spacing={2} mt={10}>
-          <Button
-            startIcon={<HomeIcon />}
-            sx={{
-              backgroundColor: "#F4A100",
-              color: "#fff",
-              textTransform: "none",
-              fontWeight: "bold",
-              "&:hover": {
-                backgroundColor: "#d89000",
-              },
-              fontSize: "18px",
-              borderRadius: "12px",
-              padding: "20px 30px",
-            }}
-          >
-            Back to Home
-          </Button>
-          <Button
-            startIcon={<ArrowForwardIcon />}
-            sx={{
-              backgroundColor: "#1E6B5E",
-              color: "#fff",
-              textTransform: "none",
-              fontWeight: "bold",
-              "&:hover": {
-                backgroundColor: "#155147",
-              },
-              fontSize: "18px",
-              borderRadius: "12px",
-              padding: "20px 30px",
-            }}
-          >
-            Open Invoice
-          </Button>
+          <NavLink to="/">
+            <Button
+              startIcon={<HomeIcon />}
+              sx={{
+                backgroundColor: "#F4A100",
+                color: "#fff",
+                textTransform: "none",
+                fontWeight: "bold",
+                "&:hover": {
+                  backgroundColor: "#d89000",
+                },
+                fontSize: "18px",
+                borderRadius: "12px",
+                padding: "20px 30px",
+              }}
+            >
+              Back to Home
+            </Button>
+          </NavLink>
+          <NavLink to="/invoice">
+            <Button
+              startIcon={<ArrowForwardIcon />}
+              sx={{
+                backgroundColor: "#1E6B5E",
+                color: "#fff",
+                textTransform: "none",
+                fontWeight: "bold",
+                "&:hover": {
+                  backgroundColor: "#155147",
+                },
+                fontSize: "18px",
+                borderRadius: "12px",
+                padding: "20px 30px",
+              }}
+            >
+              Open Invoice
+            </Button>
+          </NavLink>
         </Stack>
       </Stack>
     </>
