@@ -4,7 +4,7 @@ import Typography from "@mui/material/Typography";
 import CardMedia from "@mui/material/CardMedia";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-
+import { formatRupiah } from "../../utils/util";
 const CourseCard = ({ image, category, title, price, link }) => (
   <Card
     elevation={0}
@@ -71,7 +71,8 @@ const CourseCard = ({ image, category, title, price, link }) => (
         fontWeight="600"
         color="dlang.green"
         sx={{ marginTop: "auto" }}
-      >IDR {price}
+      >
+        IDR {formatRupiah(price)}
       </Typography>
     </CardContent>
   </Card>
