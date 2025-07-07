@@ -8,10 +8,9 @@ import MenuItem from "@mui/material/MenuItem";
 import { Link } from "react-router";
 import Divider from "@mui/material/Divider";
 import axios from "axios";
-import { ConvertDate } from "../../utils/util";
 import { useNavigate } from "react-router";
 import Cookies from "js-cookie";
-import { formatRupiah } from "../../utils/util";
+import { ConvertDayDate, formatRupiah } from "../../utils/util";
 const CourseDetail = ({ course }) => {
   const navigate = useNavigate();
   const [selectedSchedule, setSelectedSchedule] = useState(null);
@@ -137,7 +136,7 @@ const CourseDetail = ({ course }) => {
                     key={item.schedule_course_id}
                     value={item.schedule_course_id}
                   >
-                    {item.schedule_date}
+                    {ConvertDayDate(item.schedule_date)}
                   </MenuItem>
                 ))}
             </Select>

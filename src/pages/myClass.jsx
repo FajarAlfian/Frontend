@@ -8,7 +8,7 @@ import { Box } from "@mui/material";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
-import { ConvertDate, formatRupiah } from "../utils/util";
+import { ConvertDayDate, formatRupiah } from "../utils/util";
 
 const MyClass = () => {
   const [course, setCourse] = useState([]);
@@ -66,7 +66,7 @@ const MyClass = () => {
                   fontSize={{ xs: "10", sm: "20px" }}
                   sx={{ fontWeight: "400", color: "#EA9E1F" }}
                 >
-                  Schedule: {courses.schedule_date}
+                  Schedule: {ConvertDayDate(courses.schedule_date)}
                 </Typography>
               </Stack>
             </Grid>

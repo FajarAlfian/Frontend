@@ -15,7 +15,7 @@ import Modal from "@mui/material/Modal";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import Navbar from "../components/molecules/navbar";
-import { ConvertDate, formatRupiah } from "../utils/util";
+import { ConvertDayDate, formatRupiah } from "../utils/util";
 
 const modalStyle = {
   position: "absolute",
@@ -217,7 +217,7 @@ const Checkout = () => {
                   fontSize={{ xs: "8", sm: "16px" }}
                   sx={{ fontWeight: "400", color: "#4F4F4F" }}
                 >
-                  {ConvertDate(item.schedule_date)}
+                  {ConvertDayDate(item.schedule_date)}
                 </Typography>
                 <Typography
                   fontSize={{ xs: "10", sm: "20px" }}
@@ -295,7 +295,7 @@ const Checkout = () => {
             <Button
               sx={{
                 borderRadius: "10px",
-                color: "white",  
+                color: "white",
                 backgroundColor: "#226957",
                 textTransform: "none",
                 fontSize: { xs: "16px", md: "20px" },
@@ -315,11 +315,14 @@ const Checkout = () => {
               </Typography>
               <Stack spacing={1}>
                 {paymentMethods.map((method) => {
-                  const isSelected = selectedPayment === method.payment_method_id;
+                  const isSelected =
+                    selectedPayment === method.payment_method_id;
                   return (
                     <Box
                       key={method.payment_method_id}
-                      onClick={() => handleSelectPayment(method.payment_method_id)}
+                      onClick={() =>
+                        handleSelectPayment(method.payment_method_id)
+                      }
                       sx={{
                         p: 1.5,
                         px: 2,
@@ -345,13 +348,19 @@ const Checkout = () => {
                         />
                         <Typography>{method.payment_method_name}</Typography>
                       </Box>
-                      {isSelected && <CheckCircleIcon sx={{ color: "#006A61" }} />}
+                      {isSelected && (
+                        <CheckCircleIcon sx={{ color: "#006A61" }} />
+                      )}
                     </Box>
                   );
                 })}
               </Stack>
               <Stack direction="row" spacing={2} justifyContent="center" mt={4}>
-                <Button variant="contained" sx={{ backgroundColor: "#F4A100" }} onClick={handleClose}>
+                <Button
+                  variant="contained"
+                  sx={{ backgroundColor: "#F4A100" }}
+                  onClick={handleClose}
+                >
                   Cancel
                 </Button>
                 <Button
