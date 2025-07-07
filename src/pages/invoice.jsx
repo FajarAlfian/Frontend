@@ -49,14 +49,14 @@ function DetailButton({ invoiceId }) {
 }
 
 export default function Invoice() {
+  const BASE_URL = import.meta.env.VITE_API;
   const { auth, setAuth } = useContext(AuthContext);
-  // 3. State untuk menampung baris tabel
   const [rows, setRows] = useState([]);
 
   useEffect(() => {
     const token = auth.token;
     axios
-      .get("http://localhost:5009/api/Invoice/user", {
+      .get(`${BASE_URL}/Invoice/user`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {

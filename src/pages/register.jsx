@@ -13,6 +13,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const Register = () => {
+  const BASE_URL = import.meta.env.VITE_API;
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: "",
@@ -74,7 +75,7 @@ const Register = () => {
 
       console.log("Form data is valid, sending to API:", dataToSend);
       axios
-        .post("http://localhost:5009/api/auth/register", dataToSend)
+        .post(`${BASE_URL}/auth/register`, dataToSend)
         .then((response) => {
           console.log("Registrasi berhasil:", response.data);
           alert("Registrasi berhasil! Anda akan diarahkan ke halaman login.");

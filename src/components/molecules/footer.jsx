@@ -11,10 +11,11 @@ import { useState, useEffect } from "react";
 import { NavLink } from "react-router";
 import axios from "axios";
 const Footer = () => {
+  const BASE_URL = import.meta.env.VITE_API;
   const [category, setCategory] = useState([]);
   useEffect(() => {
     axios
-      .get("http://localhost:5009/api/Categories")
+      .get(`${BASE_URL}/Categories`)
       .then((response) => {
         setCategory(response.data.data);
       })

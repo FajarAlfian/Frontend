@@ -35,6 +35,7 @@ const calculateTotal = (courses, selectedItems) =>
     .reduce((sum, item) => sum + item.course_price, 0);
 
 const Checkout = () => {
+  const BASE_URL = import.meta.env.VITE_API;
   const navigate = useNavigate();
   const { auth, setAuth } = useContext(AuthContext);
   const token = auth.token;
@@ -47,7 +48,7 @@ const Checkout = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5009/api/PaymentMethod", {
+      .get(`${BASE_URL}/PaymentMethod`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => setPaymentMethods(res.data.data))
@@ -57,7 +58,7 @@ const Checkout = () => {
   useEffect(() => {
     if (!token) return;
     axios
-      .get("http://localhost:5009/api/Checkout/user", {
+      .get(`${BASE_URL}/Checkout/user`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => setCourses(res.data.data.items))
@@ -93,7 +94,7 @@ const Checkout = () => {
 
   const handleDeleteCourse = (cartId) => {
     axios
-      .delete(`http://localhost:5009/api/Checkout/remove/${cartId}`, {
+      .delete(`${BASE_URL}/Checkout/remove/${cartId}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
@@ -108,7 +109,7 @@ const Checkout = () => {
     setOpen(false);
     axios
       .post(
-        "http://localhost:5009/api/Invoice",
+        `${BASE_URL}/Invoice`,
         {
           payment_method_id: selectedPayment,
           cart_product_ids: selectedItems,

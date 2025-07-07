@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router";
 
 const VerifyEmail = () => {
+  const BASE_URL = import.meta.env.VITE_API;
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [errorMsg, setErrorMsg] = useState("");
@@ -22,7 +23,7 @@ const VerifyEmail = () => {
       }
 
       try {
-        await axios.get("http://localhost:5009/api/Auth/verify-email", {
+        await axios.get(`${BASE_URL}L/Auth/verify-email`, {
           params: { token },
         });
         await delay(DELAY_MS);

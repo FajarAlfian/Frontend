@@ -5,26 +5,27 @@ import CourseCard from "./courseCard";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-
 const CourseList = ({ limit = 6, name, categoryId, excludeId }) => {
+  const BASE_URL = import.meta.env.VITE_API;
   const [courses, setCourses] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:5009/api/courses")
+    axios
+      .get(`${BASE_URL}/courses`)
       .then((response) => {
         let data = response.data.data;
         if (categoryId) {
-          data = data.filter(c => c.category_id === categoryId);
+          data = data.filter((c) => c.category_id === categoryId);
         }
         if (excludeId) {
-          data = data.filter(c => c.course_id !== excludeId);
+          data = data.filter((c) => c.course_id !== excludeId);
         }
         setCourses(data);
       })
       .catch((error) => {
         console.error("Error fetching courses:", error);
       });
-  }, [categoryId, excludeId]); 
+  }, [categoryId, excludeId]);
 
   return (
     <Box

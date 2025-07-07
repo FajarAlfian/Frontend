@@ -12,6 +12,7 @@ import Cookies from "js-cookie";
 import { ConvertDayDate, formatRupiah } from "../../utils/util";
 import { AuthContext } from "../../utils/authContext";
 const CourseDetail = ({ course }) => {
+  const BASE_URL = import.meta.env.VITE_API;
   const navigate = useNavigate();
   const { auth, setAuth } = useContext(AuthContext);
   const token = auth.token;
@@ -22,7 +23,7 @@ const CourseDetail = ({ course }) => {
   const handleCart = async () => {
     try {
       await axios.post(
-        `http://localhost:5009/api/Checkout/add?scheduleCourseId=${selectedSchedule}`,
+        `${BASE_URL}/Checkout/add?scheduleCourseId=${selectedSchedule}`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -36,7 +37,7 @@ const CourseDetail = ({ course }) => {
   const handleBuyNow = async () => {
     try {
       await axios.post(
-        `http://localhost:5009/api/Checkout/add?scheduleCourseId=${selectedSchedule}`,
+        `${BASE_URL}/Checkout/add?scheduleCourseId=${selectedSchedule}`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -50,9 +51,7 @@ const CourseDetail = ({ course }) => {
 
   useEffect(() => {
     axios
-      .get(
-        `http://localhost:5009/api/ScheduleCourse/course/${course.course_id}`
-      )
+      .get(`${BASE_URL}/ScheduleCourse/course/${course.course_id}`)
       .then((res) => setListSchedule(res.data.data))
       .catch((err) => console.error(err));
   }, [course.course_id]);

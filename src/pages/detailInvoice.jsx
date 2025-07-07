@@ -47,6 +47,7 @@ function DetailButton() {
   );
 }
 const DetailInvoice = () => {
+  const BASE_URL = import.meta.env.VITE_API;
   const { id } = useParams();
   const [rows, setRows] = useState([]);
   const [invoice, setInvoice] = useState([]);
@@ -56,7 +57,7 @@ const DetailInvoice = () => {
   const [totalPrice, setTotalPrice] = useState("");
   useEffect(() => {
     axios
-      .get(`http://localhost:5009/api/Invoice/${id}`, {
+      .get(`${BASE_URL}/Invoice/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {

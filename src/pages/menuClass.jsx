@@ -5,11 +5,12 @@ import Divider from "@mui/material/Divider";
 import { useParams } from "react-router";
 import axios from "axios";
 const MenuClass = () => {
+  const BASE_URL = import.meta.env.VITE_API;
   const { nama } = useParams();
   const [language, setLanguage] = useState(null);
   useEffect(() => {
     axios
-      .get(`http://localhost:5009/api/Categories/category/${nama}`)
+      .get(`${BASE_URL}/Categories/category/${nama}`)
       .then((response) => {
         console.log(response);
         setLanguage(response.data.data);

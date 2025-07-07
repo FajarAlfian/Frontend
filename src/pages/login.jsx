@@ -15,6 +15,7 @@ import { AuthContext } from "../utils/authContext";
 const Login = () => {
   const { auth, setAuth } = useContext(AuthContext);
   const navigate = useNavigate();
+  const BASE_URL = import.meta.env.VITE_API;
   const [formData, setFormData] = React.useState({
     email: "",
     password: "",
@@ -36,7 +37,7 @@ const Login = () => {
       console.log("Form data is invalid, validation failed");
     }
     axios
-      .post("http://localhost:5009/api/auth/login", {
+      .post(`${BASE_URL}/auth/login`, {
         email: formData.email,
         password: formData.password,
       })
