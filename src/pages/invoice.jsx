@@ -140,27 +140,44 @@ export default function Invoice() {
             </TableHead>
 
             <TableBody>
-              {rows.map((row, ri) => (
-                <TableRow
-                  key={ri}
-                  hover
-                  tabIndex={-1}
-                  sx={{
-                    backgroundColor: ri % 2 === 0 ? "#fff" : "#EA9E1F33",
-                    "&:hover": { backgroundColor: "#e0f7fa" },
-                  }}
-                >
-                  {columns.map((col) => (
-                    <TableCell
-                      key={col.id}
-                      align={col.align}
-                      sx={{ fontSize: 16 }}
+              {rows.length > 0 ? (
+                <>
+                  {rows.map((row, ri) => (
+                    <TableRow
+                      key={ri}
+                      hover
+                      tabIndex={-1}
+                      sx={{
+                        backgroundColor: ri % 2 === 0 ? "#fff" : "#EA9E1F33",
+                        "&:hover": { backgroundColor: "#e0f7fa" },
+                      }}
                     >
-                      {col.id === "action" ? row.action : row[col.id]}
-                    </TableCell>
+                      {columns.map((col) => (
+                        <TableCell
+                          key={col.id}
+                          align={col.align}
+                          sx={{ fontSize: 16 }}
+                        >
+                          {col.id === "action" ? row.action : row[col.id]}
+                        </TableCell>
+                      ))}
+                    </TableRow>
                   ))}
+                </>
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={columns.length} align="center">
+                    <Typography
+                      variant="h6"
+                      color="#006A61"
+                      fontWeight={500}
+                      py={10}
+                    >
+                      Oops! Looks like you haven’t made any payments yet.
+                    </Typography>
+                  </TableCell>
                 </TableRow>
-              ))}
+              )}
             </TableBody>
           </Table>
         </TableContainer>
