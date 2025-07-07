@@ -97,14 +97,8 @@ import DetailInvoice from "./pages/detailInvoice";
 import MyClass from "./pages/myClass";
 import VerifyEmail from "./pages/verifyEmail";
 import "./styles/app.css";
-
-// Protect Route Component
-export const LoginRoute = ({ children }) => {
-  const isUserLoggedIn = Cookies.get("token") !== undefined;
-  if (!isUserLoggedIn) return <Navigate to="/login" />;
-  return children;
-};
-
+import UserManagement from "./pages/userManagement";
+import CourseManagement from "./pages/courseManagement";
 function App() {
   return (
     <ThemeProvider theme={Theme}>
@@ -118,13 +112,14 @@ function App() {
             <Route path="/purchase-status" element={<StatusPurchase />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/verify-email" element={<VerifyEmail />} />
-
             <Route element={<Layout />}>
               <Route path="/" element={<Home />} />
               <Route path="/class" element={<MyClass />} />
               <Route path="/category/:nama" element={<MenuClass />} />
               <Route path="/detail/:id" element={<Detail />} />
               <Route path="/invoice" element={<Invoice />} />
+              <Route path="/manage/user" element={<UserManagement />} />
+              <Route path="/manage/course" element={<CourseManagement />} />
               <Route path="/detail-invoice/:id" element={<DetailInvoice />} />
             </Route>
           </Routes>
