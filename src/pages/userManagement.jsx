@@ -18,7 +18,8 @@ import TableRow from "@mui/material/TableRow";
 import { useRequireRole } from "../utils/useRequireRole";
 import { AuthContext } from "../utils/authContext";
 import { useNavigate } from "react-router";
-import ModalDeleteUser from "../components/ModalDeleteUser";
+import ModalDeleteUser from "../components/molecules/ModalDeleteUser";
+import ModalAddUser from "../components/molecules/ModalAddUser";
 const columns = [
   { id: "No", label: "No" },
   { id: "Username", label: "Username" },
@@ -34,27 +35,27 @@ export default function UserManagement() {
   const { auth, setAuth } = useContext(AuthContext);
   const token = auth.token;
   const [rows, setRows] = useState([]);
-  
+
   useEffect(() => {
     if (!auth.token || auth.role !== "admin") {
-    return;
+      return;
     }
-  axios
-    .get(`${BASE_URL}/Users/`, {
-      headers: { Authorization: `Bearer ${auth.token}` },
-    })
-    .then((res) => {
-      const mapped = res.data.data.map((user, idx) => ({
-        No: idx + 1,
-        Username: user.username,
-        Email: user.email,
-        Role: user.role,
-        action: <ModalDeleteUser userId={user.user_id} />,
-      }));
-      setRows(mapped);
-    })
-    .catch((err) => console.error("Fetch user error:", err));
-}, [auth.token, auth.role, BASE_URL]);
+    axios
+      .get(`${BASE_URL}/Users/`, {
+        headers: { Authorization: `Bearer ${auth.token}` },
+      })
+      .then((res) => {
+        const mapped = res.data.data.map((user, idx) => ({
+          No: idx + 1,
+          Username: user.username,
+          Email: user.email,
+          Role: user.role,
+          action: <ModalDeleteUser userId={user.user_id} />,
+        }));
+        setRows(mapped);
+      })
+      .catch((err) => console.error("Fetch user error:", err));
+  }, [auth.token, auth.role, BASE_URL]);
 
   const breadcrumbs = [
     <Link
@@ -100,7 +101,6 @@ export default function UserManagement() {
             </Button>
           </Stack>
         </Grid>
-
         <Grid
           size={{ sm: "grow" }}
           item
@@ -110,20 +110,7 @@ export default function UserManagement() {
           justifyContent="flex-end"
           alignItems="flex-end"
         >
-          <Button
-            variant="contained"
-            sx={{
-              borderRadius: 2,
-              color: "#fff",
-              backgroundColor: "#EA9E1F",
-              textTransform: "none",
-              width: 140,
-              height: 38,
-              fontSize: { xs: 13, md: 15 },
-            }}
-          >
-            Add user
-          </Button>
+          <ModalAddUser />
         </Grid>
       </Grid>
       <Paper
