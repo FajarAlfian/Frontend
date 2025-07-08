@@ -6,6 +6,8 @@ import Button from "@mui/material/Button";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import Divider from "@mui/material/Divider";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 import axios from "axios";
 import { useNavigate } from "react-router";
 import Cookies from "js-cookie";
@@ -27,10 +29,18 @@ const CourseDetail = ({ course }) => {
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      alert("Menambahkan cart berhasil!");
+      setSnackbar({
+        open: true,
+        message: "Berhasil menambahkan ke keranjang",
+        severity: "success",
+      });
     } catch (error) {
       console.error(error);
-      alert("Registrasi gagal. Silakan coba lagi.");
+      setSnackbar({
+        open: true,
+        message: "Gagal menambahkan ke keranjang. Silakan coba lagi.",
+        severity: "error",
+      });
     }
   };
 
@@ -41,13 +51,31 @@ const CourseDetail = ({ course }) => {
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      alert("Menambahkan cart berhasil!");
+           setSnackbar({
+        open: true,
+        message: "Berhasil menambah ke keranjang, Anda akan dibawa ke halaman checkout",
+        severity: "success",
+      });
       navigate("/checkout");
     } catch (error) {
       console.error(error);
-      alert("Menambahkan cart gagal. Silakan coba lagi.");
+            setSnackbar({
+        open: true,
+        message: "Gagal menambahkan ke keranjang. Silakan coba lagi.",
+        severity: "error",
+      });
     }
   };
+
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "success",
+  });
+
+  const handleCloseSnackbar = () =>
+    setSnackbar((prev) => ({ ...prev, open: false }));
+
 
   useEffect(() => {
     axios
@@ -65,154 +93,170 @@ const CourseDetail = ({ course }) => {
   };
 
   return (
-    <Grid
-      container
-      sx={{
-        justifyContent: "flex-start",
-        alignItems: "center",
-        mx: { xs: 2, md: 10 },
-      }}
-    >
-      <Box
+    <>
+      <Grid
+        container
         sx={{
-          p: { xs: 2, md: "40px" },
-          backgroundColor: "white",
-          borderRadius: 0,
+          justifyContent: "flex-start",
+          alignItems: "center",
+          mx: { xs: 2, md: 10 },
         }}
       >
-        <Grid container spacing={4} justifyContent="flex-start">
-          <Grid item xs={12} md={6}>
-            <Box
-              component="img"
-              src={courseProps.image}
-              alt={courseProps.title}
-              sx={{
-                mt: 2,
-                width: "100%",
-                height: "auto",
-                borderRadius: 0,
-                objectFit: "cover",
-                display: "block",
-              }}
-            />
+        <Box
+          sx={{
+            p: { xs: 2, md: "40px" },
+            backgroundColor: "white",
+            borderRadius: 0,
+          }}
+        >
+          <Grid container spacing={4} justifyContent="flex-start">
+            <Grid item xs={12} md={6}>
+              <Box
+                component="img"
+                src={courseProps.image}
+                alt={courseProps.title}
+                sx={{
+                  mt: 2,
+                  width: "100%",
+                  height: "auto",
+                  borderRadius: 0,
+                  objectFit: "cover",
+                  display: "block",
+                }}
+              />
+            </Grid>
+
+            <Grid item xs={12} md={6}>
+              <Typography
+                variant="h6"
+                color="dlang.black"
+                fontWeight={400}
+                gutterBottom
+              >
+                {courseProps.category}
+              </Typography>
+              <Typography
+                variant="h4"
+                gutterBottom
+                sx={{ fontWeight: 600, color: "dlang.black" }}
+              >
+                {courseProps.title}
+              </Typography>
+              <Typography
+                variant="h5"
+                color="dlang.orange"
+                fontWeight={600}
+                gutterBottom
+              >
+                {courseProps.price}
+              </Typography>
+
+              <Select
+                fullWidth
+                displayEmpty
+                value={selectedSchedule || ""}
+                onChange={handleChange}
+                sx={{
+                  height: 40,
+                  width: { xs: "100%", md: "300px" },
+                  mt: "20px",
+                  mb: "40px",
+                }}
+              >
+                <MenuItem value="" disabled>
+                  Select Schedule
+                </MenuItem>
+                {listSchedule.map((item) => (
+                  <MenuItem
+                    key={item.schedule_course_id}
+                    value={item.schedule_course_id}
+                  >
+                    {ConvertDayDate(item.schedule_date)}
+                  </MenuItem>
+                ))}
+              </Select>
+
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: { xs: "column", md: "row" },
+                  gap: { xs: 2, md: "16px" },
+                }}
+              >
+                <Button
+                  variant="contained"
+                  onClick={handleCart}
+                  sx={{
+                    width: { xs: "100%", md: "233px" },
+                    color: "white",
+                    backgroundColor: "dlang.orange",
+                    borderRadius: "8px",
+                  }}
+                >
+                  Add to Cart
+                </Button>
+
+                <Button
+                  variant="contained"
+                  onClick={handleBuyNow}
+                  sx={{
+                    width: { xs: "100%", md: "234px" },
+                    color: "white",
+                    backgroundColor: "dlang.green",
+                    borderRadius: "8px",
+                  }}
+                >
+                  Buy Now
+                </Button>
+              </Box>
+            </Grid>
           </Grid>
 
-          <Grid item xs={12} md={6}>
+          <Box sx={{ mt: { xs: 2, md: "40px" } }}>
             <Typography
               variant="h6"
-              color="dlang.black"
-              fontWeight={400}
-              gutterBottom
+              sx={{ fontWeight: "bold", color: "dlang.gray" }}
             >
-              {courseProps.category}
+              Description
             </Typography>
-            <Typography
-              variant="h4"
-              gutterBottom
-              sx={{ fontWeight: 600, color: "dlang.black" }}
-            >
-              {courseProps.title}
+            <Typography variant="body1" sx={{ color: "dlang.gray" }}>
+              {courseProps.description}
             </Typography>
-            <Typography
-              variant="h5"
-              color="dlang.orange"
-              fontWeight={600}
-              gutterBottom
-            >
-              {courseProps.price}
-            </Typography>
+          </Box>
 
-            <Select
-              fullWidth
-              displayEmpty
-              value={selectedSchedule || ""}
-              onChange={handleChange}
+          <Divider sx={{ my: { xs: 4, md: "80px" } }} />
+
+          <Box sx={{ mt: { xs: 2, md: "60px" } }}>
+            <Typography
+              variant="h6"
               sx={{
-                height: 40,
-                width: { xs: "100%", md: "300px" },
-                mt: "20px",
-                mb: "40px",
+                fontWeight: "bold",
+                color: "dlang.green",
+                textAlign: "center",
+                fontSize: 24,
+                mb: 0,
               }}
             >
-              <MenuItem value="" disabled>
-                Select Schedule
-              </MenuItem>
-              {listSchedule.map((item) => (
-                <MenuItem
-                  key={item.schedule_course_id}
-                  value={item.schedule_course_id}
-                >
-                  {ConvertDayDate(item.schedule_date)}
-                </MenuItem>
-              ))}
-            </Select>
-
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: { xs: "column", md: "row" },
-                gap: { xs: 2, md: "16px" },
-              }}
-            >
-              <Button
-                variant="contained"
-                onClick={handleCart}
-                sx={{
-                  width: { xs: "100%", md: "233px" },
-                  color: "white",
-                  backgroundColor: "dlang.orange",
-                  borderRadius: "8px",
-                }}
-              >
-                Add to Cart
-              </Button>
-
-              <Button
-                variant="contained"
-                onClick={handleBuyNow}
-                sx={{
-                  width: { xs: "100%", md: "234px" },
-                  color: "white",
-                  backgroundColor: "dlang.green",
-                  borderRadius: "8px",
-                }}
-              >
-                Buy Now
-              </Button>
-            </Box>
-          </Grid>
-        </Grid>
-
-        <Box sx={{ mt: { xs: 2, md: "40px" } }}>
-          <Typography
-            variant="h6"
-            sx={{ fontWeight: "bold", color: "dlang.gray" }}
-          >
-            Description
-          </Typography>
-          <Typography variant="body1" sx={{ color: "dlang.gray" }}>
-            {courseProps.description}
-          </Typography>
+              Another class for you
+            </Typography>
+          </Box>
         </Box>
-
-        <Divider sx={{ my: { xs: 4, md: "80px" } }} />
-
-        <Box sx={{ mt: { xs: 2, md: "60px" } }}>
-          <Typography
-            variant="h6"
-            sx={{
-              fontWeight: "bold",
-              color: "dlang.green",
-              textAlign: "center",
-              fontSize: 24,
-              mb: 0,
-            }}
-          >
-            Another class for you
-          </Typography>
-        </Box>
-      </Box>
-    </Grid>
+      </Grid>
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={4000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity={snackbar.severity}
+          sx={{ width: "100%" }}
+        >
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
+    </>
   );
 };
 
