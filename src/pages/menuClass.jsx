@@ -26,6 +26,7 @@ const MenuClass = () => {
           <ImageText
             name={language.category_name}
             description={language.category_description}
+            foto={language.category_banner}
           />
           <Divider sx={{ marginTop: "80px", marginBottom: "80px" }} />
           <CourseListDetail limit={3} />

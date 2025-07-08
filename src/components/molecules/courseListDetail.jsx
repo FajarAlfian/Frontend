@@ -7,9 +7,11 @@ import CourseList from "./courseList";
 
 const CourseListDetail = ({ limit = 6, name }) => {
   const [page, setPage] = useState(1);
+  const [showButton, setShowButton] = useState(true);
 
   const handleSeeMore = () => {
     setPage((prevPage) => prevPage + 1);
+    setShowButton(false)
   };
 
   return (
@@ -23,33 +25,31 @@ const CourseListDetail = ({ limit = 6, name }) => {
         {(name = "Class you might like")}
       </Typography>
 
-      <Box
-        sx={{
-          textAlign: "left",
-        }}
-      >
+      <Box sx={{ textAlign: "left" }}>
         <CourseList limit={limit * page} />
       </Box>
 
       <Box sx={{ marginTop: "30px", marginBottom: "60px" }}>
-      <Button
-        variant="outlined"
-        onClick={handleSeeMore}
-        endIcon={<ArrowDownward />}
-        sx={{
-          alignContent: "center",
-          padding: { xs: "5px 30px", sm: "5px 50px", md: "5px 200px" },  
-          fontSize: { xs: "14px", sm: "16px", md: "16px" },  
-          color: "dlang.green",
-          borderColor: "dlang.green",
-          "&:hover": {
-            backgroundColor: "dlang.green",
-            color: "white",
-          },
-        }}
-      >
-        See More
-      </Button>
+        {showButton && (
+          <Button
+            variant="outlined"
+            onClick={handleSeeMore}
+            endIcon={<ArrowDownward />}
+            sx={{
+              alignContent: "center",
+              padding: { xs: "5px 30px", sm: "5px 50px", md: "5px 200px" },  
+              fontSize: { xs: "14px", sm: "16px", md: "16px" },  
+              color: "dlang.green",
+              borderColor: "dlang.green",
+              "&:hover": {
+                backgroundColor: "dlang.green",
+                color: "white",
+              },
+            }}
+          >
+            See More
+          </Button>
+        )}
       </Box>
     </Box>
   );

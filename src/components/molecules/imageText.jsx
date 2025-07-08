@@ -5,17 +5,17 @@ import Typography from "@mui/material/Typography";
 const ImageText = ({
   name,
   description,
-  foto = "../../public/assets/english.png",
+  foto,
 }) => {
   return (
     <Box sx={{ textAlign: "left" }}>
       <Box
         component="img"
         src={foto}
-        alt="English"
+        alt={name}
         sx={{
           width: "100%",
-          height: "auto",
+          height: "294px",
         }}
       />
 
