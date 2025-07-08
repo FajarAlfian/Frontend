@@ -15,8 +15,9 @@ import TableRow from "@mui/material/TableRow";
 import { AuthContext } from "../utils/authContext";
 import { useNavigate } from "react-router";
 import { useRequireRole } from "../utils/useRequireRole";
-import ModalDeleteUser from "../components/ModalDeleteUser";
-
+import ModalDeleteCourse from "../components/ModalDeleteCourse";
+import ModalAddCourse from "../components/ModalAddCourse";
+import ModalUpdateCourse from "../components/ModalUpdateCourse";
 const columns = [
   { id: "No", label: "No" },
   { id: "CourseName", label: "Course Name" },
@@ -38,7 +39,6 @@ export default function CourseManagement() {
     if (!token || auth.role !== "admin") {
       return;
     }
-
     axios
       .get(`${BASE_URL}/Courses`, {
         headers: { Authorization: `Bearer ${token}` },
@@ -51,22 +51,8 @@ export default function CourseManagement() {
           CategoryName: course.category_name,
           action: (
             <Stack direction="row" spacing={1}>
-              <Button
-                variant="contained"
-                sx={{
-                  borderRadius: 2,
-                  color: "#fff",
-                  backgroundColor: "#EA9E1F",
-                  textTransform: "none",
-                  width: 100,
-                  height: 38,
-                  fontSize: { xs: 13, md: 15 },
-                }}
-                onClick={() => navigate(`/courses/update/${course.course_id}`)}
-              >
-                Update
-              </Button>
-              <ModalDeleteUser courseId={course.course_id} />
+              <ModalUpdateCourse id={course.course_id} />
+              <ModalDeleteCourse id={course.course_id} />
             </Stack>
           ),
         }));
@@ -77,7 +63,10 @@ export default function CourseManagement() {
 
   return (
     <Box mx={13} my={3}>
-      <Typography sx={{ color: "#4F4F4F", fontSize: 20, fontWeight: 600 }} mb={3}>
+      <Typography
+        sx={{ color: "#4F4F4F", fontSize: 20, fontWeight: 600 }}
+        mb={3}
+      >
         Course Management
       </Typography>
 
@@ -110,25 +99,18 @@ export default function CourseManagement() {
           justifyContent="flex-end"
           alignItems="flex-end"
         >
-          <Button
-            variant="contained"
-            sx={{
-              borderRadius: 2,
-              color: "#fff",
-              backgroundColor: "#EA9E1F",
-              textTransform: "none",
-              width: 140,
-              height: 38,
-              fontSize: { xs: 13, md: 15 },
-            }}
-            onClick={() => navigate("/courses/add")}
-          >
-            Add course
-          </Button>
+          <ModalAddCourse />
         </Grid>
       </Grid>
 
-      <Paper sx={{ width: "100%", overflow: "hidden", boxShadow: "none", borderRadius: 0 }}>
+      <Paper
+        sx={{
+          width: "100%",
+          overflow: "hidden",
+          boxShadow: "none",
+          borderRadius: 0,
+        }}
+      >
         <TableContainer sx={{ maxHeight: 440 }}>
           <Table stickyHeader>
             <TableHead>
@@ -163,7 +145,11 @@ export default function CourseManagement() {
                     }}
                   >
                     {columns.map((col) => (
-                      <TableCell key={col.id} align={col.align} sx={{ fontSize: 16 }}>
+                      <TableCell
+                        key={col.id}
+                        align={col.align}
+                        sx={{ fontSize: 16 }}
+                      >
                         {col.id === "Action" ? row.action : row[col.id]}
                       </TableCell>
                     ))}
@@ -172,7 +158,12 @@ export default function CourseManagement() {
               ) : (
                 <TableRow>
                   <TableCell colSpan={columns.length} align="center">
-                    <Typography variant="h6" color="#006A61" fontWeight={500} py={10}>
+                    <Typography
+                      variant="h6"
+                      color="#006A61"
+                      fontWeight={500}
+                      py={10}
+                    >
                       Oops! No courses found.
                     </Typography>
                   </TableCell>
