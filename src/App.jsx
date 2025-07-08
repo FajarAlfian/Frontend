@@ -96,6 +96,7 @@ import Invoice from "./pages/invoice";
 import DetailInvoice from "./pages/detailInvoice";
 import MyClass from "./pages/myClass";
 import VerifyEmail from "./pages/verifyEmail";
+import { SnackbarProvider } from "./components/molecules/snackbar";
 import "./styles/app.css";
 
 // Protect Route Component
@@ -108,6 +109,7 @@ export const LoginRoute = ({ children }) => {
 function App() {
   return (
     <ThemeProvider theme={Theme}>
+      <SnackbarProvider>
       <AuthProvider>
         <Router>
           <Routes>
@@ -130,6 +132,7 @@ function App() {
           </Routes>
         </Router>
       </AuthProvider>
+      </SnackbarProvider>
     </ThemeProvider>
   );
 }
