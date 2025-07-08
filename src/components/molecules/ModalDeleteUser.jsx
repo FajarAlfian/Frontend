@@ -7,7 +7,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import axios from "axios";
 import { useContext } from "react";
-import { AuthContext } from "../utils/authContext";
+import { AuthContext } from "../../utils/authContext";
 const ModalDeleteUser = ({ userId }) => {
   const BASE_URL = import.meta.env.VITE_API;
   const { auth, setAuth } = useContext(AuthContext);

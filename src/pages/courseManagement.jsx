@@ -15,9 +15,9 @@ import TableRow from "@mui/material/TableRow";
 import { AuthContext } from "../utils/authContext";
 import { useNavigate } from "react-router";
 import { useRequireRole } from "../utils/useRequireRole";
-import ModalDeleteCourse from "../components/ModalDeleteCourse";
-import ModalAddCourse from "../components/ModalAddCourse";
-import ModalUpdateCourse from "../components/ModalUpdateCourse";
+import ModalDeleteCourse from "../components/molecules/ModalDeleteCourse";
+import ModalAddCourse from "../components/molecules/ModalAddCourse";
+import ModalUpdateCourse from "../components/molecules/ModalUpdateCourse";
 const columns = [
   { id: "No", label: "No" },
   { id: "CourseName", label: "Course Name" },

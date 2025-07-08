@@ -9,7 +9,7 @@ import Stack from "@mui/material/Stack";
 import InputLabel from "@mui/material/InputLabel";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../utils/authContext";
+import { AuthContext } from "../../utils/authContext";
 import FormControl from "@mui/material/FormControl";
 const modalStyle = {
   position: "absolute",
@@ -22,7 +22,7 @@ const modalStyle = {
   p: 4,
   width: 360,
 };
-const ModalAddCourse = () => {
+const ModalUpdateCourse = ({ id }) => {
   const BASE_URL = import.meta.env.VITE_API;
   const { auth, setAuth } = useContext(AuthContext);
   const [open, setOpen] = useState(false);
@@ -32,6 +32,17 @@ const ModalAddCourse = () => {
   const [coursePrice, setCoursePrice] = useState();
   const [courseImage, setCourseImage] = useState("");
   const [selectedCategory, setSelectedCategory] = useState();
+  const [course, setCourse] = useState([]);
+  useEffect(() => {
+    axios
+      .get(`${BASE_URL}/Courses/${id}`)
+      .then((response) => {
+        setCourse(response.data.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching category:", error);
+      });
+  }, []);
   useEffect(() => {
     axios
       .get(`${BASE_URL}/Categories`)
@@ -42,18 +53,19 @@ const ModalAddCourse = () => {
         console.error("Error fetching category:", error);
       });
   }, []);
-  const handleChange = () => {};
+
   const handleClickOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
   };
-  const handleAdd = () => {
+  const handleUpdate = () => {
     axios
-      .post(
-        `${BASE_URL}/Courses`,
+      .put(
+        `${BASE_URL}/Courses/${id}`,
         {
+          course_id: id,
           course_name: courseName,
           course_price: coursePrice,
           course_image: courseImage,
@@ -65,7 +77,7 @@ const ModalAddCourse = () => {
         }
       )
       .then(() => {
-        alert("add course success");
+        alert("update course success");
         handleClose();
       })
       .catch((err) => console.error("Error add course item:", err));
@@ -86,30 +98,35 @@ const ModalAddCourse = () => {
         }}
         onClick={handleClickOpen}
       >
-        Add Course
+        Update
       </Button>
       <Modal open={open} onClose={handleClose}>
         <Box sx={modalStyle}>
           <Typography variant="h6" textAlign="center" mb={2}>
-            Add Course
+            Update Course
           </Typography>
           <Stack spacing={1}>
             <TextField
               id="outlined-basic"
               label="Name"
               variant="outlined"
+              defaultValue={course.course_name}
               onChange={(e) => setCourseName(e.target.value)}
             />
             <TextField
               id="outlined-basic"
               label="Price"
               variant="outlined"
+              defaultValue={course.course_price}
               onChange={(e) => setCoursePrice(e.target.value)}
-            />
+            >
+              {course.course_price}
+            </TextField>
             <TextField
               id="outlined-basic"
               label="Image"
               variant="outlined"
+              defaultValue={course.course_image}
               onChange={(e) => setCourseImage(e.target.value)}
             />
             <FormControl fullWidth>
@@ -142,6 +159,7 @@ const ModalAddCourse = () => {
               maxRows={4}
               label="Description"
               variant="outlined"
+              defaultValue={course.course_description}
               onChange={(e) => setCourseDescription(e.target.value)}
             />
           </Stack>
@@ -157,9 +175,9 @@ const ModalAddCourse = () => {
             <Button
               variant="contained"
               sx={{ backgroundColor: "#006A61" }}
-              onClick={handleAdd}
+              onClick={handleUpdate}
             >
-              Add
+              Update
             </Button>
           </Stack>
         </Box>
@@ -167,4 +185,4 @@ const ModalAddCourse = () => {
     </>
   );
 };
-export default ModalAddCourse;
+export default ModalUpdateCourse;
