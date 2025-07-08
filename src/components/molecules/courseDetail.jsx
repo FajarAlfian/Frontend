@@ -6,20 +6,22 @@ import Button from "@mui/material/Button";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import Divider from "@mui/material/Divider";
-import Snackbar from "@mui/material/Snackbar";
-import Alert from "@mui/material/Alert";
 import axios from "axios";
 import { useNavigate } from "react-router";
 import Cookies from "js-cookie";
 import { ConvertDayDate, formatRupiah } from "../../utils/util";
 import { AuthContext } from "../../utils/authContext";
+import { useSnackbar } from "../../components/molecules/snackbar";
+
 const CourseDetail = ({ course }) => {
   const BASE_URL = import.meta.env.VITE_API;
   const navigate = useNavigate();
   const { auth, setAuth } = useContext(AuthContext);
   const token = auth.token;
+  const showSnackbar = useSnackbar();
   const [selectedSchedule, setSelectedSchedule] = useState(null);
   const [listSchedule, setListSchedule] = useState([]);
+
   const handleChange = (event) => setSelectedSchedule(event.target.value);
 
   const handleCart = async () => {
@@ -29,15 +31,13 @@ const CourseDetail = ({ course }) => {
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      setSnackbar({
-        open: true,
+      showSnackbar({
         message: "Berhasil menambahkan ke keranjang",
         severity: "success",
       });
     } catch (error) {
       console.error(error);
-      setSnackbar({
-        open: true,
+      showSnackbar({
         message: "Gagal menambahkan ke keranjang. Silakan coba lagi.",
         severity: "error",
       });
@@ -51,31 +51,19 @@ const CourseDetail = ({ course }) => {
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
-           setSnackbar({
-        open: true,
+      showSnackbar({
         message: "Berhasil menambah ke keranjang, Anda akan dibawa ke halaman checkout",
         severity: "success",
       });
-      navigate("/checkout");
+      setTimeout(() => navigate("/checkout"), 1000);
     } catch (error) {
       console.error(error);
-            setSnackbar({
-        open: true,
+      showSnackbar({
         message: "Gagal menambahkan ke keranjang. Silakan coba lagi.",
         severity: "error",
       });
     }
   };
-
-  const [snackbar, setSnackbar] = useState({
-    open: false,
-    message: "",
-    severity: "success",
-  });
-
-  const handleCloseSnackbar = () =>
-    setSnackbar((prev) => ({ ...prev, open: false }));
-
 
   useEffect(() => {
     axios
@@ -242,20 +230,6 @@ const CourseDetail = ({ course }) => {
           </Box>
         </Box>
       </Grid>
-      <Snackbar
-        open={snackbar.open}
-        autoHideDuration={4000}
-        onClose={handleCloseSnackbar}
-        anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-      >
-        <Alert
-          onClose={handleCloseSnackbar}
-          severity={snackbar.severity}
-          sx={{ width: "100%" }}
-        >
-          {snackbar.message}
-        </Alert>
-      </Snackbar>
     </>
   );
 };

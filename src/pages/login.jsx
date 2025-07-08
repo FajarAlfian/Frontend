@@ -12,8 +12,11 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../utils/authContext";
+import { useSnackbar } from "../components/molecules/snackbar"; 
+
 const Login = () => {
   const { auth, setAuth } = useContext(AuthContext);
+  const showSnackbar = useSnackbar();  
   const navigate = useNavigate();
   const BASE_URL = import.meta.env.VITE_API;
   const [formData, setFormData] = React.useState({
@@ -31,10 +34,12 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (checkPassword) {
-      console.log("Form data is valid, sending to API:", formData);
-    } else {
-      console.log("Form data is invalid, validation failed");
+    if (!minCharacter) {
+      showSnackbar({
+        message: "Password minimal 8 karakter.",
+        severity: "warning",
+      });
+      return;
     }
     axios
       .post(`${BASE_URL}/auth/login`, {
@@ -47,16 +52,23 @@ const Login = () => {
           token: response.data.data.token,
           role: response.data.data.role,
         });
-        alert("Login successful.", response.message);
-        navigate("/");
+        showSnackbar({
+          message: "Login berhasil.",
+          severity: "success",
+        });
+        navigate("/")
       })
       .catch((error) => {
-        console.error("Login failed:", error);
+        showSnackbar({
+          message: "Login gagal. Email atau password salah.",
+          severity: "error",
+        });
       });
   };
 
   const checkPassword = formData.password.length > 0;
   const minCharacter = formData.password.length >= 8;
+
   return (
     <Box>
       <Navbar />
