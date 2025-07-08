@@ -7,27 +7,27 @@ const AuthProvider = ({ children }) => {
     token: null,
     role: null,
   });
+  const [loading, setLoading] = useState(true);
 
-  // ⏬ Ambil dari localStorage saat pertama kali render
   useEffect(() => {
     const storedAuth = localStorage.getItem("auth");
     if (storedAuth) {
       setAuth(JSON.parse(storedAuth));
     }
+    setLoading(false);
   }, []);
 
-  // ⏫ Simpan ke localStorage setiap kali auth berubah
   useEffect(() => {
     if (auth.token) {
       localStorage.setItem("auth", JSON.stringify(auth));
     } else {
-      localStorage.removeItem("auth"); // Bersihkan jika logout
+      localStorage.removeItem("auth");
     }
   }, [auth]);
 
   return (
     <AuthContext.Provider value={{ auth, setAuth }}>
-      {children}
+      {loading ? null : children}
     </AuthContext.Provider>
   );
 };
