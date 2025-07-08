@@ -15,6 +15,7 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import { useRequireRole } from "../utils/useRequireRole";
 import { AuthContext } from "../utils/authContext";
 import { useNavigate } from "react-router";
 import ModalDeleteUser from "../components/ModalDeleteUser";
@@ -27,33 +28,33 @@ const columns = [
 ];
 
 export default function UserManagement() {
+  useRequireRole(["admin"]);
   const navigate = useNavigate();
   const BASE_URL = import.meta.env.VITE_API;
   const { auth, setAuth } = useContext(AuthContext);
   const token = auth.token;
   const [rows, setRows] = useState([]);
-  if (auth.role !== "admin") {
-    alert("kamu bukan admin, role kamu", auth.role);
-    // navigate("/");
-  }
+  
   useEffect(() => {
-    const token = auth.token;
-    axios
-      .get(`${BASE_URL}/Users/`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((res) => {
-        const mapped = res.data.data.map((user, idx) => ({
-          No: idx + 1,
-          Username: user.username,
-          Email: user.email,
-          Role: user.role,
-          action: <ModalDeleteUser userId={user.user_id} />,
-        }));
-        setRows(mapped);
-      })
-      .catch((err) => console.error("Fetch invoice error:", err));
-  }, [token]);
+    if (!auth.token || auth.role !== "admin") {
+    return;
+    }
+  axios
+    .get(`${BASE_URL}/Users/`, {
+      headers: { Authorization: `Bearer ${auth.token}` },
+    })
+    .then((res) => {
+      const mapped = res.data.data.map((user, idx) => ({
+        No: idx + 1,
+        Username: user.username,
+        Email: user.email,
+        Role: user.role,
+        action: <ModalDeleteUser userId={user.user_id} />,
+      }));
+      setRows(mapped);
+    })
+    .catch((err) => console.error("Fetch user error:", err));
+}, [auth.token, auth.role, BASE_URL]);
 
   const breadcrumbs = [
     <Link
