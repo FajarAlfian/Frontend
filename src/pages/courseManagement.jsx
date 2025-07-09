@@ -50,7 +50,7 @@ export default function CourseManagement() {
           CoursePrice: course.course_price,
           CategoryName: course.category_name,
           action: (
-            <Stack direction="row" spacing={1}>
+            <Stack direction="row" justifyContent="center" spacing={1}>
               <ModalUpdateCourse id={course.course_id} />
               <ModalDeleteCourse id={course.course_id} />
             </Stack>
@@ -84,14 +84,13 @@ export default function CourseManagement() {
                 height: 38,
                 fontSize: { xs: 13, md: 15 },
               }}
-              onClick={() => navigate("/courses/search")}
             >
               Search course
             </Button>
           </Stack>
         </Grid>
-
         <Grid
+          size={{ sm: "grow" }}
           item
           xs={12}
           md={6}
