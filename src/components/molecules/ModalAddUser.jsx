@@ -63,12 +63,12 @@ const ModalAddUser = () => {
         }}
         onClick={handleClickOpen}
       >
-        Add Course
+        Add User
       </Button>
       <Modal open={open} onClose={handleClose}>
         <Box sx={modalStyle}>
           <Typography variant="h6" textAlign="center" mb={2}>
-            Add Course
+            Add User
           </Typography>
           <Stack spacing={1}>
             <TextField
