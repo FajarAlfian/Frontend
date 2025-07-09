@@ -105,8 +105,8 @@ const CourseDetail = ({ course }) => {
                 alt={courseProps.title}
                 sx={{
                   mt: 2,
-                  width: "100%",
-                  height: "auto",
+                  width: "400px",
+                  height: "267px",
                   borderRadius: 0,
                   objectFit: "cover",
                   display: "block",

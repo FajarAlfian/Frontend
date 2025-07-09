@@ -46,7 +46,7 @@ const CategoryCourse = () => {
               key={item.category_id}
               xs={12}
               sm={6}
-              md={4} // 4 items per row at md breakpoint
+              md={4} 
               display="flex"
               justifyContent="center"
             >

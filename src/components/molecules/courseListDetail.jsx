@@ -5,14 +5,7 @@ import Typography from "@mui/material/Typography";
 import ArrowDownward from "@mui/icons-material/ArrowDownward";
 import CourseList from "./courseList";
 
-const CourseListDetail = ({ limit = 6, name }) => {
-  const [page, setPage] = useState(1);
-  const [showButton, setShowButton] = useState(true);
-
-  const handleSeeMore = () => {
-    setPage((prevPage) => prevPage + 1);
-    setShowButton(false)
-  };
+const CourseListDetail = ({ limit = 6, name, categoryId }) => {
 
   return (
     <Box sx={{ marginTop: "60px", textAlign: "center" }}>
@@ -22,35 +15,13 @@ const CourseListDetail = ({ limit = 6, name }) => {
         fontWeight="bold"
         sx={{ marginBottom: "24px", color: "#226957" }}
       >
-        {(name = "Class you might like")}
+        {name = "Class you might like"}
       </Typography>
 
       <Box sx={{ textAlign: "left" }}>
-        <CourseList limit={limit * page} />
+        <CourseList categoryId={categoryId} />
       </Box>
 
-      <Box sx={{ marginTop: "30px", marginBottom: "60px" }}>
-        {showButton && (
-          <Button
-            variant="outlined"
-            onClick={handleSeeMore}
-            endIcon={<ArrowDownward />}
-            sx={{
-              alignContent: "center",
-              padding: { xs: "5px 30px", sm: "5px 50px", md: "5px 200px" },  
-              fontSize: { xs: "14px", sm: "16px", md: "16px" },  
-              color: "dlang.green",
-              borderColor: "dlang.green",
-              "&:hover": {
-                backgroundColor: "dlang.green",
-                color: "white",
-              },
-            }}
-          >
-            See More
-          </Button>
-        )}
-      </Box>
     </Box>
   );
 };
