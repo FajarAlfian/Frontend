@@ -18,6 +18,7 @@ import { useRequireRole } from "../utils/useRequireRole";
 import ModalDeleteCourse from "../components/molecules/ModalDeleteCourse";
 import ModalAddCourse from "../components/molecules/ModalAddCourse";
 import ModalUpdateCourse from "../components/molecules/ModalUpdateCourse";
+import ModalAddSchedule from "../components/molecules/ModalCourseSchedule.jsx";
 const columns = [
   { id: "No", label: "No" },
   { id: "CourseName", label: "Course Name" },
@@ -51,6 +52,10 @@ export default function CourseManagement() {
           CategoryName: course.category_name,
           action: (
             <Stack direction="row" justifyContent="center" spacing={1}>
+              <ModalAddSchedule
+                courseId={course.course_id}
+                courseName={course.course_name}
+              />
               <ModalUpdateCourse id={course.course_id} />
               <ModalDeleteCourse id={course.course_id} />
             </Stack>
