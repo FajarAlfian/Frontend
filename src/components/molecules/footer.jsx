@@ -11,10 +11,11 @@ import { useState, useEffect } from "react";
 import { NavLink } from "react-router";
 import axios from "axios";
 const Footer = () => {
+  const BASE_URL = import.meta.env.VITE_API;
   const [category, setCategory] = useState([]);
   useEffect(() => {
     axios
-      .get("http://localhost:5009/api/Categories")
+      .get(`${BASE_URL}/Categories`)
       .then((response) => {
         setCategory(response.data.data);
       })
@@ -29,24 +30,27 @@ const Footer = () => {
         backgroundColor: " #226957",
       }}
     >
-      <Grid mx={10}>
+      <Grid mx={{ xs: 5, sm: 10 }}>
         <Grid
           container
-          spacing={{ xs: 2, md: 3 }}
+          spacing={{ xs: 0, md: 3 }}
           columns={{ xs: 4, sm: 8, md: 12 }}
           sx={{
             color: "white",
           }}
         >
-          <Grid size={4} p={3}>
+          <Grid size={4} p={{ xs: 2, sm: 3 }}>
             <Typography
               marginBottom={2}
-              sx={{ fontSize: "16px", fontWeight: "500" }}
+              fontSize={{ xs: "12px", sm: "16px" }}
+              fontWeight="500"
             >
               About Us
             </Typography>
             <Typography
-              sx={{ fontSize: "14px", fontWeight: "400", textAlign: "justify" }}
+              fontSize={{ xs: "10px", sm: "14px" }}
+              fontWeight="400"
+              sx={{ textAlign: "justify" }}
             >
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio non
               consectetur quas, sunt adipisci assumenda similique vel aspernatur
@@ -57,10 +61,11 @@ const Footer = () => {
               sapiente ducimus esse quos tempore nisi! Impedit, maiores.
             </Typography>
           </Grid>
-          <Grid size={3.5} p={3}>
+          <Grid size={3.5} p={{ xs: 2, sm: 3 }}>
             <Typography
               marginBottom={2}
-              sx={{ fontSize: "16px", fontWeight: "500" }}
+              fontSize={{ xs: "12px", sm: "16px" }}
+              fontWeight="500"
             >
               Product
             </Typography>
@@ -76,7 +81,10 @@ const Footer = () => {
                       to={`/category/${item.category_name}`}
                       style={{ textDecoration: "none", color: "inherit" }}
                     >
-                      <Typography sx={{ fontSize: "14px", fontWeight: "400" }}>
+                      <Typography
+                        fontSize={{ xs: "10px", sm: "14px" }}
+                        fontWeight="400"
+                      >
                         {item.category_name}
                       </Typography>
                     </NavLink>
@@ -85,15 +93,19 @@ const Footer = () => {
               </Grid>
             </Box>
           </Grid>
-          <Grid size={4.5} p={3}>
+          <Grid size={4.5} p={{ xs: 2, sm: 3 }}>
             <Grid marginBottom={2}>
               <Typography
                 marginBottom={2}
-                sx={{ fontSize: "16px", fontWeight: "500" }}
+                fontSize={{ xs: "12px", sm: "16px" }}
+                fontWeight="500"
               >
                 Address
               </Typography>
-              <Typography sx={{ fontSize: "14px", fontWeight: "400" }}>
+              <Typography
+                fontSize={{ xs: "10px", sm: "14px" }}
+                fontWeight="400"
+              >
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
                 efficitur risus non varius aliquet.
               </Typography>
@@ -101,7 +113,8 @@ const Footer = () => {
             <Grid>
               <Typography
                 marginBottom={2}
-                sx={{ fontSize: "16px", fontWeight: "500" }}
+                fontSize={{ xs: "12px", sm: "16px" }}
+                fontWeight="500"
                 component="div"
               >
                 Contact Us

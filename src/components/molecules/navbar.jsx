@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -17,17 +17,21 @@ import CloseIcon from "@mui/icons-material/Close";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import PersonIcon from "@mui/icons-material/Person";
 import LogoutIcon from "@mui/icons-material/Logout";
-
+import { AuthContext } from "../../utils/authContext";
 import logo from "../../assets/Logo.png";
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const isUserLoggedIn = !!Cookies.get("token");
+  const { auth, setAuth } = useContext(AuthContext);
+  const isUserLoggedIn = !!auth.token;
   const [drawerOpen, setDrawerOpen] = useState(false);
   const isMobile = useMediaQuery("(max-width:900px)");
-
   const handleLogout = () => {
-    Cookies.remove("token");
+    setAuth({
+      id: null,
+      token: null,
+      role: null,
+    });
     navigate("/");
   };
 
@@ -176,9 +180,7 @@ const Navbar = () => {
   return (
     <Box mx={isMobile ? 1 : 10}>
       <AppBar position="static" color="transparent" elevation={0}>
-        <Toolbar
-          sx={{ justifyContent: "space-between", px: 0, py: 0 }}
-        >
+        <Toolbar sx={{ justifyContent: "space-between", px: 0, py: 0 }}>
           <Box display="flex" alignItems="center">
             <Box
               component="img"
@@ -227,7 +229,9 @@ const Navbar = () => {
                 </Drawer>
               </>
             ) : (
-              <Box display="flex" alignItems="center">{menuList}</Box>
+              <Box display="flex" alignItems="center">
+                {menuList}
+              </Box>
             )
           ) : (
             <Box>

@@ -14,8 +14,9 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { NavLink } from "react-router";
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import axios from "axios";
+import { AuthContext } from "../utils/authContext";
 import Cookies from "js-cookie";
 import { ConvertDayDate, ConvertDate, formatRupiah } from "../utils/util";
 const columns = [
@@ -46,15 +47,17 @@ function DetailButton() {
   );
 }
 const DetailInvoice = () => {
+  const BASE_URL = import.meta.env.VITE_API;
   const { id } = useParams();
   const [rows, setRows] = useState([]);
   const [invoice, setInvoice] = useState([]);
-  const token = Cookies.get("token");
+  const { auth, setAuth } = useContext(AuthContext);
+  const token = auth.token;
   const [invoiceDate, setInvoiceDate] = useState("");
   const [totalPrice, setTotalPrice] = useState("");
   useEffect(() => {
     axios
-      .get(`http://localhost:5009/api/Invoice/${id}`, {
+      .get(`${BASE_URL}/Invoice/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {

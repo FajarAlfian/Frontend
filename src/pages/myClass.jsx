@@ -5,17 +5,19 @@ import CardMedia from "@mui/material/CardMedia";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import { Box } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import axios from "axios";
-import Cookies from "js-cookie";
 import { ConvertDayDate, formatRupiah } from "../utils/util";
+import { AuthContext } from "../utils/authContext";
 
 const MyClass = () => {
+  const BASE_URL = import.meta.env.VITE_API;
+  const { auth, setAuth } = useContext(AuthContext);
   const [course, setCourse] = useState([]);
   useEffect(() => {
-    const token = Cookies.get("token");
+    const token = auth.token;
     axios
-      .get("http://localhost:5009/api/Courses/paid", {
+      .get(`${BASE_URL}/Courses/paid`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {

@@ -8,9 +8,10 @@ import { Box } from "@mui/material";
 const Detail = () => {
   const { id } = useParams();
   const [course, setCourse] = useState(null);
+  const BASE_URL = import.meta.env.VITE_API;
   useEffect(() => {
     axios
-      .get(`http://localhost:5009/api/courses/${id}`)
+      .get(`${BASE_URL}/courses/${id}`)
       .then((res) => setCourse(res.data.data));
   }, [id]);
 

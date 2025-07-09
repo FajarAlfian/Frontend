@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
@@ -16,7 +16,7 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import Navbar from "../components/molecules/navbar";
 import { ConvertDayDate, formatRupiah } from "../utils/util";
-
+import { AuthContext } from "../utils/authContext";
 const modalStyle = {
   position: "absolute",
   top: "50%",
@@ -35,20 +35,20 @@ const calculateTotal = (courses, selectedItems) =>
     .reduce((sum, item) => sum + item.course_price, 0);
 
 const Checkout = () => {
+  const BASE_URL = import.meta.env.VITE_API;
   const navigate = useNavigate();
-  const token = Cookies.get("token");
-
+  const { auth, setAuth } = useContext(AuthContext);
+  const token = auth.token;
   const [open, setOpen] = useState(false);
   const [selectedPayment, setSelectedPayment] = useState(null);
   const [paymentMethods, setPaymentMethods] = useState([]);
-
   const [courses, setCourses] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
     axios
-      .get("http://localhost:5009/api/PaymentMethod", {
+      .get(`${BASE_URL}/PaymentMethod`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => setPaymentMethods(res.data.data))
@@ -56,8 +56,9 @@ const Checkout = () => {
   }, [token]);
 
   useEffect(() => {
+    if (!token) return;
     axios
-      .get("http://localhost:5009/api/Checkout/user", {
+      .get(`${BASE_URL}/Checkout/user`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => setCourses(res.data.data.items))
@@ -93,7 +94,7 @@ const Checkout = () => {
 
   const handleDeleteCourse = (cartId) => {
     axios
-      .delete(`http://localhost:5009/api/Checkout/remove/${cartId}`, {
+      .delete(`${BASE_URL}/Checkout/remove/${cartId}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
@@ -106,10 +107,9 @@ const Checkout = () => {
   const handlePay = () => {
     if (!selectedPayment || selectedItems.length === 0) return;
     setOpen(false);
-
     axios
       .post(
-        "http://localhost:5009/api/Invoice",
+        `${BASE_URL}/Invoice`,
         {
           payment_method_id: selectedPayment,
           cart_product_ids: selectedItems,
@@ -124,7 +124,7 @@ const Checkout = () => {
   };
 
   return (
-    <>
+    <Box display="flex" flexDirection="column" minHeight="100vh">
       <Navbar />
       {courses.length !== 0 ? (
         <>
@@ -252,7 +252,6 @@ const Checkout = () => {
           </Stack>
 
           <Divider sx={{ marginTop: "24px" }} />
-
           <Box
             sx={{
               position: "fixed",
@@ -398,7 +397,7 @@ const Checkout = () => {
           Looks like you haven't picked any courses yet.
         </Typography>
       )}
-    </>
+    </Box>
   );
 };
 

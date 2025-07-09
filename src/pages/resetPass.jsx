@@ -10,6 +10,7 @@ import Description from "../components/molecules/description";
 import Navbar from "../components/molecules/navbar";
 import axios from "axios";
 const ResetPass = () => {
+  const BASE_URL = import.meta.env.VITE_API;
   const [formData, setFormData] = React.useState({
     email: "",
   });
@@ -25,7 +26,7 @@ const ResetPass = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:5009/api/Auth/forgot-password", {
+      .post(`${BASE_URL}/Auth/forgot-password`, {
         email: formData.email,
       })
       .then((response) => {

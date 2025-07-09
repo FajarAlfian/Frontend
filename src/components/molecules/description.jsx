@@ -12,7 +12,6 @@ const Description = ({
     <Typography
       sx={{
         textAlign: align,
-        color: "dlang.grey",
         fontWeight: boldness,
         color: colorText,
       }}
