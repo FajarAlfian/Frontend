@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "./authContext";
 
 export function useRequireRole(allowedRoles) {
-  const { auth } = useContext(AuthContext);                    // ambil auth global :contentReference[oaicite:4]{index=4}
+  const { auth } = useContext(AuthContext);                  
   const navigate = useNavigate();
 
   useEffect(() => {
