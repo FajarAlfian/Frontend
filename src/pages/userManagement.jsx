@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useCallback } from "react";
 import { NavLink } from "react-router";
 import axios from "axios";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
@@ -20,6 +20,7 @@ import { AuthContext } from "../utils/authContext";
 import { useNavigate } from "react-router";
 import ModalDeleteUser from "../components/molecules/ModalDeleteUser";
 import ModalAddUser from "../components/molecules/ModalAddUser";
+
 const columns = [
   { id: "No", label: "No" },
   { id: "Username", label: "Username" },
@@ -36,10 +37,8 @@ export default function UserManagement() {
   const token = auth.token;
   const [rows, setRows] = useState([]);
 
-  useEffect(() => {
-    if (!auth.token || auth.role !== "admin") {
-      return;
-    }
+  const fetchUsers = useCallback(() => {
+    if (!auth.token || auth.role !== "admin") return;
     axios
       .get(`${BASE_URL}/Users/`, {
         headers: { Authorization: `Bearer ${auth.token}` },
@@ -50,12 +49,23 @@ export default function UserManagement() {
           Username: user.username,
           Email: user.email,
           Role: user.role,
-          action: <ModalDeleteUser userId={user.user_id} />,
+          action: (
+            <Stack direction="row" justifyContent="center" spacing={2}>
+              <ModalDeleteUser
+                userId={user.user_id}
+                onSuccess={fetchUsers}
+              />
+            </Stack>
+          ),
         }));
         setRows(mapped);
       })
       .catch((err) => console.error("Fetch user error:", err));
   }, [auth.token, auth.role, BASE_URL]);
+
+  useEffect(() => {
+    fetchUsers();
+  }, [fetchUsers]);
 
   const breadcrumbs = [
     <Link
@@ -110,7 +120,7 @@ export default function UserManagement() {
           justifyContent="flex-end"
           alignItems="flex-end"
         >
-          <ModalAddUser />
+          <ModalAddUser onSuccess={fetchUsers} />
         </Grid>
       </Grid>
       <Paper
@@ -143,29 +153,27 @@ export default function UserManagement() {
             </TableHead>
             <TableBody>
               {rows.length > 0 ? (
-                <>
-                  {rows.map((row, ri) => (
-                    <TableRow
-                      key={ri}
-                      hover
-                      tabIndex={-1}
-                      sx={{
-                        backgroundColor: ri % 2 === 0 ? "#fff" : "#EA9E1F33",
-                        "&:hover": { backgroundColor: "#e0f7fa" },
-                      }}
-                    >
-                      {columns.map((col) => (
-                        <TableCell
-                          key={col.id}
-                          align={col.align}
-                          sx={{ fontSize: 16 }}
-                        >
-                          {col.id === "Action" ? row.action : row[col.id]}
-                        </TableCell>
-                      ))}
-                    </TableRow>
-                  ))}
-                </>
+                rows.map((row, ri) => (
+                  <TableRow
+                    key={ri}
+                    hover
+                    tabIndex={-1}
+                    sx={{
+                      backgroundColor: ri % 2 === 0 ? "#fff" : "#EA9E1F33",
+                      "&:hover": { backgroundColor: "#e0f7fa" },
+                    }}
+                  >
+                    {columns.map((col) => (
+                      <TableCell
+                        key={col.id}
+                        align={col.align}
+                        sx={{ fontSize: 16 }}
+                      >
+                        {col.id === "Action" ? row.action : row[col.id]}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))
               ) : (
                 <TableRow>
                   <TableCell colSpan={columns.length} align="center">

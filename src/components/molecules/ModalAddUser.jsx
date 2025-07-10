@@ -1,15 +1,12 @@
+import React, { useState } from "react";
+import axios from "axios";
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
-import InputLabel from "@mui/material/InputLabel";
-import axios from "axios";
-import { useContext, useEffect, useState } from "react";
-import FormControl from "@mui/material/FormControl";
+
 const modalStyle = {
   position: "absolute",
   top: "50%",
@@ -21,28 +18,30 @@ const modalStyle = {
   p: 4,
   width: 360,
 };
-const ModalAddUser = () => {
+
+const ModalAddUser = ({ onSuccess }) => {
   const BASE_URL = import.meta.env.VITE_API;
   const [open, setOpen] = useState(false);
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
+
+  const handleClickOpen = () => setOpen(true);
+  const handleClose     = () => setOpen(false);
+
   const handleAdd = () => {
     axios
       .post(`${BASE_URL}/auth/register`, {
-        username: username,
-        email: email,
-        password: password,
+        username,
+        email,
+        password,
         role: "member",
       })
       .then(() => {
         alert("add user success");
+        if (typeof onSuccess === "function") {
+          onSuccess();
+        }
         handleClose();
       })
       .catch((err) => console.error("Error add user:", err));
@@ -72,21 +71,22 @@ const ModalAddUser = () => {
           </Typography>
           <Stack spacing={1}>
             <TextField
-              id="outlined-basic"
               label="Username"
               variant="outlined"
+              value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
             <TextField
-              id="outlined-basic"
               label="Email"
               variant="outlined"
+              value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
             <TextField
-              id="outlined-basic"
               label="Password"
               variant="outlined"
+              type="password"
+              value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
           </Stack>
@@ -111,4 +111,5 @@ const ModalAddUser = () => {
     </>
   );
 };
+
 export default ModalAddUser;

@@ -8,10 +8,12 @@ import DialogTitle from "@mui/material/DialogTitle";
 import axios from "axios";
 import { useContext } from "react";
 import { AuthContext } from "../../utils/authContext";
-const ModalDeleteUser = ({ userId }) => {
+
+const ModalDeleteUser = ({ userId, onSuccess }) => {
   const BASE_URL = import.meta.env.VITE_API;
   const { auth, setAuth } = useContext(AuthContext);
   const [open, setOpen] = React.useState(false);
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -25,8 +27,10 @@ const ModalDeleteUser = ({ userId }) => {
       })
       .then(() => {
         alert("Delete user success");
+        if (typeof onSuccess === "function") {
+          onSuccess();
+        }
         handleClose();
-        // Optionally trigger data refresh from parent
       })
       .catch((err) => console.error("Error deleting item:", err));
   };
@@ -70,4 +74,5 @@ const ModalDeleteUser = ({ userId }) => {
     </>
   );
 };
+
 export default ModalDeleteUser;

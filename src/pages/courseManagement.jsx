@@ -79,7 +79,8 @@ export default function CourseManagement() {
   }, [fetchCourses]);
 
   return (
-    <Box mx={13} my={3}>
+    <Box mx={{ xs: 2, sm: 13 }}
+      my={{ xs: 2, sm: 3 }}>
       <Typography
         sx={{ color: "#4F4F4F", fontSize: 20, fontWeight: 600 }}
         mb={3}
@@ -157,14 +158,14 @@ export default function CourseManagement() {
                     tabIndex={-1}
                     sx={{
                       backgroundColor: ri % 2 === 0 ? "#fff" : "#EA9E1F33",
-                      "&:hover": { backgroundColor: "#e0f7fa" },
+                      "&:hover": { backgroundColor: "#e0f7fa" }
                     }}
                   >
                     {columns.map((col) => (
                       <TableCell
                         key={col.id}
                         align={col.align}
-                        sx={{ fontSize: 16, marginRight: "0" }}
+                        sx={{ fontSize: 16}}
                       >
                         {col.id === "Action" ? row.action : row[col.id]}
                       </TableCell>
