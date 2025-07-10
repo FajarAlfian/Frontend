@@ -7,10 +7,7 @@ import AppBar from "@mui/material/AppBar";
 import Drawer from "@mui/material/Drawer";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import Avatar from "@mui/material/Avatar";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
 import { Link, useNavigate } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
@@ -250,7 +247,7 @@ const Navbar = () => {
 
       <Button
         component={Link}
-        to="/"
+        to="/profile"
         variant="text"
         onClick={() => setDrawerOpen(false)}
         sx={{

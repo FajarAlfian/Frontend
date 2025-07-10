@@ -12,11 +12,11 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../utils/authContext";
-import { useSnackbar } from "../components/molecules/snackbar"; 
+import { useSnackbar } from "../components/molecules/snackbar";
 
 const Login = () => {
   const { auth, setAuth } = useContext(AuthContext);
-  const showSnackbar = useSnackbar();  
+  const showSnackbar = useSnackbar();
   const navigate = useNavigate();
   const BASE_URL = import.meta.env.VITE_API;
   const [formData, setFormData] = React.useState({
@@ -54,6 +54,7 @@ const Login = () => {
         setAuth({
           id: response.data.data.userId,
           token: response.data.data.token,
+          username: response.data.data.username,
           role: response.data.data.role,
         });
         showSnackbar({
