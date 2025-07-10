@@ -17,6 +17,7 @@ import {
 import DeleteIcon from '@mui/icons-material/Delete';
 import { AuthContext } from '../../utils/authContext';
 import { useSnackbar } from './snackbar';
+import { ConvertDate } from '../../utils/util';
 
 export default function ModalManageSchedules({
   courseId,
@@ -137,7 +138,7 @@ export default function ModalManageSchedules({
                     </IconButton>
                   }
                 >
-                  <ListItemText primary={sch.schedule_date} />
+                  <ListItemText primary={ConvertDate(sch.schedule_date)} />
                 </ListItem>
               ))
             ) : (
