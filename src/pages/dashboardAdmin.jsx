@@ -110,7 +110,8 @@ export default function DashboardAdmin() {
     <Box>
       <Box mx={{ xs: 2, sm: 13 }} my={3}>
         <Typography
-          sx={{ color: "#4F4F4F", fontSize: 20, fontWeight: 600 }}
+          fontSize={{ xs: "16px", sm: 20 }}
+          sx={{ color: "#4F4F4F", fontWeight: 600 }}
           mb={3}
         >
           Dashboard Admin
@@ -127,8 +128,8 @@ export default function DashboardAdmin() {
           {Dashboard.map((item, index) => (
             <Grid item key={index}>
               <Box
+                width={{ xs: 125, sm: 200 }}
                 sx={{
-                  width: 200,
                   padding: 1,
                   color: "white",
                   bgcolor: activeTab === item.key ? "#d88d00" : "#226957",
@@ -142,7 +143,10 @@ export default function DashboardAdmin() {
                 }}
                 onClick={() => setActiveTab(item.key)}
               >
-                <Typography fontSize="16px" fontWeight="500">
+                <Typography
+                  fontSize={{ xs: "12px", sm: "16px" }}
+                  fontWeight="500"
+                >
                   {item.title}
                 </Typography>
               </Box>
@@ -150,9 +154,9 @@ export default function DashboardAdmin() {
           ))}
         </Grid>
       </Box>
-      <Grid mx={{ xs: 2, sm: 13 }} my={3}>
+      {/* <Grid mx={{ xs: 2, sm: 13 }} my={3}>
         <Divider />
-      </Grid>
+      </Grid> */}
       <Box>{renderContent()}</Box>
     </Box>
   );

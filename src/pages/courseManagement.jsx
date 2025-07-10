@@ -45,7 +45,7 @@ export default function CourseManagement() {
     axios
       .get(`${BASE_URL}/Courses/all`, {
         headers: { Authorization: `Bearer ${token}` },
-         params: { search: searchText }
+        params: { search: searchText },
       })
       .then((res) => {
         const mapped = res.data.data.map((course, idx) => ({
@@ -53,7 +53,13 @@ export default function CourseManagement() {
           CourseName: course.course_name,
           CoursePrice: course.course_price,
           CategoryName: course.category_name,
-          Active: <Checkbox checked={course.is_active} onChange={handleActiveToggle(course.course_id)} color="success" />,
+          Active: (
+            <Checkbox
+              checked={course.is_active}
+              onChange={handleActiveToggle(course.course_id)}
+              color="success"
+            />
+          ),
           action: (
             <Stack direction="row" justifyContent="center" spacing={3}>
               <ModalManageSchedule
@@ -83,7 +89,7 @@ export default function CourseManagement() {
     fetchCourses();
   }, [fetchCourses]);
 
-   const handleActiveToggle = (courseId) => (e) => {
+  const handleActiveToggle = (courseId) => (e) => {
     const newActive = e.target.checked;
     axios
       .patch(
@@ -97,16 +103,16 @@ export default function CourseManagement() {
         }
       )
       .then(() => {
-        fetchCourses();    
+        fetchCourses();
       })
       .catch((err) => console.error("Toggle active failed:", err));
   };
 
   return (
-    <Box mx={{ xs: 2, sm: 13 }}
-      my={{ xs: 2, sm: 3 }}>
+    <Box mx={{ xs: 2, sm: 13 }} my={{ xs: 2, sm: 3 }}>
       <Typography
-        sx={{ color: "#4F4F4F", fontSize: 20, fontWeight: 600 }}
+        fontSize={{ xs: "16px", sm: 20 }}
+        sx={{ color: "#4F4F4F", fontWeight: 600 }}
         mb={3}
       >
         Course Management
@@ -115,20 +121,21 @@ export default function CourseManagement() {
       <Grid container spacing={2} my={3}>
         <Grid item xs={12} sm={4} md={2}>
           <Stack spacing={2}>
-      <TextField
-                size="small"
-                placeholder="Search course"
-                value={searchText}
-                onChange={(e) => setSearchText(e.target.value)}
-                fullWidth
-                sx={{
-                  width: 220,
-                  height: 38,
-                  "& .MuiOutlinedInput-root": {                 borderRadius: 2,
-                    fontSize: { xs: 13, md: 15 },
-                  },
-                }}
-              />
+            <TextField
+              size="small"
+              placeholder="Search course"
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+              fullWidth
+              sx={{
+                width: 220,
+                height: 38,
+                "& .MuiOutlinedInput-root": {
+                  borderRadius: 2,
+                  fontSize: { xs: 13, md: 15 },
+                },
+              }}
+            />
           </Stack>
         </Grid>
         <Grid
@@ -182,14 +189,14 @@ export default function CourseManagement() {
                     tabIndex={-1}
                     sx={{
                       backgroundColor: ri % 2 === 0 ? "#fff" : "#EA9E1F33",
-                      "&:hover": { backgroundColor: "#e0f7fa" }
+                      "&:hover": { backgroundColor: "#e0f7fa" },
                     }}
                   >
                     {columns.map((col) => (
                       <TableCell
                         key={col.id}
                         align={col.align}
-                        sx={{ fontSize: 16}}
+                        sx={{ fontSize: 16 }}
                       >
                         {col.id === "Action" ? row.action : row[col.id]}
                       </TableCell>

@@ -91,8 +91,10 @@ export default function PaymentMethodManagement() {
   return (
     <Box mx={{ xs: 2, sm: 13 }} my={{ xs: 2, sm: 3 }}>
       <Typography
-        sx={{ color: "#4F4F4F", fontSize: 20, fontWeight: 600 }}
+        fontWeight={600}
+        fontSize={{ xs: "16px", sm: 20 }}
         mb={3}
+        color="#4F4F4F"
       >
         Payment Method Management
       </Typography>

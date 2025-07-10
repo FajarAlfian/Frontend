@@ -20,7 +20,7 @@ import { AuthContext } from "../utils/authContext";
 import { useNavigate } from "react-router";
 import ModalDeleteUser from "../components/molecules/ModalDeleteUser";
 import ModalAddUser from "../components/molecules/ModalAddUser";
-import { useSnackbar } from "../components/molecules/snackbar";  // ← tambah import
+import { useSnackbar } from "../components/molecules/snackbar"; // ← tambah import
 
 const columns = [
   { id: "No", label: "No" },
@@ -36,7 +36,7 @@ export default function UserManagement() {
   const BASE_URL = import.meta.env.VITE_API;
   const { auth } = useContext(AuthContext);
   const token = auth.token;
-  const showSnackbar = useSnackbar(); 
+  const showSnackbar = useSnackbar();
   const [rows, setRows] = useState([]);
   const [searchText, setSearchText] = useState("");
 
@@ -77,7 +77,9 @@ export default function UserManagement() {
   return (
     <Box mx={{ xs: 2, sm: 13 }} my={3}>
       <Typography
-        sx={{ color: "#4F4F4F", fontSize: 20, fontWeight: 600 }}
+        fontWeight={600}
+        fontSize={{ xs: "16px", sm: 20 }}
+        color="#4F4F4F"
         mb={3}
       >
         User Management

@@ -96,12 +96,13 @@ export default function AdminInvoices() {
       </Stack> */}
 
       <Typography
-        sx={{ color: "#4F4F4F", fontSize: 20, fontWeight: 600 }}
+        fontWeight={600}
+        fontSize={{ xs: "16px", sm: 20 }}
+        color="#4F4F4F"
         mb={3}
       >
         Invoices
       </Typography>
-
       <Paper
         sx={{
           width: "100%",
