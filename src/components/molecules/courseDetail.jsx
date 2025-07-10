@@ -102,7 +102,7 @@ const CourseDetail = ({ course }) => {
             spacing={4}
             justifyContent={{ xs: "center", sm: "flex-start" }}
           >
-            <Grid item xs={12} md={4}>
+            <Grid item xs={12} md={6}>
               <Box
                 component="img"
                 src={courseProps.image}
@@ -125,7 +125,7 @@ const CourseDetail = ({ course }) => {
               />
             </Grid>
 
-            <Grid item xs={12} md={8} width="100%">
+            <Grid item xs={12} md={6}>
               <Typography
                 color="dlang.black"
                 fontSize={{ xs: "14px", sm: "h6.fontSize" }}
@@ -151,7 +151,6 @@ const CourseDetail = ({ course }) => {
               </Typography>
 
               <Select
-                fullWidth
                 displayEmpty
                 value={selectedSchedule || ""}
                 onChange={handleChange}
