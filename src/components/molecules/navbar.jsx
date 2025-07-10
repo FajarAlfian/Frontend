@@ -12,8 +12,6 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { Link, useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
-
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -47,8 +45,9 @@ const Navbar = () => {
       {isUserLoggedIn && auth.role === "admin" && (
         <>
           <Button
+            component={Link}
+            to="/dashboard-admin"
             variant="text"
-            onClick={handleAdminMenuOpen}
             sx={{
               fontSize: 16,
               color: "dlang.green",
@@ -56,51 +55,8 @@ const Navbar = () => {
               mr: 5,
             }}
           >
-            Admin
+            Dashboard Admin
           </Button>
-          <Menu
-            anchorEl={anchorAdmin}
-            open={Boolean(anchorAdmin)}
-            onClose={handleAdminMenuClose}
-            anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-            transformOrigin={{ vertical: "top", horizontal: "left" }}
-          >
-            <MenuItem
-              component={Link}
-              to="/manage/user"
-              onClick={handleAdminMenuClose}
-            >
-              Manage User
-            </MenuItem>
-            <MenuItem
-              component={Link}
-              to="/manage/course"
-              onClick={handleAdminMenuClose}
-            >
-              Manage Course
-            </MenuItem>
-              <MenuItem
-              component={Link}
-              to="/manage/category"
-              onClick={handleAdminMenuClose}
-            >
-              Manage Category
-            </MenuItem>
-            <MenuItem
-              component={Link}
-              to="/manage/invoice"
-              onClick={handleAdminMenuClose}
-            >
-              Manage Invoice
-            </MenuItem>
-              <MenuItem
-              component={Link}
-              to="/manage/payment-method"
-              onClick={handleAdminMenuClose}
-            >
-              Manage Payment Method
-            </MenuItem>
-          </Menu>
         </>
       )}
 
@@ -191,7 +147,7 @@ const Navbar = () => {
           >
             Manage Course
           </Button>
-            <Button
+          <Button
             component={Link}
             to="/manage/category"
             variant="text"
@@ -206,7 +162,7 @@ const Navbar = () => {
           >
             Manage Category
           </Button>
-          
+
           <Button
             component={Link}
             to="/manage/invoice"
@@ -379,7 +335,9 @@ const Navbar = () => {
                 </Drawer>
               </>
             ) : (
-              <Box display="flex" alignItems="center">{menuList}</Box>
+              <Box display="flex" alignItems="center">
+                {menuList}
+              </Box>
             )
           ) : (
             <Box>

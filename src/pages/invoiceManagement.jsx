@@ -18,11 +18,10 @@ import { useRequireRole } from "../utils/useRequireRole";
 import { AuthContext } from "../utils/authContext";
 
 export default function AdminInvoices() {
-useRequireRole(["admin"]);
+  useRequireRole(["admin"]);
   const BASE_URL = import.meta.env.VITE_API;
   const { auth } = useContext(AuthContext);
   const [rows, setRows] = useState([]);
-  
 
   useEffect(() => {
     axios
@@ -80,9 +79,8 @@ useRequireRole(["admin"]);
   ];
 
   return (
-    <Box mx={{ xs: 2, sm: 13 }}
-      my={{ xs: 2, sm: 3 }}>
-      <Stack spacing={2} mb={3}>
+    <Box mx={{ xs: 2, sm: 13 }} my={{ xs: 2, sm: 3 }}>
+      {/* <Stack spacing={2} mb={3}>
         <Breadcrumbs separator="›">
           <Link
             underline="hover"
@@ -95,13 +93,23 @@ useRequireRole(["admin"]);
             All Invoices
           </Typography>
         </Breadcrumbs>
-      </Stack>
+      </Stack> */}
 
-      <Typography sx={{ color: "#4F4F4F", fontSize: 20, fontWeight: 600 }} mb={3}>
-        List of All Invoices
+      <Typography
+        sx={{ color: "#4F4F4F", fontSize: 20, fontWeight: 600 }}
+        mb={3}
+      >
+        Invoices
       </Typography>
 
-      <Paper sx={{ width: "100%", overflow: "hidden", boxShadow: "none", borderRadius: 0 }}>
+      <Paper
+        sx={{
+          width: "100%",
+          overflow: "hidden",
+          boxShadow: "none",
+          borderRadius: 0,
+        }}
+      >
         <TableContainer sx={{ maxHeight: 440 }}>
           <Table stickyHeader>
             <TableHead>
@@ -136,7 +144,11 @@ useRequireRole(["admin"]);
                     }}
                   >
                     {columns.map((col) => (
-                      <TableCell key={col.id} align={col.align} sx={{ fontSize: 16 }}>
+                      <TableCell
+                        key={col.id}
+                        align={col.align}
+                        sx={{ fontSize: 16 }}
+                      >
                         {row[col.id]}
                       </TableCell>
                     ))}
@@ -145,7 +157,12 @@ useRequireRole(["admin"]);
               ) : (
                 <TableRow>
                   <TableCell colSpan={columns.length} align="center">
-                    <Typography variant="h6" color="#006A61" fontWeight={500} py={10}>
+                    <Typography
+                      variant="h6"
+                      color="#006A61"
+                      fontWeight={500}
+                      py={10}
+                    >
                       No invoices found.
                     </Typography>
                   </TableCell>
