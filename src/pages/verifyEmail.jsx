@@ -23,7 +23,7 @@ const VerifyEmail = () => {
       }
 
       try {
-        await axios.get(`${BASE_URL}L/Auth/verify-email`, {
+        await axios.get(`${BASE_URL}/Auth/verify-email`, {
           params: { token },
         });
         await delay(DELAY_MS);
