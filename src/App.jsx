@@ -102,6 +102,7 @@ import "./styles/app.css";
 import UserManagement from "./pages/userManagement";
 import CourseManagement from "./pages/courseManagement";
 import PaymentMethodManagement from "./pages/paymentMethodManagement";
+import CategoryManagement from "./pages/CategoryManagement";
 function App() {
   return (
     <ThemeProvider theme={Theme}>
@@ -122,13 +123,11 @@ function App() {
                 <Route path="/category/:nama" element={<MenuClass />} />
                 <Route path="/detail/:id" element={<Detail />} />
                 <Route path="/invoice" element={<Invoice />} />
-              <Route path="/manage/invoice" element={<AdminInvoices />} />
+                <Route path="/manage/invoice" element={<AdminInvoices />} />
                 <Route path="/manage/user" element={<UserManagement />} />
                 <Route path="/manage/course" element={<CourseManagement />} />
-                <Route
-                  path="/manage/payment-method"
-                  element={<PaymentMethodManagement />}
-                />
+                <Route path="/manage/category" element={<CategoryManagement />}/>
+                <Route path="/manage/payment-method" element={<PaymentMethodManagement />}/>
                 <Route path="/detail-invoice/:id" element={<DetailInvoice />} />
               </Route>
             </Routes>

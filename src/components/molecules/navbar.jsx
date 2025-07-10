@@ -79,12 +79,26 @@ const Navbar = () => {
             >
               Manage Course
             </MenuItem>
+              <MenuItem
+              component={Link}
+              to="/manage/category"
+              onClick={handleAdminMenuClose}
+            >
+              Manage Category
+            </MenuItem>
             <MenuItem
               component={Link}
               to="/manage/invoice"
               onClick={handleAdminMenuClose}
             >
               Manage Invoice
+            </MenuItem>
+              <MenuItem
+              component={Link}
+              to="/manage/payment-method"
+              onClick={handleAdminMenuClose}
+            >
+              Manage Payment Method
             </MenuItem>
           </Menu>
         </>
@@ -177,7 +191,23 @@ const Navbar = () => {
           >
             Manage Course
           </Button>
-                    <Button
+            <Button
+            component={Link}
+            to="/manage/category"
+            variant="text"
+            onClick={() => setDrawerOpen(false)}
+            sx={{
+              width: "100%",
+              justifyContent: "flex-start",
+              textTransform: "none",
+              mb: 2,
+              color: "dlang.green",
+            }}
+          >
+            Manage Category
+          </Button>
+          
+          <Button
             component={Link}
             to="/manage/invoice"
             variant="text"
@@ -192,6 +222,22 @@ const Navbar = () => {
           >
             Manage Invoice
           </Button>
+          <Button
+            component={Link}
+            to="/manage/payment-method"
+            variant="text"
+            onClick={() => setDrawerOpen(false)}
+            sx={{
+              width: "100%",
+              justifyContent: "flex-start",
+              textTransform: "none",
+              mb: 2,
+              color: "dlang.green",
+            }}
+          >
+            Manage Payment Method
+          </Button>
+
           <Divider sx={{ width: "100%", mb: 2 }} />
         </>
       )}
