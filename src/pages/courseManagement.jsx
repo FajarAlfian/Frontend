@@ -20,7 +20,7 @@ import { useRequireRole } from "../utils/useRequireRole";
 import ModalDeleteCourse from "../components/molecules/ModalDeleteCourse";
 import ModalAddCourse from "../components/molecules/ModalAddCourse";
 import ModalUpdateCourse from "../components/molecules/ModalUpdateCourse";
-import ModalAddSchedule from "../components/molecules/ModalCourseSchedule";
+import ModalManageSchedule from "../components/molecules/ModalCourseSchedule";
 
 const columns = [
   { id: "No", label: "No" },
@@ -56,7 +56,7 @@ export default function CourseManagement() {
           Active: <Checkbox checked={course.is_active} onChange={handleActiveToggle(course.course_id)} color="success" />,
           action: (
             <Stack direction="row" justifyContent="center" spacing={3}>
-              <ModalAddSchedule
+              <ModalManageSchedule
                 courseId={course.course_id}
                 courseName={course.course_name}
                 onSuccess={fetchCourses}
