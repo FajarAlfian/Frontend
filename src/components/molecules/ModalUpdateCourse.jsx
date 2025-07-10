@@ -11,6 +11,7 @@ import Stack from "@mui/material/Stack";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import { AuthContext } from "../../utils/authContext";
+import { useSnackbar } from "./snackbar";
 
 const modalStyle = {
   position: "absolute",
@@ -37,6 +38,8 @@ const ModalUpdateCourse = ({ id, onSuccess }) => {
   const [courseImage, setCourseImage] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [courseDescription, setCourseDescription] = useState("");
+  const showSnackbar = useSnackbar();
+
 
   useEffect(() => {
     if (!open) return;
@@ -86,7 +89,10 @@ const ModalUpdateCourse = ({ id, onSuccess }) => {
         },
       })
       .then(() => {
-        alert("Update course berhasil!");
+        showSnackbar({
+        message: "Success updating course.",
+        severity: "success",
+      });
         if (typeof onSuccess === "function") {
           onSuccess();
         }
@@ -94,7 +100,10 @@ const ModalUpdateCourse = ({ id, onSuccess }) => {
       })
       .catch((err) => {
         console.error("Error updating course:", err);
-        alert("Gagal update course. Cek console untuk detail.");
+        showSnackbar({
+        message: "Error updating course.",
+        severity: "warning",
+      });
       });
   };
 

@@ -7,11 +7,13 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { AuthContext } from "../../utils/authContext";
+import { useSnackbar } from "./snackbar";
 
 const ModalDeleteCourse = ({ id, onSuccess }) => {
   const BASE_URL = import.meta.env.VITE_API;
   const { auth } = useContext(AuthContext);
   const [open, setOpen] = useState(false);
+  const showSnackbar = useSnackbar();
 
   const handleClickOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -22,7 +24,10 @@ const ModalDeleteCourse = ({ id, onSuccess }) => {
         headers: { Authorization: `Bearer ${auth.token}` },
       })
       .then(() => {
-        alert("Delete course success");
+        showSnackbar({
+        message: "Success deleting course.",
+        severity: "success",
+      });
         if (typeof onSuccess === "function") {
           onSuccess();
         }
@@ -30,7 +35,10 @@ const ModalDeleteCourse = ({ id, onSuccess }) => {
       })
       .catch((err) => {
         console.error("Error deleting course:", err);
-        alert("Gagal menghapus course.");
+        showSnackbar({
+        message: "Error deleting course.",
+        severity: "warning",
+      });
       });
   };
 

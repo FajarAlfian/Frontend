@@ -6,6 +6,7 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
+import { useSnackbar } from "./snackbar";
 
 const modalStyle = {
   position: "absolute",
@@ -25,6 +26,7 @@ const ModalAddUser = ({ onSuccess }) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const showSnackbar = useSnackbar();
 
   const handleClickOpen = () => setOpen(true);
   const handleClose     = () => setOpen(false);
@@ -38,13 +40,18 @@ const ModalAddUser = ({ onSuccess }) => {
         role: "member",
       })
       .then(() => {
-        alert("add user success");
+        showSnackbar({
+        message: "Success adding user. need to check email for verification",
+        severity: "success",
+      });
         if (typeof onSuccess === "function") {
           onSuccess();
         }
         handleClose();
       })
-      .catch((err) => console.error("Error add user:", err));
+      .catch((err) => {
+        showSnackbar({ message: "Error adding user.", severity: "error",})
+        console.error("Error add user:", err)});
   };
 
   return (

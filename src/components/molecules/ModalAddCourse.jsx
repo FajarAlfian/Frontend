@@ -11,6 +11,7 @@ import Stack from "@mui/material/Stack";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import { AuthContext } from "../../utils/authContext";
+import { useSnackbar } from "./snackbar";
 
 const modalStyle = {
   position: "absolute",
@@ -34,6 +35,7 @@ const ModalAddCourse = ({ onSuccess }) => {
   const [courseImage, setCourseImage] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [courseDescription, setCourseDescription] = useState("");
+  const showSnackbar = useSnackbar();
 
   useEffect(() => {
     axios
@@ -70,7 +72,10 @@ const ModalAddCourse = ({ onSuccess }) => {
         }
       )
       .then(() => {
-        alert("Add course success");
+        showSnackbar({
+        message: "Success adding course.",
+        severity: "success",
+      });
         if (typeof onSuccess === "function") {
           onSuccess();
         }
@@ -78,7 +83,10 @@ const ModalAddCourse = ({ onSuccess }) => {
       })
       .catch((err) => {
         console.error("Error adding course:", err);
-        alert("Gagal menambah course");
+        showSnackbar({
+        message: "Error adding course.",
+        severity: "warning",
+      });
       });
   };
 

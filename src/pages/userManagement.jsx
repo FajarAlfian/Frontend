@@ -8,7 +8,6 @@ import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
-import Button from "@mui/material/Button";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -21,6 +20,7 @@ import { AuthContext } from "../utils/authContext";
 import { useNavigate } from "react-router";
 import ModalDeleteUser from "../components/molecules/ModalDeleteUser";
 import ModalAddUser from "../components/molecules/ModalAddUser";
+import { useSnackbar } from "../components/molecules/snackbar";  // ← tambah import
 
 const columns = [
   { id: "No", label: "No" },
@@ -34,16 +34,17 @@ export default function UserManagement() {
   useRequireRole(["admin"]);
   const navigate = useNavigate();
   const BASE_URL = import.meta.env.VITE_API;
-  const { auth, setAuth } = useContext(AuthContext);
+  const { auth } = useContext(AuthContext);
   const token = auth.token;
+  const showSnackbar = useSnackbar(); 
   const [rows, setRows] = useState([]);
   const [searchText, setSearchText] = useState("");
 
   const fetchUsers = useCallback(() => {
-    if (!auth.token || auth.role !== "admin") return;
+    if (!token || auth.role !== "admin") return;
     axios
       .get(`${BASE_URL}/Users/`, {
-        headers: { Authorization: `Bearer ${auth.token}` },
+        headers: { Authorization: `Bearer ${token}` },
         params: { search: searchText },
       })
       .then((res) => {
@@ -54,38 +55,24 @@ export default function UserManagement() {
           Role: user.role,
           action: (
             <Stack direction="row" justifyContent="center" spacing={2}>
-              <ModalDeleteUser
-                userId={user.user_id}
-                onSuccess={fetchUsers}
-              />
+              <ModalDeleteUser userId={user.user_id} onSuccess={fetchUsers} />
             </Stack>
           ),
         }));
         setRows(mapped);
       })
-      .catch((err) => console.error("Fetch user error:", err));
-  }, [auth.token, auth.role, BASE_URL, searchText]);
+      .catch((err) => {
+        console.error("Fetch user error:", err);
+        showSnackbar({
+          message: "Failed to fetch users.",
+          severity: "error",
+        });
+      });
+  }, [token, auth.role, BASE_URL, searchText, showSnackbar]);
 
   useEffect(() => {
     fetchUsers();
   }, [fetchUsers]);
-
-  const breadcrumbs = [
-    <Link
-      key="1"
-      underline="hover"
-      href="/"
-      sx={{ color: "#828282", fontSize: 16, fontWeight: 600 }}
-    >
-      Home
-    </Link>,
-    <Typography
-      key="2"
-      sx={{ color: "#EA9E1F", fontSize: 16, fontWeight: 600 }}
-    >
-      Invoice
-    </Typography>,
-  ];
 
   return (
     <Box mx={{ xs: 2, sm: 13 }} my={3}>
@@ -102,7 +89,7 @@ export default function UserManagement() {
               size="small"
               placeholder="Search user"
               value={searchText}
-              onChange={e => setSearchText(e.target.value)}
+              onChange={(e) => setSearchText(e.target.value)}
               fullWidth
               sx={{
                 width: 220,

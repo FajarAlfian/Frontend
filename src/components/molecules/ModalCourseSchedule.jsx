@@ -10,6 +10,7 @@ import {
   Stack,
 } from '@mui/material';
 import { AuthContext } from '../../utils/authContext';
+import { useSnackbar } from './snackbar';
 
 export default function ModalAddSchedule({
   courseId,
@@ -21,6 +22,8 @@ export default function ModalAddSchedule({
   const { auth } = useContext(AuthContext);
   const token = auth.token;
   const BASE_URL = import.meta.env.VITE_API;
+  const showSnackbar = useSnackbar();
+
 
   const handleOpen = () => {
     setDate('');
@@ -40,9 +43,16 @@ export default function ModalAddSchedule({
         onAdded(res.data);
       }
       handleClose();
+        showSnackbar({
+        message: "Success adding schedule.",
+        severity: "success",
+      });
     } catch (error) {
       console.error('Error adding schedule:', error);
-      alert('Gagal menambahkan schedule');
+        showSnackbar({
+        message: "Error adding schedule!",
+        severity: "warning",
+      });
     }
   };
 
