@@ -12,6 +12,7 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import TextField from "@mui/material/TextField";
 import { AuthContext } from "../utils/authContext";
 import { useNavigate } from "react-router";
 import { useRequireRole } from "../utils/useRequireRole";
@@ -36,12 +37,13 @@ export default function CourseManagement() {
   const BASE_URL = import.meta.env.VITE_API;
 
   const [rows, setRows] = useState([]);
-
+  const [searchText, setSearchText] = useState("");
   const fetchCourses = useCallback(() => {
     if (!token || auth.role !== "admin") return;
     axios
       .get(`${BASE_URL}/Courses`, {
         headers: { Authorization: `Bearer ${token}` },
+         params: { search: searchText }
       })
       .then((res) => {
         const mapped = res.data.data.map((course, idx) => ({
@@ -72,7 +74,7 @@ export default function CourseManagement() {
       .catch((err) => {
         console.error("Fetch courses error:", err);
       });
-  }, [token, auth.role, BASE_URL]);
+  }, [token, auth.role, BASE_URL, searchText]);
 
   useEffect(() => {
     fetchCourses();
@@ -91,20 +93,20 @@ export default function CourseManagement() {
       <Grid container spacing={2} my={3}>
         <Grid item xs={12} sm={4} md={2}>
           <Stack spacing={2}>
-            <Button
-              variant="contained"
-              sx={{
-                borderRadius: 2,
-                color: "#fff",
-                backgroundColor: "#EA9E1F",
-                textTransform: "none",
-                width: 140,
-                height: 38,
-                fontSize: { xs: 13, md: 15 },
-              }}
-            >
-              Search course
-            </Button>
+      <TextField
+                size="small"
+                placeholder="Search course"
+                value={searchText}
+                onChange={(e) => setSearchText(e.target.value)}
+                fullWidth
+                sx={{
+                  width: 220,
+                  height: 38,
+                  "& .MuiOutlinedInput-root": {                 borderRadius: 2,
+                    fontSize: { xs: 13, md: 15 },
+                  },
+                }}
+              />
           </Stack>
         </Grid>
         <Grid
