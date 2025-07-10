@@ -52,7 +52,8 @@ const CourseDetail = ({ course }) => {
         { headers: { Authorization: `Bearer ${token}` } }
       );
       showSnackbar({
-        message: "Berhasil menambah ke keranjang, Anda akan dibawa ke halaman checkout",
+        message:
+          "Berhasil menambah ke keranjang, Anda akan dibawa ke halaman checkout",
         severity: "success",
       });
       setTimeout(() => navigate("/checkout"), 1000);
@@ -83,7 +84,6 @@ const CourseDetail = ({ course }) => {
   return (
     <>
       <Grid
-        container
         sx={{
           justifyContent: "flex-start",
           alignItems: "center",
@@ -97,7 +97,11 @@ const CourseDetail = ({ course }) => {
             borderRadius: 0,
           }}
         >
-          <Grid container spacing={4} justifyContent="flex-start">
+          <Grid
+            container
+            spacing={4}
+            justifyContent={{ xs: "center", sm: "flex-start" }}
+          >
             <Grid item xs={12} md={6}>
               <Box
                 component="img"
@@ -105,8 +109,15 @@ const CourseDetail = ({ course }) => {
                 alt={courseProps.title}
                 sx={{
                   mt: 2,
-                  width: "400px",
-                  height: "267px",
+                  width: {
+                    xs: "100%",
+                    sm: "100%",
+                    md: "400px",
+                  },
+                  height: {
+                    xs: "auto",
+                    md: "267px",
+                  },
                   borderRadius: 0,
                   objectFit: "cover",
                   display: "block",
@@ -116,23 +127,23 @@ const CourseDetail = ({ course }) => {
 
             <Grid item xs={12} md={6}>
               <Typography
-                variant="h6"
                 color="dlang.black"
+                fontSize={{ xs: "14px", sm: "h6.fontSize" }}
                 fontWeight={400}
                 gutterBottom
               >
                 {courseProps.category}
               </Typography>
               <Typography
-                variant="h4"
                 gutterBottom
+                fontSize={{ xs: "18px", sm: "h4.fontSize" }}
                 sx={{ fontWeight: 600, color: "dlang.black" }}
               >
                 {courseProps.title}
               </Typography>
               <Typography
-                variant="h5"
                 color="dlang.orange"
+                fontSize={{ xs: "16px", sm: "h5.fontSize" }}
                 fontWeight={600}
                 gutterBottom
               >
@@ -140,7 +151,6 @@ const CourseDetail = ({ course }) => {
               </Typography>
 
               <Select
-                fullWidth
                 displayEmpty
                 value={selectedSchedule || ""}
                 onChange={handleChange}
@@ -200,14 +210,17 @@ const CourseDetail = ({ course }) => {
             </Grid>
           </Grid>
 
-          <Box sx={{ mt: { xs: 2, md: "40px" } }}>
+          <Box sx={{ mt: { xs: 6, md: "40px" } }}>
             <Typography
-              variant="h6"
+              fontSize={{ xs: "14px", sm: "h6.fontSize" }}
               sx={{ fontWeight: "bold", color: "dlang.gray" }}
             >
               Description
             </Typography>
-            <Typography variant="body1" sx={{ color: "dlang.gray" }}>
+            <Typography
+              fontSize={{ xs: "12px", sm: "body1.fontSize" }}
+              sx={{ color: "dlang.gray" }}
+            >
               {courseProps.description}
             </Typography>
           </Box>
@@ -216,7 +229,6 @@ const CourseDetail = ({ course }) => {
 
           <Box sx={{ mt: { xs: 2, md: "60px" } }}>
             <Typography
-              variant="h6"
               sx={{
                 fontWeight: "bold",
                 color: "dlang.green",
