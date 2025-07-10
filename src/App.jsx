@@ -96,37 +96,44 @@ import Invoice from "./pages/invoice";
 import DetailInvoice from "./pages/detailInvoice";
 import MyClass from "./pages/myClass";
 import VerifyEmail from "./pages/verifyEmail";
+import AdminInvoices from "./pages/invoiceManagement";
 import { SnackbarProvider } from "./components/molecules/snackbar";
 import "./styles/app.css";
 import UserManagement from "./pages/userManagement";
 import CourseManagement from "./pages/courseManagement";
+import PaymentMethodManagement from "./pages/paymentMethodManagement";
 function App() {
   return (
     <ThemeProvider theme={Theme}>
       <SnackbarProvider>
-      <AuthProvider>
-        <Router>
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/new-password" element={<NewPass />} />
-            <Route path="/reset-password" element={<ResetPass />} />
-            <Route path="/purchase-status" element={<StatusPurchase />} />
-            <Route path="/checkout" element={<Checkout />} />
-            <Route path="/verify-email" element={<VerifyEmail />} />
-            <Route element={<Layout />}>
-              <Route path="/" element={<Home />} />
-              <Route path="/class" element={<MyClass />} />
-              <Route path="/category/:nama" element={<MenuClass />} />
-              <Route path="/detail/:id" element={<Detail />} />
-              <Route path="/invoice" element={<Invoice />} />
-              <Route path="/manage/user" element={<UserManagement />} />
-              <Route path="/manage/course" element={<CourseManagement />} />
-              <Route path="/detail-invoice/:id" element={<DetailInvoice />} />
-            </Route>
-          </Routes>
-        </Router>
-      </AuthProvider>
+        <AuthProvider>
+          <Router>
+            <Routes>
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/new-password" element={<NewPass />} />
+              <Route path="/reset-password" element={<ResetPass />} />
+              <Route path="/purchase-status" element={<StatusPurchase />} />
+              <Route path="/checkout" element={<Checkout />} />
+              <Route path="/verify-email" element={<VerifyEmail />} />
+              <Route element={<Layout />}>
+                <Route path="/" element={<Home />} />
+                <Route path="/class" element={<MyClass />} />
+                <Route path="/category/:nama" element={<MenuClass />} />
+                <Route path="/detail/:id" element={<Detail />} />
+                <Route path="/invoice" element={<Invoice />} />
+              <Route path="/manage/invoice" element={<AdminInvoices />} />
+                <Route path="/manage/user" element={<UserManagement />} />
+                <Route path="/manage/course" element={<CourseManagement />} />
+                <Route
+                  path="/manage/payment-method"
+                  element={<PaymentMethodManagement />}
+                />
+                <Route path="/detail-invoice/:id" element={<DetailInvoice />} />
+              </Route>
+            </Routes>
+          </Router>
+        </AuthProvider>
       </SnackbarProvider>
     </ThemeProvider>
   );

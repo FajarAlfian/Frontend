@@ -9,6 +9,8 @@ import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Avatar from "@mui/material/Avatar";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
@@ -26,17 +28,68 @@ const Navbar = () => {
   const isUserLoggedIn = !!auth.token;
   const [drawerOpen, setDrawerOpen] = useState(false);
   const isMobile = useMediaQuery("(max-width:900px)");
+  const [anchorAdmin, setAnchorAdmin] = useState(null);
+
   const handleLogout = () => {
-    setAuth({
-      id: null,
-      token: null,
-      role: null,
-    });
+    setAuth({ id: null, token: null, role: null });
     navigate("/");
+  };
+
+  const handleAdminMenuOpen = (e) => {
+    setAnchorAdmin(e.currentTarget);
+  };
+  const handleAdminMenuClose = () => {
+    setAnchorAdmin(null);
   };
 
   const menuList = (
     <>
+      {isUserLoggedIn && auth.role === "admin" && (
+        <>
+          <Button
+            variant="text"
+            onClick={handleAdminMenuOpen}
+            sx={{
+              fontSize: 16,
+              color: "dlang.green",
+              textTransform: "none",
+              mr: 5,
+            }}
+          >
+            Admin
+          </Button>
+          <Menu
+            anchorEl={anchorAdmin}
+            open={Boolean(anchorAdmin)}
+            onClose={handleAdminMenuClose}
+            anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+            transformOrigin={{ vertical: "top", horizontal: "left" }}
+          >
+            <MenuItem
+              component={Link}
+              to="/manage/user"
+              onClick={handleAdminMenuClose}
+            >
+              Manage User
+            </MenuItem>
+            <MenuItem
+              component={Link}
+              to="/manage/course"
+              onClick={handleAdminMenuClose}
+            >
+              Manage Course
+            </MenuItem>
+            <MenuItem
+              component={Link}
+              to="/manage/invoice"
+              onClick={handleAdminMenuClose}
+            >
+              Manage Invoice
+            </MenuItem>
+          </Menu>
+        </>
+      )}
+
       <IconButton
         component={Link}
         to="/checkout"
@@ -91,6 +144,57 @@ const Navbar = () => {
           <CloseIcon />
         </IconButton>
       </Box>
+
+      {isUserLoggedIn && auth.role === "admin" && (
+        <>
+          <Button
+            component={Link}
+            to="/manage/user"
+            variant="text"
+            onClick={() => setDrawerOpen(false)}
+            sx={{
+              width: "100%",
+              justifyContent: "flex-start",
+              textTransform: "none",
+              mb: 1,
+              color: "dlang.green",
+            }}
+          >
+            Manage User
+          </Button>
+          <Button
+            component={Link}
+            to="/manage/course"
+            variant="text"
+            onClick={() => setDrawerOpen(false)}
+            sx={{
+              width: "100%",
+              justifyContent: "flex-start",
+              textTransform: "none",
+              mb: 2,
+              color: "dlang.green",
+            }}
+          >
+            Manage Course
+          </Button>
+                    <Button
+            component={Link}
+            to="/manage/invoice"
+            variant="text"
+            onClick={() => setDrawerOpen(false)}
+            sx={{
+              width: "100%",
+              justifyContent: "flex-start",
+              textTransform: "none",
+              mb: 2,
+              color: "dlang.green",
+            }}
+          >
+            Manage Invoice
+          </Button>
+          <Divider sx={{ width: "100%", mb: 2 }} />
+        </>
+      )}
 
       <Button
         component={Link}
@@ -229,9 +333,7 @@ const Navbar = () => {
                 </Drawer>
               </>
             ) : (
-              <Box display="flex" alignItems="center">
-                {menuList}
-              </Box>
+              <Box display="flex" alignItems="center">{menuList}</Box>
             )
           ) : (
             <Box>

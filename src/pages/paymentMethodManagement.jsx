@@ -13,61 +13,48 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TextField from "@mui/material/TextField";
-import Checkbox from "@mui/material/Checkbox";
 import { AuthContext } from "../utils/authContext";
 import { useNavigate } from "react-router";
 import { useRequireRole } from "../utils/useRequireRole";
-import ModalDeleteCourse from "../components/molecules/ModalDeleteCourse";
-import ModalAddCourse from "../components/molecules/ModalAddCourse";
-import ModalUpdateCourse from "../components/molecules/ModalUpdateCourse";
-import ModalManageSchedule from "../components/molecules/ModalCourseSchedule";
-
+import ModalAddPaymentMethod from "../components/molecules/ModalAddPaymentMethod";
+import ModalUpdatePaymentMethod from "../components/molecules/ModalUpdatePaymentmethod";
+import Checkbox from "@mui/material/Checkbox";
 const columns = [
   { id: "No", label: "No" },
-  { id: "CourseName", label: "Course Name" },
-  { id: "CoursePrice", label: "Course Price" },
-  { id: "CategoryName", label: "Category" },
-  { id: "Active", label: "Active", align: "center" },
+  { id: "Name", label: "Name" },
+  { id: "Active", label: "Active" },
   { id: "Action", label: "Action", align: "center" },
 ];
 
-export default function CourseManagement() {
+export default function PaymentMethodManagement() {
   useRequireRole(["admin"]);
-  const navigate = useNavigate();
   const { auth } = useContext(AuthContext);
   const token = auth.token;
   const BASE_URL = import.meta.env.VITE_API;
 
   const [rows, setRows] = useState([]);
-  const [searchText, setSearchText] = useState("");
-  const fetchCourses = useCallback(() => {
+  const fetchPaymentMethod = useCallback(() => {
     if (!token || auth.role !== "admin") return;
     axios
-      .get(`${BASE_URL}/Courses/all`, {
+      .get(`${BASE_URL}/PaymentMethod/all`, {
         headers: { Authorization: `Bearer ${token}` },
-         params: { search: searchText }
       })
       .then((res) => {
-        const mapped = res.data.data.map((course, idx) => ({
+        const mapped = res.data.data.map((paymentMethod, idx) => ({
           No: idx + 1,
-          CourseName: course.course_name,
-          CoursePrice: course.course_price,
-          CategoryName: course.category_name,
-          Active: <Checkbox checked={course.is_active} onChange={handleActiveToggle(course.course_id)} color="success" />,
+          Name: paymentMethod.payment_method_name,
+          Active: (
+            <Checkbox
+              checked={paymentMethod.is_active}
+              onChange={handleActiveToggle(paymentMethod.payment_method_id)}
+              color="success"
+            />
+          ),
           action: (
             <Stack direction="row" justifyContent="center" spacing={3}>
-              <ModalManageSchedule
-                courseId={course.course_id}
-                courseName={course.course_name}
-                onSuccess={fetchCourses}
-              />
-              <ModalUpdateCourse
-                id={course.course_id}
-                onSuccess={fetchCourses}
-              />
-              <ModalDeleteCourse
-                id={course.course_id}
-                onSuccess={fetchCourses}
+              <ModalUpdatePaymentMethod
+                id={paymentMethod.payment_method_id}
+                onSuccess={fetchPaymentMethod}
               />
             </Stack>
           ),
@@ -75,19 +62,19 @@ export default function CourseManagement() {
         setRows(mapped);
       })
       .catch((err) => {
-        console.error("Fetch courses error:", err);
+        console.error("Fetch payment method error:", err);
       });
-  }, [token, auth.role, BASE_URL, searchText]);
+  }, [token, auth.role, BASE_URL]);
 
   useEffect(() => {
-    fetchCourses();
-  }, [fetchCourses]);
+    fetchPaymentMethod();
+  }, [fetchPaymentMethod]);
 
-   const handleActiveToggle = (courseId) => (e) => {
+  const handleActiveToggle = (id) => (e) => {
     const newActive = e.target.checked;
     axios
       .patch(
-        `${BASE_URL}/Courses/${courseId}`,
+        `${BASE_URL}/PaymentMethod/${id}`,
         [{ op: "replace", path: "/is_active", value: newActive }],
         {
           headers: {
@@ -97,40 +84,20 @@ export default function CourseManagement() {
         }
       )
       .then(() => {
-        fetchCourses();    
+        fetchPaymentMethod();
       })
       .catch((err) => console.error("Toggle active failed:", err));
   };
-
   return (
-    <Box mx={{ xs: 2, sm: 13 }}
-      my={{ xs: 2, sm: 3 }}>
+    <Box mx={{ xs: 2, sm: 13 }} my={{ xs: 2, sm: 3 }}>
       <Typography
         sx={{ color: "#4F4F4F", fontSize: 20, fontWeight: 600 }}
         mb={3}
       >
-        Course Management
+        Payment Method Management
       </Typography>
 
       <Grid container spacing={2} my={3}>
-        <Grid item xs={12} sm={4} md={2}>
-          <Stack spacing={2}>
-      <TextField
-                size="small"
-                placeholder="Search course"
-                value={searchText}
-                onChange={(e) => setSearchText(e.target.value)}
-                fullWidth
-                sx={{
-                  width: 220,
-                  height: 38,
-                  "& .MuiOutlinedInput-root": {                 borderRadius: 2,
-                    fontSize: { xs: 13, md: 15 },
-                  },
-                }}
-              />
-          </Stack>
-        </Grid>
         <Grid
           size={{ sm: "grow" }}
           item
@@ -140,7 +107,7 @@ export default function CourseManagement() {
           justifyContent="flex-end"
           alignItems="flex-end"
         >
-          <ModalAddCourse onSuccess={fetchCourses} />
+          <ModalAddPaymentMethod onSuccess={fetchPaymentMethod} />
         </Grid>
       </Grid>
 
@@ -182,14 +149,14 @@ export default function CourseManagement() {
                     tabIndex={-1}
                     sx={{
                       backgroundColor: ri % 2 === 0 ? "#fff" : "#EA9E1F33",
-                      "&:hover": { backgroundColor: "#e0f7fa" }
+                      "&:hover": { backgroundColor: "#e0f7fa" },
                     }}
                   >
                     {columns.map((col) => (
                       <TableCell
                         key={col.id}
                         align={col.align}
-                        sx={{ fontSize: 16}}
+                        sx={{ fontSize: 16 }}
                       >
                         {col.id === "Action" ? row.action : row[col.id]}
                       </TableCell>
@@ -205,7 +172,7 @@ export default function CourseManagement() {
                       fontWeight={500}
                       py={10}
                     >
-                      Oops! No courses found.
+                      Oops! No payment method found.
                     </Typography>
                   </TableCell>
                 </TableRow>
