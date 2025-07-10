@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useCallback } from "react";
 import { NavLink } from "react-router";
 import axios from "axios";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
@@ -8,18 +8,20 @@ import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
-import Button from "@mui/material/Button";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import TextField from "@mui/material/TextField";
 import { useRequireRole } from "../utils/useRequireRole";
 import { AuthContext } from "../utils/authContext";
 import { useNavigate } from "react-router";
 import ModalDeleteUser from "../components/molecules/ModalDeleteUser";
 import ModalAddUser from "../components/molecules/ModalAddUser";
+import { useSnackbar } from "../components/molecules/snackbar";  // ← tambah import
+
 const columns = [
   { id: "No", label: "No" },
   { id: "Username", label: "Username" },
@@ -32,17 +34,18 @@ export default function UserManagement() {
   useRequireRole(["admin"]);
   const navigate = useNavigate();
   const BASE_URL = import.meta.env.VITE_API;
-  const { auth, setAuth } = useContext(AuthContext);
+  const { auth } = useContext(AuthContext);
   const token = auth.token;
+  const showSnackbar = useSnackbar(); 
   const [rows, setRows] = useState([]);
+  const [searchText, setSearchText] = useState("");
 
-  useEffect(() => {
-    if (!auth.token || auth.role !== "admin") {
-      return;
-    }
+  const fetchUsers = useCallback(() => {
+    if (!token || auth.role !== "admin") return;
     axios
       .get(`${BASE_URL}/Users/`, {
-        headers: { Authorization: `Bearer ${auth.token}` },
+        headers: { Authorization: `Bearer ${token}` },
+        params: { search: searchText },
       })
       .then((res) => {
         const mapped = res.data.data.map((user, idx) => ({
@@ -50,32 +53,29 @@ export default function UserManagement() {
           Username: user.username,
           Email: user.email,
           Role: user.role,
-          action: <ModalDeleteUser userId={user.user_id} />,
+          action: (
+            <Stack direction="row" justifyContent="center" spacing={2}>
+              <ModalDeleteUser userId={user.user_id} onSuccess={fetchUsers} />
+            </Stack>
+          ),
         }));
         setRows(mapped);
       })
-      .catch((err) => console.error("Fetch user error:", err));
-  }, [auth.token, auth.role, BASE_URL]);
+      .catch((err) => {
+        console.error("Fetch user error:", err);
+        showSnackbar({
+          message: "Failed to fetch users.",
+          severity: "error",
+        });
+      });
+  }, [token, auth.role, BASE_URL, searchText, showSnackbar]);
 
-  const breadcrumbs = [
-    <Link
-      key="1"
-      underline="hover"
-      href="/"
-      sx={{ color: "#828282", fontSize: 16, fontWeight: 600 }}
-    >
-      Home
-    </Link>,
-    <Typography
-      key="2"
-      sx={{ color: "#EA9E1F", fontSize: 16, fontWeight: 600 }}
-    >
-      Invoice
-    </Typography>,
-  ];
+  useEffect(() => {
+    fetchUsers();
+  }, [fetchUsers]);
 
   return (
-    <Box mx={13} my={3}>
+    <Box mx={{ xs: 2, sm: 13 }} my={3}>
       <Typography
         sx={{ color: "#4F4F4F", fontSize: 20, fontWeight: 600 }}
         mb={3}
@@ -85,20 +85,21 @@ export default function UserManagement() {
       <Grid container spacing={2} my={3}>
         <Grid item xs={12} sm={4} md={2}>
           <Stack spacing={2}>
-            <Button
-              variant="contained"
+            <TextField
+              size="small"
+              placeholder="Search user"
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+              fullWidth
               sx={{
-                borderRadius: 2,
-                color: "#fff",
-                backgroundColor: "#EA9E1F",
-                textTransform: "none",
-                width: 140,
+                width: 220,
                 height: 38,
-                fontSize: { xs: 13, md: 15 },
+                "& .MuiOutlinedInput-root": {
+                  borderRadius: 2,
+                  fontSize: { xs: 13, md: 15 },
+                },
               }}
-            >
-              Search user
-            </Button>
+            />
           </Stack>
         </Grid>
         <Grid
@@ -110,7 +111,7 @@ export default function UserManagement() {
           justifyContent="flex-end"
           alignItems="flex-end"
         >
-          <ModalAddUser />
+          <ModalAddUser onSuccess={fetchUsers} />
         </Grid>
       </Grid>
       <Paper
@@ -143,29 +144,27 @@ export default function UserManagement() {
             </TableHead>
             <TableBody>
               {rows.length > 0 ? (
-                <>
-                  {rows.map((row, ri) => (
-                    <TableRow
-                      key={ri}
-                      hover
-                      tabIndex={-1}
-                      sx={{
-                        backgroundColor: ri % 2 === 0 ? "#fff" : "#EA9E1F33",
-                        "&:hover": { backgroundColor: "#e0f7fa" },
-                      }}
-                    >
-                      {columns.map((col) => (
-                        <TableCell
-                          key={col.id}
-                          align={col.align}
-                          sx={{ fontSize: 16 }}
-                        >
-                          {col.id === "Action" ? row.action : row[col.id]}
-                        </TableCell>
-                      ))}
-                    </TableRow>
-                  ))}
-                </>
+                rows.map((row, ri) => (
+                  <TableRow
+                    key={ri}
+                    hover
+                    tabIndex={-1}
+                    sx={{
+                      backgroundColor: ri % 2 === 0 ? "#fff" : "#EA9E1F33",
+                      "&:hover": { backgroundColor: "#e0f7fa" },
+                    }}
+                  >
+                    {columns.map((col) => (
+                      <TableCell
+                        key={col.id}
+                        align={col.align}
+                        sx={{ fontSize: 16 }}
+                      >
+                        {col.id === "Action" ? row.action : row[col.id]}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))
               ) : (
                 <TableRow>
                   <TableCell colSpan={columns.length} align="center">

@@ -8,10 +8,15 @@ import DialogTitle from "@mui/material/DialogTitle";
 import axios from "axios";
 import { useContext } from "react";
 import { AuthContext } from "../../utils/authContext";
-const ModalDeleteUser = ({ userId }) => {
+import { useSnackbar } from "./snackbar";
+
+const ModalDeleteUser = ({ userId, onSuccess }) => {
   const BASE_URL = import.meta.env.VITE_API;
   const { auth, setAuth } = useContext(AuthContext);
   const [open, setOpen] = React.useState(false);
+  const showSnackbar = useSnackbar();
+
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -24,11 +29,18 @@ const ModalDeleteUser = ({ userId }) => {
         headers: { Authorization: `Bearer ${auth.token}` },
       })
       .then(() => {
-        alert("Delete user success");
+        showSnackbar({
+        message: "Success to delete user.",
+        severity: "success",
+      });
+        if (typeof onSuccess === "function") {
+          onSuccess();
+        }
         handleClose();
-        // Optionally trigger data refresh from parent
       })
-      .catch((err) => console.error("Error deleting item:", err));
+      .catch((err) => {
+        showSnackbar({ message: "Error deleting user.", severity: "error",})
+        console.error("Error deleting item:", err)});
   };
 
   return (
@@ -70,4 +82,5 @@ const ModalDeleteUser = ({ userId }) => {
     </>
   );
 };
+
 export default ModalDeleteUser;

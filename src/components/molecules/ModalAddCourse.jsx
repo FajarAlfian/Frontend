@@ -1,3 +1,5 @@
+import React, { useContext, useEffect, useState } from "react";
+import axios from "axios";
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
@@ -7,10 +9,10 @@ import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import InputLabel from "@mui/material/InputLabel";
-import axios from "axios";
-import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../../utils/authContext";
 import FormControl from "@mui/material/FormControl";
+import { AuthContext } from "../../utils/authContext";
+import { useSnackbar } from "./snackbar";
+
 const modalStyle = {
   position: "absolute",
   top: "50%",
@@ -22,40 +24,45 @@ const modalStyle = {
   p: 4,
   width: 360,
 };
-const ModalAddCourse = () => {
+
+const ModalAddCourse = ({ onSuccess }) => {
   const BASE_URL = import.meta.env.VITE_API;
-  const { auth, setAuth } = useContext(AuthContext);
+  const { auth } = useContext(AuthContext);
   const [open, setOpen] = useState(false);
-  const [category, setCategory] = useState([]);
+  const [categoryList, setCategoryList] = useState([]);
   const [courseName, setCourseName] = useState("");
-  const [courseDescription, setCourseDescription] = useState("");
-  const [coursePrice, setCoursePrice] = useState();
+  const [coursePrice, setCoursePrice] = useState("");
   const [courseImage, setCourseImage] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState();
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [courseDescription, setCourseDescription] = useState("");
+  const showSnackbar = useSnackbar();
+
   useEffect(() => {
     axios
-      .get(`${BASE_URL}/Categories`)
-      .then((response) => {
-        setCategory(response.data.data);
+      .get(`${BASE_URL}/Categories`, {
+        headers: { Authorization: `Bearer ${auth.token}` },
       })
-      .catch((error) => {
-        console.error("Error fetching category:", error);
-      });
-  }, []);
-  const handleChange = () => {};
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+      .then((res) => setCategoryList(res.data.data))
+      .catch((err) => console.error("Error fetching categories:", err));
+  }, [BASE_URL, auth.token]);
+
+  const handleClickOpen = () => setOpen(true);
   const handleClose = () => {
     setOpen(false);
+    setCourseName("");
+    setCoursePrice("");
+    setCourseImage("");
+    setSelectedCategory("");
+    setCourseDescription("");
   };
+
   const handleAdd = () => {
     axios
       .post(
         `${BASE_URL}/Courses`,
         {
           course_name: courseName,
-          course_price: coursePrice,
+          course_price: Number(coursePrice),
           course_image: courseImage,
           category_id: selectedCategory,
           course_description: courseDescription,
@@ -65,10 +72,22 @@ const ModalAddCourse = () => {
         }
       )
       .then(() => {
-        alert("add course success");
+        showSnackbar({
+        message: "Success adding course.",
+        severity: "success",
+      });
+        if (typeof onSuccess === "function") {
+          onSuccess();
+        }
         handleClose();
       })
-      .catch((err) => console.error("Error add course item:", err));
+      .catch((err) => {
+        console.error("Error adding course:", err);
+        showSnackbar({
+        message: "Error adding course.",
+        severity: "warning",
+      });
+      });
   };
 
   return (
@@ -88,60 +107,61 @@ const ModalAddCourse = () => {
       >
         Add Course
       </Button>
+
       <Modal open={open} onClose={handleClose}>
         <Box sx={modalStyle}>
           <Typography variant="h6" textAlign="center" mb={2}>
             Add Course
           </Typography>
-          <Stack spacing={1}>
+
+          <Stack spacing={2}>
             <TextField
-              id="outlined-basic"
               label="Name"
               variant="outlined"
+              value={courseName}
               onChange={(e) => setCourseName(e.target.value)}
             />
+
             <TextField
-              id="outlined-basic"
               label="Price"
               variant="outlined"
+              type="number"
+              value={coursePrice}
               onChange={(e) => setCoursePrice(e.target.value)}
             />
+
             <TextField
-              id="outlined-basic"
-              label="Image"
+              label="Image URL"
               variant="outlined"
+              value={courseImage}
               onChange={(e) => setCourseImage(e.target.value)}
             />
+
             <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-autowidth-label">
-                Category
-              </InputLabel>
+              <InputLabel id="category-select-label">Category</InputLabel>
               <Select
-                labelId="demo-simple-select-autowidth-label"
-                id="demo-simple-select-autowidth"
+                labelId="category-select-label"
                 value={selectedCategory}
-                onChange={(e) => {
-                  setSelectedCategory(e.target.value);
-                }}
-                autoWidth
+                onChange={(e) => setSelectedCategory(e.target.value)}
                 label="Category"
               >
                 <MenuItem value="" disabled>
                   Select Category
                 </MenuItem>
-                {category.map((item) => (
-                  <MenuItem key={item.category_id} value={item.category_id}>
-                    {item.category_name}
+                {categoryList.map((cat) => (
+                  <MenuItem key={cat.category_id} value={cat.category_id}>
+                    {cat.category_name}
                   </MenuItem>
                 ))}
               </Select>
             </FormControl>
+
             <TextField
-              multiline
-              id="outlined-basic"
-              maxRows={4}
               label="Description"
               variant="outlined"
+              multiline
+              maxRows={4}
+              value={courseDescription}
               onChange={(e) => setCourseDescription(e.target.value)}
             />
           </Stack>
@@ -167,4 +187,5 @@ const ModalAddCourse = () => {
     </>
   );
 };
+
 export default ModalAddCourse;

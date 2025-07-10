@@ -32,6 +32,9 @@ const Login = () => {
     }));
   };
 
+  const checkPassword = formData.password.length > 0;
+  const minCharacter = formData.password.length >= 8;
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!minCharacter) {
@@ -41,6 +44,7 @@ const Login = () => {
       });
       return;
     }
+
     axios
       .post(`${BASE_URL}/auth/login`, {
         email: formData.email,
@@ -56,18 +60,26 @@ const Login = () => {
           message: "Login berhasil.",
           severity: "success",
         });
-        navigate("/")
+        navigate("/");
       })
       .catch((error) => {
-        showSnackbar({
-          message: "Login gagal. Email atau password salah.",
-          severity: "error",
-        });
+        const resp = error.response?.data;
+        const errors = Array.isArray(resp?.errors) ? resp.errors : [];
+        const firstError = errors.length > 0 ? errors[0] : "";
+
+        if (firstError.toLowerCase().includes("verifikasi")) {
+          showSnackbar({
+            message: firstError,
+            severity: "warning",
+          });
+        } else {
+          showSnackbar({
+            message: "Login gagal. Email atau password salah.",
+            severity: "error",
+          });
+        }
       });
   };
-
-  const checkPassword = formData.password.length > 0;
-  const minCharacter = formData.password.length >= 8;
 
   return (
     <Box>
