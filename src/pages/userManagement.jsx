@@ -15,6 +15,7 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import TextField from "@mui/material/TextField";
 import { useRequireRole } from "../utils/useRequireRole";
 import { AuthContext } from "../utils/authContext";
 import { useNavigate } from "react-router";
@@ -36,12 +37,14 @@ export default function UserManagement() {
   const { auth, setAuth } = useContext(AuthContext);
   const token = auth.token;
   const [rows, setRows] = useState([]);
+  const [searchText, setSearchText] = useState("");
 
   const fetchUsers = useCallback(() => {
     if (!auth.token || auth.role !== "admin") return;
     axios
       .get(`${BASE_URL}/Users/`, {
         headers: { Authorization: `Bearer ${auth.token}` },
+        params: { search: searchText },
       })
       .then((res) => {
         const mapped = res.data.data.map((user, idx) => ({
@@ -61,7 +64,7 @@ export default function UserManagement() {
         setRows(mapped);
       })
       .catch((err) => console.error("Fetch user error:", err));
-  }, [auth.token, auth.role, BASE_URL]);
+  }, [auth.token, auth.role, BASE_URL, searchText]);
 
   useEffect(() => {
     fetchUsers();
@@ -85,7 +88,7 @@ export default function UserManagement() {
   ];
 
   return (
-    <Box mx={13} my={3}>
+    <Box mx={{ xs: 2, sm: 13 }} my={3}>
       <Typography
         sx={{ color: "#4F4F4F", fontSize: 20, fontWeight: 600 }}
         mb={3}
@@ -95,20 +98,21 @@ export default function UserManagement() {
       <Grid container spacing={2} my={3}>
         <Grid item xs={12} sm={4} md={2}>
           <Stack spacing={2}>
-            <Button
-              variant="contained"
+            <TextField
+              size="small"
+              placeholder="Search user"
+              value={searchText}
+              onChange={e => setSearchText(e.target.value)}
+              fullWidth
               sx={{
-                borderRadius: 2,
-                color: "#fff",
-                backgroundColor: "#EA9E1F",
-                textTransform: "none",
-                width: 140,
+                width: 220,
                 height: 38,
-                fontSize: { xs: 13, md: 15 },
+                "& .MuiOutlinedInput-root": {
+                  borderRadius: 2,
+                  fontSize: { xs: 13, md: 15 },
+                },
               }}
-            >
-              Search user
-            </Button>
+            />
           </Stack>
         </Grid>
         <Grid
