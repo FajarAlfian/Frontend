@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useCallback } from "react";
 import axios from "axios";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
@@ -18,7 +18,8 @@ import { useRequireRole } from "../utils/useRequireRole";
 import ModalDeleteCourse from "../components/molecules/ModalDeleteCourse";
 import ModalAddCourse from "../components/molecules/ModalAddCourse";
 import ModalUpdateCourse from "../components/molecules/ModalUpdateCourse";
-import ModalAddSchedule from "../components/molecules/ModalCourseSchedule.jsx";
+import ModalAddSchedule from "../components/molecules/ModalCourseSchedule";
+
 const columns = [
   { id: "No", label: "No" },
   { id: "CourseName", label: "Course Name" },
@@ -29,17 +30,15 @@ const columns = [
 
 export default function CourseManagement() {
   useRequireRole(["admin"]);
-
   const navigate = useNavigate();
-  const BASE_URL = import.meta.env.VITE_API;
   const { auth } = useContext(AuthContext);
   const token = auth.token;
+  const BASE_URL = import.meta.env.VITE_API;
+
   const [rows, setRows] = useState([]);
 
-  useEffect(() => {
-    if (!token || auth.role !== "admin") {
-      return;
-    }
+  const fetchCourses = useCallback(() => {
+    if (!token || auth.role !== "admin") return;
     axios
       .get(`${BASE_URL}/Courses`, {
         headers: { Authorization: `Bearer ${token}` },
@@ -51,20 +50,33 @@ export default function CourseManagement() {
           CoursePrice: course.course_price,
           CategoryName: course.category_name,
           action: (
-            <Stack direction="row" justifyContent="center" spacing={1}>
+            <Stack direction="row" justifyContent="center" spacing={3}>
               <ModalAddSchedule
                 courseId={course.course_id}
                 courseName={course.course_name}
+                onSuccess={fetchCourses}
               />
-              <ModalUpdateCourse id={course.course_id} />
-              <ModalDeleteCourse id={course.course_id} />
+              <ModalUpdateCourse
+                id={course.course_id}
+                onSuccess={fetchCourses}
+              />
+              <ModalDeleteCourse
+                id={course.course_id}
+                onSuccess={fetchCourses}
+              />
             </Stack>
           ),
         }));
         setRows(mapped);
       })
-      .catch((err) => console.error("Fetch course error:", err));
-  }, [token, auth.role, BASE_URL, navigate]);
+      .catch((err) => {
+        console.error("Fetch courses error:", err);
+      });
+  }, [token, auth.role, BASE_URL]);
+
+  useEffect(() => {
+    fetchCourses();
+  }, [fetchCourses]);
 
   return (
     <Box mx={13} my={3}>
@@ -103,7 +115,7 @@ export default function CourseManagement() {
           justifyContent="flex-end"
           alignItems="flex-end"
         >
-          <ModalAddCourse />
+          <ModalAddCourse onSuccess={fetchCourses} />
         </Grid>
       </Grid>
 
@@ -152,7 +164,7 @@ export default function CourseManagement() {
                       <TableCell
                         key={col.id}
                         align={col.align}
-                        sx={{ fontSize: 16 }}
+                        sx={{ fontSize: 16, marginRight: "0" }}
                       >
                         {col.id === "Action" ? row.action : row[col.id]}
                       </TableCell>

@@ -11,7 +11,11 @@ import {
 } from '@mui/material';
 import { AuthContext } from '../../utils/authContext';
 
-export default function ModalAddSchedule({ courseId, courseName, onAdded }) {
+export default function ModalAddSchedule({
+  courseId,
+  courseName,
+  onAdded,     
+}) {
   const [open, setOpen] = useState(false);
   const [date, setDate] = useState('');
   const { auth } = useContext(AuthContext);
@@ -32,7 +36,9 @@ export default function ModalAddSchedule({ courseId, courseName, onAdded }) {
         payload,
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      onAdded && onAdded(res.data);
+      if (typeof onAdded === 'function') {
+        onAdded(res.data);
+      }
       handleClose();
     } catch (error) {
       console.error('Error adding schedule:', error);
@@ -45,11 +51,11 @@ export default function ModalAddSchedule({ courseId, courseName, onAdded }) {
       <Button
         variant="contained"
         onClick={handleOpen}
-          sx={{
+        sx={{
           borderRadius: 2,
-          color: "#fff",
-          backgroundColor: "#226957",
-          textTransform: "none",
+          color: '#fff',
+          backgroundColor: '#226957',
+          textTransform: 'none',
           width: 140,
           height: 38,
           fontSize: { xs: 13, md: 15 },
@@ -62,7 +68,7 @@ export default function ModalAddSchedule({ courseId, courseName, onAdded }) {
         <DialogTitle>Tambah Schedule untuk "{courseName}"</DialogTitle>
         <DialogContent>
           <TextField
-          variant="filled"
+            variant="filled"
             label="Schedule Date"
             type="date"
             fullWidth
@@ -72,8 +78,15 @@ export default function ModalAddSchedule({ courseId, courseName, onAdded }) {
           />
         </DialogContent>
         <DialogActions>
-          <Button variant="contained" color="error" onClick={handleClose}>Batal</Button>
-          <Button sx={{ backgroundColor: "#226957" }} onClick={handleSave} disabled={!date} variant="contained">
+          <Button variant="contained" color="error" onClick={handleClose}>
+            Batal
+          </Button>
+          <Button
+            sx={{ backgroundColor: '#226957' }}
+            onClick={handleSave}
+            disabled={!date}
+            variant="contained"
+          >
             Simpan
           </Button>
         </DialogActions>

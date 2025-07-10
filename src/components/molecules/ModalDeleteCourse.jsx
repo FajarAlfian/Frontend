@@ -1,22 +1,21 @@
+import React, { useContext, useState } from "react";
+import axios from "axios";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import axios from "axios";
-import { useContext, useState } from "react";
 import { AuthContext } from "../../utils/authContext";
-const ModalDeleteCourse = ({ id }) => {
+
+const ModalDeleteCourse = ({ id, onSuccess }) => {
   const BASE_URL = import.meta.env.VITE_API;
-  const { auth, setAuth } = useContext(AuthContext);
+  const { auth } = useContext(AuthContext);
   const [open, setOpen] = useState(false);
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
+
+  const handleClickOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   const handleDeleteCourse = () => {
     axios
       .delete(`${BASE_URL}/Courses/${id}`, {
@@ -24,19 +23,25 @@ const ModalDeleteCourse = ({ id }) => {
       })
       .then(() => {
         alert("Delete course success");
+        if (typeof onSuccess === "function") {
+          onSuccess();
+        }
         handleClose();
       })
-      .catch((err) => console.error("Error deleting item:", err));
+      .catch((err) => {
+        console.error("Error deleting course:", err);
+        alert("Gagal menghapus course.");
+      });
   };
 
   return (
     <>
       <Button
         variant="contained"
+        color="error"
         sx={{
           borderRadius: 2,
           color: "#fff",
-          backgroundColor: "#EA9E1F",
           textTransform: "none",
           width: 140,
           height: 38,
@@ -46,23 +51,24 @@ const ModalDeleteCourse = ({ id }) => {
       >
         Delete
       </Button>
+
       <Dialog
         open={open}
         onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
+        aria-labelledby="confirm-delete-title"
+        aria-describedby="confirm-delete-description"
       >
-        <DialogTitle id="alert-dialog-title">
-          Confirm course deletion
+        <DialogTitle id="confirm-delete-title">
+          Confirm Course Deletion
         </DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Please confirm if you want to delete this course.
+          <DialogContentText id="confirm-delete-description">
+            Are you sure you want to delete this course?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleDeleteCourse} autoFocus>
+          <Button color="error" onClick={handleDeleteCourse} autoFocus>
             Confirm
           </Button>
         </DialogActions>
@@ -70,4 +76,5 @@ const ModalDeleteCourse = ({ id }) => {
     </>
   );
 };
+
 export default ModalDeleteCourse;
