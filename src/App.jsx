@@ -96,6 +96,7 @@ import Invoice from "./pages/invoice";
 import DetailInvoice from "./pages/detailInvoice";
 import MyClass from "./pages/myClass";
 import VerifyEmail from "./pages/verifyEmail";
+import AdminInvoices from "./pages/invoiceManagement";
 import { SnackbarProvider } from "./components/molecules/snackbar";
 import "./styles/app.css";
 import UserManagement from "./pages/userManagement";
@@ -120,6 +121,7 @@ function App() {
               <Route path="/category/:nama" element={<MenuClass />} />
               <Route path="/detail/:id" element={<Detail />} />
               <Route path="/invoice" element={<Invoice />} />
+              <Route path="/manage/invoice" element={<AdminInvoices />} />
               <Route path="/manage/user" element={<UserManagement />} />
               <Route path="/manage/course" element={<CourseManagement />} />
               <Route path="/detail-invoice/:id" element={<DetailInvoice />} />
