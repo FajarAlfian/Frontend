@@ -13,6 +13,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TextField from "@mui/material/TextField";
+import Checkbox from "@mui/material/Checkbox";
 import { AuthContext } from "../utils/authContext";
 import { useNavigate } from "react-router";
 import { useRequireRole } from "../utils/useRequireRole";
@@ -26,6 +27,7 @@ const columns = [
   { id: "CourseName", label: "Course Name" },
   { id: "CoursePrice", label: "Course Price" },
   { id: "CategoryName", label: "Category" },
+  { id: "Active", label: "Active", align: "center" },
   { id: "Action", label: "Action", align: "center" },
 ];
 
@@ -41,7 +43,7 @@ export default function CourseManagement() {
   const fetchCourses = useCallback(() => {
     if (!token || auth.role !== "admin") return;
     axios
-      .get(`${BASE_URL}/Courses`, {
+      .get(`${BASE_URL}/Courses/all`, {
         headers: { Authorization: `Bearer ${token}` },
          params: { search: searchText }
       })
@@ -51,6 +53,7 @@ export default function CourseManagement() {
           CourseName: course.course_name,
           CoursePrice: course.course_price,
           CategoryName: course.category_name,
+          Active: <Checkbox checked={course.is_active} onChange={handleActiveToggle(course.course_id)} color="success" />,
           action: (
             <Stack direction="row" justifyContent="center" spacing={3}>
               <ModalAddSchedule
@@ -79,6 +82,25 @@ export default function CourseManagement() {
   useEffect(() => {
     fetchCourses();
   }, [fetchCourses]);
+
+   const handleActiveToggle = (courseId) => (e) => {
+    const newActive = e.target.checked;
+    axios
+      .patch(
+        `${BASE_URL}/Courses/${courseId}`,
+        [{ op: "replace", path: "/is_active", value: newActive }],
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json-patch+json",
+          },
+        }
+      )
+      .then(() => {
+        fetchCourses();    
+      })
+      .catch((err) => console.error("Toggle active failed:", err));
+  };
 
   return (
     <Box mx={{ xs: 2, sm: 13 }}
