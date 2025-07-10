@@ -50,7 +50,8 @@ function App() {
                 <Route path="/category/:nama" element={<MenuClass />} />
                 <Route path="/detail/:id" element={<Detail />} />
                 <Route path="/invoice" element={<Invoice />} />
-                <Route path="/dashboard-admin" element={<DashboardAdmin />} />
+                {/* <Route path="/dashboard-admin" element={<DashboardAdmin />} /> */}
+                {/* <Route path="/detail-invoice/:id" element={<DetailInvoice />} /> */}
                 {/* <Route path="/manage/invoice" element={<AdminInvoices />} />
                 <Route path="/manage/user" element={<UserManagement />} />
                 <Route path="/manage/course" element={<CourseManagement />} />
@@ -62,8 +63,8 @@ function App() {
                   path="/manage/payment-method"
                   element={<PaymentMethodManagement />}
                 /> */}
-                <Route path="/detail-invoice/:id" element={<DetailInvoice />} />
               </Route>
+              <Route path="/dashboard-admin" element={<DashboardAdmin />} />
             </Routes>
           </Router>
         </AuthProvider>
