@@ -1,9 +1,6 @@
 import React, { useEffect, useState, useContext, useCallback } from "react";
-import { NavLink } from "react-router";
 import axios from "axios";
-import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Typography from "@mui/material/Typography";
-import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
@@ -15,12 +12,18 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TextField from "@mui/material/TextField";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useRequireRole } from "../utils/useRequireRole";
 import { AuthContext } from "../utils/authContext";
 import { useNavigate } from "react-router";
 import ModalDeleteUser from "../components/molecules/ModalDeleteUser";
 import ModalAddUser from "../components/molecules/ModalAddUser";
-import { useSnackbar } from "../components/molecules/snackbar"; // ← tambah import
+import { useSnackbar } from "../components/molecules/snackbar";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 const columns = [
   { id: "No", label: "No" },
@@ -39,6 +42,9 @@ export default function UserManagement() {
   const showSnackbar = useSnackbar();
   const [rows, setRows] = useState([]);
   const [searchText, setSearchText] = useState("");
+
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const fetchUsers = useCallback(() => {
     if (!token || auth.role !== "admin") return;
@@ -73,6 +79,77 @@ export default function UserManagement() {
   useEffect(() => {
     fetchUsers();
   }, [fetchUsers]);
+
+  if (isMobile) {
+  return (
+    <Box px={2} py={3}>
+      <Typography
+        fontWeight={600}
+        fontSize="16px"
+        color="#4F4F4F"
+        mb={2}
+      >
+        User Management
+      </Typography>
+      <Grid container spacing={2} mb={2}>
+        <Grid item xs={8}>
+          <TextField
+            size="medium"
+            placeholder="Search user"
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+            fullWidth
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                borderRadius: 2,
+                fontSize: 13,
+              },
+            }}
+          />
+        </Grid>
+        <Grid item xs={4} display="flex" justifyContent="flex-end" alignItems={"center"}>
+          <ModalAddUser onSuccess={fetchUsers} />
+        </Grid>
+      </Grid>
+
+      {rows.length > 0 ? (
+        rows.map((row, idx) => (
+          <Accordion key={idx} sx={{ width: "100%", mb: 2, borderRadius: 2 }}>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              sx={{ width: "100%", px: 0  }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  width: "100%",
+                  px: 1,
+                }}
+              >
+                <Typography sx={{ width: 30 }}>{row.No}.</Typography>
+                <Typography sx={{ flexGrow: 1 }}>{row.Username}</Typography>
+                <Typography sx={{ mr: 1 }}>{row.Role}</Typography>
+              </Box>
+            </AccordionSummary>
+
+            <AccordionDetails sx={{ px: 1, pt: 0 }}>
+              <Box mb={1}>
+                <Typography variant="subtitle2">Email</Typography>
+                <Typography variant="body2">{row.Email}</Typography>
+              </Box>
+              <Box>{row.action}</Box>
+            </AccordionDetails>
+          </Accordion>
+        ))
+      ) : (
+        <Typography align="center" mt={10} color="#006A61">
+          Oops! Looks like you haven’t made any users yet.
+        </Typography>
+      )}
+    </Box>
+  );
+}
 
   return (
     <Box mx={{ xs: 2, sm: 13 }} my={3}>
@@ -124,7 +201,7 @@ export default function UserManagement() {
           borderRadius: 0,
         }}
       >
-        <TableContainer sx={{ maxHeight: 440 }}>
+        <TableContainer sx={{ maxHeight: 440, overflowX: "auto" }}>
           <Table stickyHeader>
             <TableHead>
               <TableRow>
