@@ -52,6 +52,8 @@ export default function CategoryManagement() {
             <Checkbox
               checked={cat.is_active}
               onChange={handleActiveToggle(cat.category_id)}
+              onClick={e => e.stopPropagation()}
+              onFocus={e => e.stopPropagation()}
               color="success"
             />
           ),
@@ -74,6 +76,7 @@ export default function CategoryManagement() {
   }, [fetchCategories]);
 
   const handleActiveToggle = (id) => (e) => {
+    e.stopPropagation();
     const newActive = e.target.checked;
     axios
       .patch(

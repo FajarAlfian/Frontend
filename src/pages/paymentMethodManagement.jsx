@@ -54,6 +54,8 @@ export default function PaymentMethodManagement() {
             <Checkbox
               checked={paymentMethod.is_active}
               onChange={handleActiveToggle(paymentMethod.payment_method_id)}
+              onClick={e => e.stopPropagation()}
+               onFocus={e => e.stopPropagation()}
               color="success"
             />
           ),
@@ -78,6 +80,7 @@ export default function PaymentMethodManagement() {
   }, [fetchPaymentMethod]);
 
   const handleActiveToggle = (id) => (e) => {
+    e.stopPropagation();
     const newActive = e.target.checked;
     axios
       .patch(
