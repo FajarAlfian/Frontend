@@ -133,6 +133,7 @@ const Checkout = () => {
             divider={<Divider orientation="horizontal" />}
             px={{ xs: 2, sm: 10 }}
             spacing={2}
+             sx={{ pb: { xs: 14, md: 16 }, }}
           >
             <Grid
               container
@@ -387,15 +388,18 @@ const Checkout = () => {
           </Box>
         </>
       ) : (
-        <Typography
-          variant="h5"
-          fontWeight={500}
-          p={50}
-          textAlign="center"
-          color="#006A61"
-        >
-          Looks like you haven't picked any courses yet.
-        </Typography>
+          <Typography
+            align="center"
+            mt={4}
+            color="#006A61"
+            sx={{
+              px: 2,        
+              whiteSpace: 'normal',  
+              wordBreak: 'break-word' 
+            }}
+          >
+            Oops! Looks like you haven’t made any payments yet.
+          </Typography>
       )}
     </Box>
   );

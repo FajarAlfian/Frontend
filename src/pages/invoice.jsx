@@ -14,6 +14,12 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { AuthContext } from "../utils/authContext";
 const columns = [
   { id: "no", label: "No" },
@@ -52,6 +58,8 @@ export default function Invoice() {
   const BASE_URL = import.meta.env.VITE_API;
   const { auth, setAuth } = useContext(AuthContext);
   const [rows, setRows] = useState([]);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   console.log("role", auth.role);
   useEffect(() => {
     const token = auth.token;
@@ -96,6 +104,60 @@ export default function Invoice() {
       Invoice
     </Typography>,
   ];
+
+if (isMobile) {
+  return (
+    <Box px={2} py={2}>
+      <Typography
+        sx={{ color: "#4F4F4F", fontSize: 20, fontWeight: 600 }}
+        mb={2}
+      >
+        Menu Invoice
+      </Typography>
+
+      {rows.length > 0 ? (
+        rows.map((row, idx) => (
+          <Accordion
+            key={idx}
+            sx={{ width: "100%", mb: 2, borderRadius: 2 }}
+          >
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              expandIconPosition="end"
+              disableGutters
+              sx={{ px: 2 }}
+            >
+              <Typography sx={{ flexGrow: 1, fontSize: 16 }}>
+                {row.InvoiceID}
+              </Typography>
+              <Typography
+                sx={{ flexShrink: 0, fontSize: 14, color: "#666", ml: 1 }}
+              >
+                {row.date}
+              </Typography>
+            </AccordionSummary>
+
+            <AccordionDetails sx={{ px: 2, pt: 0 }}>
+              <Stack spacing={1}>
+                <Typography variant="body2">
+                  <strong>Total Course:</strong> {row["Total Course"]}
+                </Typography>
+                <Typography variant="body2">
+                  <strong>Total Price:</strong> {row.totalPrice}
+                </Typography>
+                <Box mt={1}>{row.action}</Box>
+              </Stack>
+            </AccordionDetails>
+          </Accordion>
+        ))
+      ) : (
+        <Typography align="center" mt={4} color="#006A61">
+          Oops! Looks like you haven’t made any payments yet.
+        </Typography>
+      )}
+    </Box>
+  );
+}
 
   return (
     <Box mx={10} my={3}>

@@ -7,13 +7,8 @@ import AppBar from "@mui/material/AppBar";
 import Drawer from "@mui/material/Drawer";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import Avatar from "@mui/material/Avatar";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
 import { Link, useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
-
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -47,8 +42,9 @@ const Navbar = () => {
       {isUserLoggedIn && auth.role === "admin" && (
         <>
           <Button
+            component={Link}
+            to="/dashboard-admin"
             variant="text"
-            onClick={handleAdminMenuOpen}
             sx={{
               fontSize: 16,
               color: "dlang.green",
@@ -56,51 +52,8 @@ const Navbar = () => {
               mr: 5,
             }}
           >
-            Admin
+            Dashboard Admin
           </Button>
-          <Menu
-            anchorEl={anchorAdmin}
-            open={Boolean(anchorAdmin)}
-            onClose={handleAdminMenuClose}
-            anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-            transformOrigin={{ vertical: "top", horizontal: "left" }}
-          >
-            <MenuItem
-              component={Link}
-              to="/manage/user"
-              onClick={handleAdminMenuClose}
-            >
-              Manage User
-            </MenuItem>
-            <MenuItem
-              component={Link}
-              to="/manage/course"
-              onClick={handleAdminMenuClose}
-            >
-              Manage Course
-            </MenuItem>
-              <MenuItem
-              component={Link}
-              to="/manage/category"
-              onClick={handleAdminMenuClose}
-            >
-              Manage Category
-            </MenuItem>
-            <MenuItem
-              component={Link}
-              to="/manage/invoice"
-              onClick={handleAdminMenuClose}
-            >
-              Manage Invoice
-            </MenuItem>
-              <MenuItem
-              component={Link}
-              to="/manage/payment-method"
-              onClick={handleAdminMenuClose}
-            >
-              Manage Payment Method
-            </MenuItem>
-          </Menu>
         </>
       )}
 
@@ -142,7 +95,7 @@ const Navbar = () => {
         flexItem
         sx={{ borderColor: "dlang.green", mr: 5 }}
       />
-      <IconButton component={Link} to="/" sx={{ color: "dlang.green", mr: 2 }}>
+      <IconButton component={Link} to="/profile" sx={{ color: "dlang.green", mr: 2 }}>
         <PersonIcon />
       </IconButton>
       <IconButton sx={{ color: "#EB5757" }} onClick={handleLogout}>
@@ -163,7 +116,7 @@ const Navbar = () => {
         <>
           <Button
             component={Link}
-            to="/manage/user"
+            to="/dashboard-admin"
             variant="text"
             onClick={() => setDrawerOpen(false)}
             sx={{
@@ -174,70 +127,8 @@ const Navbar = () => {
               color: "dlang.green",
             }}
           >
-            Manage User
+            Dashboard Admin
           </Button>
-          <Button
-            component={Link}
-            to="/manage/course"
-            variant="text"
-            onClick={() => setDrawerOpen(false)}
-            sx={{
-              width: "100%",
-              justifyContent: "flex-start",
-              textTransform: "none",
-              mb: 2,
-              color: "dlang.green",
-            }}
-          >
-            Manage Course
-          </Button>
-            <Button
-            component={Link}
-            to="/manage/category"
-            variant="text"
-            onClick={() => setDrawerOpen(false)}
-            sx={{
-              width: "100%",
-              justifyContent: "flex-start",
-              textTransform: "none",
-              mb: 2,
-              color: "dlang.green",
-            }}
-          >
-            Manage Category
-          </Button>
-          
-          <Button
-            component={Link}
-            to="/manage/invoice"
-            variant="text"
-            onClick={() => setDrawerOpen(false)}
-            sx={{
-              width: "100%",
-              justifyContent: "flex-start",
-              textTransform: "none",
-              mb: 2,
-              color: "dlang.green",
-            }}
-          >
-            Manage Invoice
-          </Button>
-          <Button
-            component={Link}
-            to="/manage/payment-method"
-            variant="text"
-            onClick={() => setDrawerOpen(false)}
-            sx={{
-              width: "100%",
-              justifyContent: "flex-start",
-              textTransform: "none",
-              mb: 2,
-              color: "dlang.green",
-            }}
-          >
-            Manage Payment Method
-          </Button>
-
           <Divider sx={{ width: "100%", mb: 2 }} />
         </>
       )}
@@ -294,7 +185,7 @@ const Navbar = () => {
 
       <Button
         component={Link}
-        to="/"
+        to="/profile"
         variant="text"
         onClick={() => setDrawerOpen(false)}
         sx={{
@@ -379,7 +270,9 @@ const Navbar = () => {
                 </Drawer>
               </>
             ) : (
-              <Box display="flex" alignItems="center">{menuList}</Box>
+              <Box display="flex" alignItems="center">
+                {menuList}
+              </Box>
             )
           ) : (
             <Box>

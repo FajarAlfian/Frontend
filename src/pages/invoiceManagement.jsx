@@ -14,15 +14,22 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useRequireRole } from "../utils/useRequireRole";
 import { AuthContext } from "../utils/authContext";
 
 export default function AdminInvoices() {
-useRequireRole(["admin"]);
+  useRequireRole(["admin"]);
   const BASE_URL = import.meta.env.VITE_API;
   const { auth } = useContext(AuthContext);
   const [rows, setRows] = useState([]);
-  
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   useEffect(() => {
     axios
@@ -79,10 +86,68 @@ useRequireRole(["admin"]);
     { id: "action", label: "Action", align: "center" },
   ];
 
+  if (isMobile) {
+    return (
+      <Box px={2} py={2}>
+        <Typography
+          fontWeight={600}
+          fontSize="16px"
+          color="#4F4F4F"
+          mb={2}
+        >
+          Invoices
+        </Typography>
+
+        {rows.length > 0 ? (
+          rows.map((row, idx) => (
+            <Accordion
+              key={idx}
+              sx={{ width: "100%", mb: 2, borderRadius: 2 }}
+            >
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                expandIconPosition="end"
+                disableGutters
+                sx={{ px: 2 }}
+              >
+                <Typography sx={{ flexGrow: 1, fontSize: 16 }}>
+                  {row.invoiceId}
+                </Typography>
+                <Typography
+                  sx={{ flexShrink: 0, fontSize: 14, color: "#666", ml: 1 }}
+                >
+                  {row.date}
+                </Typography>
+              </AccordionSummary>
+
+              <AccordionDetails sx={{ px: 2, pt: 0 }}>
+                <Stack spacing={1}>
+                  <Typography variant="body2">
+                    <strong>User ID:</strong> {row.userId}
+                  </Typography>
+                  <Typography variant="body2">
+                    <strong>Total Courses:</strong> {row.totalCourse}
+                  </Typography>
+                  <Typography variant="body2">
+                    <strong>Total Price:</strong> {row.totalPrice}
+                  </Typography>
+                  <Box mt={1}>{row.action}</Box>
+                </Stack>
+              </AccordionDetails>
+            </Accordion>
+          ))
+        ) : (
+          <Typography align="center" mt={10} color="#006A61">
+            No invoices found.
+          </Typography>
+        )}
+      </Box>
+    );
+  }
+
   return (
-    <Box mx={{ xs: 2, sm: 13 }}
-      my={{ xs: 2, sm: 3 }}>
-      <Stack spacing={2} mb={3}>
+    <Box mx={{ xs: 2, sm: 13 }} my={{ xs: 2, sm: 3 }}>
+      {/* <Stack spacing={2} mb={3}>
         <Breadcrumbs separator="›">
           <Link
             underline="hover"
@@ -95,13 +160,24 @@ useRequireRole(["admin"]);
             All Invoices
           </Typography>
         </Breadcrumbs>
-      </Stack>
+      </Stack> */}
 
-      <Typography sx={{ color: "#4F4F4F", fontSize: 20, fontWeight: 600 }} mb={3}>
-        List of All Invoices
+      <Typography
+        fontWeight={600}
+        fontSize={{ xs: "16px", sm: 20 }}
+        color="#4F4F4F"
+        mb={3}
+      >
+        Invoices
       </Typography>
-
-      <Paper sx={{ width: "100%", overflow: "hidden", boxShadow: "none", borderRadius: 0 }}>
+      <Paper
+        sx={{
+          width: "100%",
+          overflow: "hidden",
+          boxShadow: "none",
+          borderRadius: 0,
+        }}
+      >
         <TableContainer sx={{ maxHeight: 440 }}>
           <Table stickyHeader>
             <TableHead>
@@ -136,7 +212,11 @@ useRequireRole(["admin"]);
                     }}
                   >
                     {columns.map((col) => (
-                      <TableCell key={col.id} align={col.align} sx={{ fontSize: 16 }}>
+                      <TableCell
+                        key={col.id}
+                        align={col.align}
+                        sx={{ fontSize: 16 }}
+                      >
                         {row[col.id]}
                       </TableCell>
                     ))}
@@ -145,7 +225,12 @@ useRequireRole(["admin"]);
               ) : (
                 <TableRow>
                   <TableCell colSpan={columns.length} align="center">
-                    <Typography variant="h6" color="#006A61" fontWeight={500} py={10}>
+                    <Typography
+                      variant="h6"
+                      color="#006A61"
+                      fontWeight={500}
+                      py={10}
+                    >
                       No invoices found.
                     </Typography>
                   </TableCell>

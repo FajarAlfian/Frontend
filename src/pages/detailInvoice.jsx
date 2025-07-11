@@ -12,6 +12,12 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { NavLink, useParams, Link as RouterLink } from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
 import axios from "axios";
@@ -57,6 +63,8 @@ const DetailInvoice = () => {
   const token = auth.token;
   const [invoiceDate, setInvoiceDate] = useState("");
   const [totalPrice, setTotalPrice] = useState("");
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   useEffect(() => {
     axios
@@ -108,13 +116,72 @@ const DetailInvoice = () => {
     </Typography>,
   ];
 
+if (isMobile) {
+  return (
+    <Box px={2} py={2}>
+      <Typography
+        sx={{ color: "#4F4F4F", fontSize: "18px", fontWeight: 600 }}
+        mb={2}
+      >
+        Details Invoice
+      </Typography>
+      <Box mb={2}>
+        <Typography><strong>No. Invoice:</strong> {invoice.invoice_number}</Typography>
+        <Typography><strong>Date:</strong> {invoiceDate}</Typography>
+        <Typography><strong>Total Price:</strong> IDR {totalPrice}</Typography>
+      </Box>
+
+      {rows.length > 0 ? (
+        rows.map((row, idx) => (
+          <Accordion
+            key={idx}
+            sx={{ width: "100%", mb: 2, borderRadius: 2 }}
+          >
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              expandIconPosition="end"
+              disableGutters
+              sx={{ px: 2 }}
+            >
+              <Typography sx={{ width: 30 }}>{row.no}.</Typography>
+              <Typography sx={{ flexGrow: 1, mx: 1, width:"100%" }}>
+                {row.course_name}
+              </Typography>
+              <Typography sx={{ flexShrink: 0 }}>
+                {row.price}
+              </Typography>
+            </AccordionSummary>
+
+            <AccordionDetails sx={{ px: 2, pt: 0 }}>
+              <Stack spacing={1}>
+                <Typography variant="body2">
+                  <strong>Language:</strong> {row.language}
+                </Typography>
+                <Typography variant="body2">
+                  <strong>Schedule:</strong> {row.schedule}
+                </Typography>
+              </Stack>
+            </AccordionDetails>
+          </Accordion>
+        ))
+      ) : (
+        <Typography align="center" mt={4} color="#006A61">
+          No invoice details found.
+        </Typography>
+      )}
+    </Box>
+  );
+}
+
   return (
     <Box mx={10} my={3}>
+      {auth.role !== 'admin' && (
       <Stack spacing={2} mb={3}>
         <Breadcrumbs separator="›" aria-label="breadcrumb">
           {breadcrumbs}
         </Breadcrumbs>
       </Stack>
+      )}
 
       <Typography
         sx={{ color: "#4F4F4F", fontSize: "20px", fontWeight: "600" }}

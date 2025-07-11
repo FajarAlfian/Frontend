@@ -13,6 +13,12 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TextField from "@mui/material/TextField";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { AuthContext } from "../utils/authContext";
 import { useNavigate } from "react-router";
 import { useRequireRole } from "../utils/useRequireRole";
@@ -31,7 +37,8 @@ export default function PaymentMethodManagement() {
   const { auth } = useContext(AuthContext);
   const token = auth.token;
   const BASE_URL = import.meta.env.VITE_API;
-
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm")); 
   const [rows, setRows] = useState([]);
   const fetchPaymentMethod = useCallback(() => {
     if (!token || auth.role !== "admin") return;
@@ -47,6 +54,8 @@ export default function PaymentMethodManagement() {
             <Checkbox
               checked={paymentMethod.is_active}
               onChange={handleActiveToggle(paymentMethod.payment_method_id)}
+              onClick={e => e.stopPropagation()}
+               onFocus={e => e.stopPropagation()}
               color="success"
             />
           ),
@@ -71,6 +80,7 @@ export default function PaymentMethodManagement() {
   }, [fetchPaymentMethod]);
 
   const handleActiveToggle = (id) => (e) => {
+    e.stopPropagation();
     const newActive = e.target.checked;
     axios
       .patch(
@@ -88,11 +98,64 @@ export default function PaymentMethodManagement() {
       })
       .catch((err) => console.error("Toggle active failed:", err));
   };
+
+  if (isMobile) {
+  return (
+    <Box px={2} py={2}>
+      <Typography
+        fontWeight={600}
+        fontSize="16px"
+        color="#4F4F4F"
+        mb={2}
+      >
+        Payment Method Management
+      </Typography>
+
+      <Grid container spacing={2} mb={2}>
+        <Grid item xs={12} display="flex" justifyContent="flex-end">
+          <ModalAddPaymentMethod onSuccess={fetchPaymentMethod} />
+        </Grid>
+      </Grid>
+
+      {rows.length > 0 ? (
+        rows.map((row, idx) => (
+          <Accordion
+            key={idx}
+            sx={{ width: "100%", mb: 2, borderRadius: 2 }}
+          >
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              expandIconPosition="end"
+              disableGutters
+              sx={{ px: 2 }}
+            >
+              <Typography alignContent={"center"} sx={{ width: 30 }}>{row.No}.</Typography>
+              <Typography alignContent={"center"} sx={{ flexGrow: 1, mx: 1, width:"100%", }}>
+                {row.Name}
+              </Typography>
+              <Box alignContent={"center"}>{row.Active}</Box>
+            </AccordionSummary>
+
+            <AccordionDetails sx={{ px: 2, pt: 0 }}>
+              <Box mt={1}>{row.action}</Box>
+            </AccordionDetails>
+          </Accordion>
+        ))
+      ) : (
+        <Typography align="center" mt={10} color="#006A61">
+          Oops! No payment method found.
+        </Typography>
+      )}
+    </Box>
+  );
+}
   return (
     <Box mx={{ xs: 2, sm: 13 }} my={{ xs: 2, sm: 3 }}>
       <Typography
-        sx={{ color: "#4F4F4F", fontSize: 20, fontWeight: 600 }}
+        fontWeight={600}
+        fontSize={{ xs: "16px", sm: 20 }}
         mb={3}
+        color="#4F4F4F"
       >
         Payment Method Management
       </Typography>
