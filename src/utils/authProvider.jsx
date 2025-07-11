@@ -5,6 +5,7 @@ const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState({
     id: null,
     token: null,
+    username: null,
     role: null,
   });
   const [loading, setLoading] = useState(true);

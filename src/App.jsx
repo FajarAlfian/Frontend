@@ -24,6 +24,7 @@ import MyClass from "./pages/myClass";
 import VerifyEmail from "./pages/verifyEmail";
 import { SnackbarProvider } from "./components/molecules/snackbar";
 import "./styles/app.css";
+import Profile from "./pages/profile";
 // import AdminInvoices from "./pages/invoiceManagement";
 // import UserManagement from "./pages/userManagement";
 // import CourseManagement from "./pages/courseManagement";
@@ -42,6 +43,7 @@ function App() {
               <Route path="/new-password" element={<NewPass />} />
               <Route path="/reset-password" element={<ResetPass />} />
               <Route path="/purchase-status" element={<StatusPurchase />} />
+              <Route path="/profile" element={<Profile />} />
               <Route path="/checkout" element={<Checkout />} />
               <Route path="/verify-email" element={<VerifyEmail />} />
               <Route element={<Layout />}>
