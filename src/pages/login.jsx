@@ -68,12 +68,19 @@ const Login = () => {
         const errors = Array.isArray(resp?.errors) ? resp.errors : [];
         const firstError = errors.length > 0 ? errors[0] : "";
 
-        if (firstError.toLowerCase().includes("verifikasi")) {
+        if (firstError.toLowerCase().includes("dihapus")) {
+          showSnackbar({
+            message: "Akun Anda sudah dihapus. Silahkan hubungi kami melalui email",
+            severity: "warning",
+          });
+        }
+        else if (firstError.toLowerCase().includes("verifikasi")) {
           showSnackbar({
             message: firstError,
             severity: "warning",
           });
-        } else {
+        }
+        else {
           showSnackbar({
             message: "Login gagal. Email atau password salah.",
             severity: "error",
@@ -81,6 +88,7 @@ const Login = () => {
         }
       });
   };
+
 
   return (
     <Box>
