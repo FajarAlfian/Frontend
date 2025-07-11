@@ -23,7 +23,6 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { AuthContext } from "../utils/authContext";
 import { useNavigate } from "react-router";
 import { useRequireRole } from "../utils/useRequireRole";
-import ModalDeleteCourse from "../components/molecules/ModalDeleteCourse";
 import ModalAddCourse from "../components/molecules/ModalAddCourse";
 import ModalUpdateCourse from "../components/molecules/ModalUpdateCourse";
 import ModalManageSchedule from "../components/molecules/ModalCourseSchedule";
@@ -78,10 +77,6 @@ export default function CourseManagement() {
                 id={course.course_id}
                 onSuccess={fetchCourses}
               />
-              <ModalDeleteCourse
-                id={course.course_id}
-                onSuccess={fetchCourses}
-              />
             </Stack>
           ),
         }));
@@ -115,77 +110,80 @@ export default function CourseManagement() {
       .catch((err) => console.error("Toggle active failed:", err));
   };
 
-if (isMobile) {
-  return (
-    <Box px={2} py={2}>
-      <Typography
-        fontSize="16px"
-        sx={{ color: "#4F4F4F", fontWeight: 600 }}
-        mb={2}
-      >
-        Course Management
-      </Typography>
-
-      <Grid container spacing={2} mb={2} >
-        <Grid item xs={8} margin={0}>
-          <TextField
-            size="medium"
-            placeholder="Search course"
-            value={searchText}
-            onChange={(e) => setSearchText(e.target.value)}
-            fullWidth
-            sx={{
-              "& .MuiOutlinedInput-root": { borderRadius: 2, fontSize: 13 },
-            }}
-          />
-        </Grid>
-        <Grid item xs={4} display="flex" justifyContent="flex-end" alignItems={"center"}>
-          <ModalAddCourse onSuccess={fetchCourses} />
-        </Grid>
-      </Grid>
-
-      {rows.length > 0 ? (
-        rows.map((row, idx) => (
-          <Accordion
-            key={idx}
-            sx={{ width: "100%", mb: 2, borderRadius: 2 }}
-          >
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              expandIconPosition="end"
-              disableGutters
-              sx={{ px: 2 }}
-            >
-              <Typography sx={{ width: 30 }}>{row.No}.</Typography>
-              <Typography sx={{ width: "100%", fontSize: 15, flexGrow: 1 }}>
-                {row.CourseName}
-              </Typography>
-              <Typography sx={{ flexShrink: 0}}>
-                {row.CoursePrice}
-              </Typography>
-            </AccordionSummary>
-
-            <AccordionDetails sx={{ px: 2, pt: 0 }}>
-              <Stack spacing={1}>
-                <Typography variant="body2">
-                  <strong>Category:</strong> {row.CategoryName}
-                </Typography>
-                <Box>
-                  <strong>Active:</strong> {row.Active}
-                </Box>
-                <Box mt={1}>{row.action}</Box>
-              </Stack>
-            </AccordionDetails>
-          </Accordion>
-        ))
-      ) : (
-        <Typography align="center" mt={10} color="#006A61">
-          Oops! No courses found.
+  if (isMobile) {
+    return (
+      <Box px={2} py={2}>
+        <Typography
+          fontSize="16px"
+          sx={{ color: "#4F4F4F", fontWeight: 600 }}
+          mb={2}
+        >
+          Course Management
         </Typography>
-      )}
-    </Box>
-  );
-}
+
+        <Grid container spacing={2} mb={2}>
+          <Grid item xs={8} margin={0}>
+            <TextField
+              size="medium"
+              placeholder="Search course"
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+              fullWidth
+              sx={{
+                "& .MuiOutlinedInput-root": { borderRadius: 2, fontSize: 13 },
+              }}
+            />
+          </Grid>
+          <Grid
+            item
+            xs={4}
+            display="flex"
+            justifyContent="flex-end"
+            alignItems={"center"}
+          >
+            <ModalAddCourse onSuccess={fetchCourses} />
+          </Grid>
+        </Grid>
+
+        {rows.length > 0 ? (
+          rows.map((row, idx) => (
+            <Accordion key={idx} sx={{ width: "100%", mb: 2, borderRadius: 2 }}>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                expandIconPosition="end"
+                disableGutters
+                sx={{ px: 2 }}
+              >
+                <Typography sx={{ width: 30 }}>{row.No}.</Typography>
+                <Typography sx={{ width: "100%", fontSize: 15, flexGrow: 1 }}>
+                  {row.CourseName}
+                </Typography>
+                <Typography sx={{ flexShrink: 0 }}>
+                  {row.CoursePrice}
+                </Typography>
+              </AccordionSummary>
+
+              <AccordionDetails sx={{ px: 2, pt: 0 }}>
+                <Stack spacing={1}>
+                  <Typography variant="body2">
+                    <strong>Category:</strong> {row.CategoryName}
+                  </Typography>
+                  <Box>
+                    <strong>Active:</strong> {row.Active}
+                  </Box>
+                  <Box mt={1}>{row.action}</Box>
+                </Stack>
+              </AccordionDetails>
+            </Accordion>
+          ))
+        ) : (
+          <Typography align="center" mt={10} color="#006A61">
+            Oops! No courses found.
+          </Typography>
+        )}
+      </Box>
+    );
+  }
 
   return (
     <Box mx={{ xs: 2, sm: 13 }} my={{ xs: 2, sm: 3 }}>
