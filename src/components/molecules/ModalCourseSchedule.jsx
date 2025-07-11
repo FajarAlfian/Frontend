@@ -70,18 +70,22 @@ export default function ModalManageSchedules({
     }
   };
 
-  const handleDelete = async (scheduleCourseId) => {
+  const handleToggleActive = async (scheduleCourseId, newState) => {
     try {
-      await axios.delete(
-        `${BASE_URL}/ScheduleCourse/${scheduleCourseId}`,
+      await axios.patch(
+        `${BASE_URL}/ScheduleCourse/${scheduleCourseId}/active`,
+        { isActive: newState },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      showSnackbar({ message: 'Jadwal dihapus', severity: 'info' });
+      showSnackbar({
+        message: newState ? 'Jadwal diaktifkan' : 'Jadwal dinonaktifkan',
+        severity: newState ? 'success' : 'info'
+      });
       fetchSchedules();
       onSuccess?.();
     } catch (err) {
-      console.error('Error deleting schedule:', err);
-      showSnackbar({ message: 'Gagal hapus jadwal', severity: 'error' });
+      console.error('Error toggling active:', err);
+      showSnackbar({ message: 'Gagal mengubah status jadwal', severity: 'error' });
     }
   };
 
@@ -117,11 +121,10 @@ export default function ModalManageSchedules({
             />
             <Button
               variant="contained"
-              size='small'
-              color='success'
+              size="small"
+              color="success"
               disabled={!date}
               onClick={handleAdd}
-              
             >
               Add Schedule
             </Button>
@@ -130,15 +133,20 @@ export default function ModalManageSchedules({
           <List>
             {schedules.length > 0 ? (
               schedules.map((sch) => (
-                <ListItem
-                  key={sch.schedule_course_id}
-                  secondaryAction={
-                    <IconButton edge="end" onClick={() => handleDelete(sch.schedule_course_id)}>
-                      <DeleteIcon color="error" />
-                    </IconButton>
-                  }
+                <ListItem key={sch.schedule_course_id} disablePadding
+                  sx={{ opacity: sch.is_active ? 1 : 0.5 }}
                 >
                   <ListItemText primary={ConvertDate(sch.schedule_date)} />
+                  <IconButton
+                    edge="end"
+                    onClick={() =>
+                      handleToggleActive(sch.schedule_course_id, !sch.is_active)
+                    }
+                  >
+                    <DeleteIcon
+                      color={sch.is_active ? 'error' : 'disabled'}
+                    />
+                  </IconButton>
                 </ListItem>
               ))
             ) : (
@@ -149,7 +157,9 @@ export default function ModalManageSchedules({
           </List>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="inherit">Close</Button>
+          <Button onClick={handleClose} color="inherit">
+            Close
+          </Button>
         </DialogActions>
       </Dialog>
     </>
