@@ -36,8 +36,6 @@ const CourseList = ({ limit = 6, name, categoryId, excludeId }) => {
       }}
     >
       <Typography
-        component={Link}
-        to="/menuClass"
         variant="h4"
         align="center"
         fontWeight="bold"
