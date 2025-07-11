@@ -12,6 +12,12 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Stack from "@mui/material/Stack";
 import Checkbox from "@mui/material/Checkbox";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { AuthContext } from "../utils/authContext";
 import { useRequireRole } from "../utils/useRequireRole";
 import ModalAddCategory from "../components/molecules/ModalAddCategory";
@@ -29,7 +35,8 @@ export default function CategoryManagement() {
   const { auth } = useContext(AuthContext);
   const token = auth.token;
   const BASE_URL = import.meta.env.VITE_API;
-
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [rows, setRows] = useState([]);
 
   const fetchCategories = useCallback(() => {
@@ -82,6 +89,55 @@ export default function CategoryManagement() {
       .then(() => fetchCategories())
       .catch((err) => console.error("Toggle active failed:", err));
   };
+
+ if (isMobile) {
+    return (
+      <Box px={2} py={2}>
+        <Typography
+          fontWeight={600}
+          fontSize="16px"
+          color="#4F4F4F"
+          mb={2}
+        >
+          Category Management
+        </Typography>
+
+        <Box mb={2}>
+          <ModalAddCategory onSuccess={fetchCategories} />
+        </Box>
+
+        {rows.length > 0 ? (
+          rows.map((row, idx) => (
+            <Accordion
+              key={idx}
+              sx={{ width: "100%", mb: 2, borderRadius: 2 }}
+            >
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                expandIconPosition="end"
+                disableGutters
+                sx={{ px: 2 }}
+              >
+                <Typography alignContent={"center"} sx={{ width: 30 }}>{row.No}.</Typography>
+                <Typography alignContent={"center"} sx={{ flexGrow: 1, mx: 1 }}>
+                  {row.Name}
+                </Typography>
+                <Box>{row.Active}</Box>
+              </AccordionSummary>
+
+              <AccordionDetails sx={{ px: 2, pt: 0 }}>
+                <Box>{row.action}</Box>
+              </AccordionDetails>
+            </Accordion>
+          ))
+        ) : (
+          <Typography align="center" mt={10} color="#006A61">
+            Oops! No category found.
+          </Typography>
+        )}
+      </Box>
+    );
+  }
 
   return (
     <Box mx={{ xs: 2, sm: 13 }} my={{ xs: 2, sm: 3 }}>
