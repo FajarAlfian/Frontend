@@ -9,8 +9,11 @@ import FormButton from "../components/molecules/formButton";
 import Description from "../components/molecules/description";
 import Navbar from "../components/molecules/navbar";
 import axios from "axios";
+import { useSnackbar } from "../components/molecules/snackbar";
+
 const ResetPass = () => {
   const BASE_URL = import.meta.env.VITE_API;
+  const showSnackbar = useSnackbar();
   const [formData, setFormData] = React.useState({
     email: "",
   });
@@ -30,13 +33,18 @@ const ResetPass = () => {
         email: formData.email,
       })
       .then((response) => {
-        alert(
-          "forgot password successful, please check your inbox email",
-          response.message
-        );
+        showSnackbar({
+          message: "forgot password successful, please check your inbox email",
+          severity: "success",
+        });
       })
       .catch((error) => {
-        console.error("reset pass failed:", error);
+        const resp = error.response?.data;
+        const firstError = Array.isArray(resp?.errors) ? resp.errors[0] : null;
+        showSnackbar({
+          message: firstError || "Failed resetting Password.",
+          severity: "error",
+        });
       });
   };
   return (

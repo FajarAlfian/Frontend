@@ -10,10 +10,12 @@ import Navbar from "../components/molecules/navbar";
 import { useSearchParams } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useSnackbar } from "../components/molecules/snackbar";
 
 const NewPass = () => {
   const BASE_URL = import.meta.env.VITE_API;
   const navigate = useNavigate();
+  const showSnackbar = useSnackbar();
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token");
   const [formData, setFormData] = React.useState({
@@ -40,12 +42,21 @@ const NewPass = () => {
             confirmPassword: formData.password2,
           })
           .then((response) => {
-            alert("Reset password successful.", response.message);
-            navigate("/login");
+        showSnackbar({
+          message: "Reset password succesfull. Please login with your new password.",
+          severity: "success",
+        });
+        navigate("/login");
           })
           .catch((error) => {
-            console.error("reset pass failed:", error);
-          });
+        const resp = error.response?.data;
+        const firstError = Array.isArray(resp?.errors) ? resp.errors[0] : resp?.message;
+        showSnackbar({
+          message: firstError || "Gagal mereset password. Coba lagi.",
+          severity: "error",
+        });
+        console.error("reset pass failed:", error);
+      });
 
         console.log("Form data is valid, sending to API:", formData);
       } else {
