@@ -25,6 +25,14 @@ const CourseDetail = ({ course }) => {
   const handleChange = (event) => setSelectedSchedule(event.target.value);
 
   const handleCart = async () => {
+    if (auth.token == undefined) {
+      showSnackbar({
+        message: "Silahkan login terlebih dahulu untuk melanjutkan pembelian",
+        severity: "error",
+      });
+      return;
+    }
+
     try {
       await axios.post(
         `${BASE_URL}/Checkout/add?scheduleCourseId=${selectedSchedule}`,
@@ -45,6 +53,13 @@ const CourseDetail = ({ course }) => {
   };
 
   const handleBuyNow = async () => {
+    if (auth.token == undefined) {
+      showSnackbar({
+        message: "Silahkan login terlebih dahulu untuk melanjutkan pembelian",
+        severity: "error",
+      });
+      return;
+    }
     try {
       await axios.post(
         `${BASE_URL}/Checkout/add?scheduleCourseId=${selectedSchedule}`,
