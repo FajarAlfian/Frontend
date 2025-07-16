@@ -131,9 +131,9 @@ const Checkout = () => {
           <Stack
             direction="column"
             divider={<Divider orientation="horizontal" />}
-            px={{ xs: 2, sm: 10 }}
+            px={{ xs: 2, sm: 13 }}
             spacing={2}
-             sx={{ pb: { xs: 14, md: 16 }, }}
+            sx={{ pb: { xs: 20, md: 16 } }}
           >
             <Grid
               container
@@ -254,6 +254,7 @@ const Checkout = () => {
 
           <Divider sx={{ marginTop: "24px" }} />
           <Box
+            py={{ xs: "6px", sm: "16px" }}
             sx={{
               position: "fixed",
               bottom: 0,
@@ -269,14 +270,14 @@ const Checkout = () => {
               container
               spacing={3}
               sx={{ flexGrow: 1 }}
-              paddingX={{ xs: 2, md: 12 }}
-              py={{ xs: 4, md: 0 }}
+              paddingX={{ xs: 0, md: 12 }}
+              // py={{ xs: 2, md: 0 }}
               alignItems="center"
             >
               <Grid size={{ xs: 4, md: 1 }} offset={{ xs: 1, md: 0 }}>
                 <Typography
                   sx={{ fontWeight: "400", color: "#333333" }}
-                  fontSize={{ xs: "20px", sm: "18px" }}
+                  fontSize={{ xs: "14px", sm: "18px" }}
                 >
                   Total Price
                 </Typography>
@@ -284,7 +285,7 @@ const Checkout = () => {
               <Grid size={{ xs: 5, md: 2 }} offset={{ xs: 1, md: 0 }}>
                 <Typography
                   sx={{ fontWeight: "600", color: "#226957" }}
-                  fontSize={{ xs: "23px", sm: "24px" }}
+                  fontSize={{ xs: "20px", sm: "24px" }}
                 >
                   {formatRupiah(total)}
                 </Typography>
@@ -310,7 +311,6 @@ const Checkout = () => {
                   Pay Now
                 </Button>
               </Grid>
-
               <Modal open={open} onClose={handleClose}>
                 <Box sx={modalStyle}>
                   <Typography variant="h6" textAlign="center" mb={2}>
@@ -388,18 +388,18 @@ const Checkout = () => {
           </Box>
         </>
       ) : (
-          <Typography
-            align="center"
-            mt={4}
-            color="#006A61"
-            sx={{
-              px: 2,        
-              whiteSpace: 'normal',  
-              wordBreak: 'break-word' 
-            }}
-          >
-            Oops! Looks like you haven’t made any payments yet.
-          </Typography>
+        <Typography
+          align="center"
+          mt={4}
+          color="#006A61"
+          sx={{
+            px: 2,
+            whiteSpace: "normal",
+            wordBreak: "break-word",
+          }}
+        >
+          Oops! Looks like you haven’t made any payments yet.
+        </Typography>
       )}
     </Box>
   );
