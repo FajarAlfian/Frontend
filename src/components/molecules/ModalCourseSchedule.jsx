@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect, useContext } from "react";
+import axios from "axios";
 import {
   Button,
   Dialog,
@@ -13,16 +13,16 @@ import {
   IconButton,
   Divider,
   Stack,
-} from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { AuthContext } from '../../utils/authContext';
-import { useSnackbar } from './snackbar';
-import { ConvertDate } from '../../utils/util';
+} from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { AuthContext } from "../../utils/authContext";
+import { useSnackbar } from "./snackbar";
+import { ConvertDate } from "../../utils/util";
 
 export default function ModalManageSchedules({
   courseId,
   courseName,
-  onSuccess,  
+  onSuccess,
 }) {
   const { auth } = useContext(AuthContext);
   const token = auth.token;
@@ -30,9 +30,12 @@ export default function ModalManageSchedules({
   const showSnackbar = useSnackbar();
 
   const [open, setOpen] = useState(false);
-  const [date, setDate] = useState('');
+  const [date, setDate] = useState("");
   const [schedules, setSchedules] = useState([]);
 
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  const minDate = tomorrow.toISOString().split("T")[0];
   const fetchSchedules = async () => {
     try {
       const res = await axios.get(
@@ -41,15 +44,15 @@ export default function ModalManageSchedules({
       );
       setSchedules(res.data.data);
     } catch (err) {
-      console.error('Fetch schedules error:', err);
-      showSnackbar({ message: 'Gagal load jadwal', severity: 'error' });
+      console.error("Fetch schedules error:", err);
+      showSnackbar({ message: "Gagal load jadwal", severity: "error" });
     }
   };
 
   const handleOpen = () => {
     setOpen(true);
     fetchSchedules();
-    setDate('');
+    setDate("");
   };
   const handleClose = () => setOpen(false);
 
@@ -60,13 +63,16 @@ export default function ModalManageSchedules({
         { course_id: courseId, schedule_date: date },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      showSnackbar({ message: 'Jadwal berhasil ditambah', severity: 'success' });
-      setDate('');
+      showSnackbar({
+        message: "Jadwal berhasil ditambah",
+        severity: "success",
+      });
+      setDate("");
       fetchSchedules();
       onSuccess?.();
     } catch (err) {
-      console.error('Error adding schedule:', err);
-      showSnackbar({ message: 'Gagal tambah jadwal', severity: 'error' });
+      console.error("Error adding schedule:", err);
+      showSnackbar({ message: "Gagal tambah jadwal", severity: "error" });
     }
   };
 
@@ -78,14 +84,17 @@ export default function ModalManageSchedules({
         { headers: { Authorization: `Bearer ${token}` } }
       );
       showSnackbar({
-        message: newState ? 'Jadwal diaktifkan' : 'Jadwal dinonaktifkan',
-        severity: newState ? 'success' : 'info'
+        message: newState ? "Jadwal diaktifkan" : "Jadwal dinonaktifkan",
+        severity: newState ? "success" : "info",
       });
       fetchSchedules();
       onSuccess?.();
     } catch (err) {
-      console.error('Error toggling active:', err);
-      showSnackbar({ message: 'Gagal mengubah status jadwal', severity: 'error' });
+      console.error("Error toggling active:", err);
+      showSnackbar({
+        message: "Gagal mengubah status jadwal",
+        severity: "error",
+      });
     }
   };
 
@@ -96,9 +105,9 @@ export default function ModalManageSchedules({
         onClick={handleOpen}
         sx={{
           borderRadius: 2,
-          color: '#fff',
-          backgroundColor: '#226957',
-          textTransform: 'none',
+          color: "#fff",
+          backgroundColor: "#226957",
+          textTransform: "none",
           width: 140,
           height: 38,
           fontSize: { xs: 13, md: 15 },
@@ -117,6 +126,7 @@ export default function ModalManageSchedules({
               value={date}
               onChange={(e) => setDate(e.target.value)}
               InputLabelProps={{ shrink: true }}
+              inputProps={{ min: minDate }}
               fullWidth
             />
             <Button
@@ -133,7 +143,9 @@ export default function ModalManageSchedules({
           <List>
             {schedules.length > 0 ? (
               schedules.map((sch) => (
-                <ListItem key={sch.schedule_course_id} disablePadding
+                <ListItem
+                  key={sch.schedule_course_id}
+                  disablePadding
                   sx={{ opacity: sch.is_active ? 1 : 0.5 }}
                 >
                   <ListItemText primary={ConvertDate(sch.schedule_date)} />
@@ -143,9 +155,7 @@ export default function ModalManageSchedules({
                       handleToggleActive(sch.schedule_course_id, !sch.is_active)
                     }
                   >
-                    <DeleteIcon
-                      color={sch.is_active ? 'error' : 'disabled'}
-                    />
+                    <DeleteIcon color={sch.is_active ? "error" : "disabled"} />
                   </IconButton>
                 </ListItem>
               ))
