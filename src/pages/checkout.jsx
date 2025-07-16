@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Cookies from "js-cookie";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
@@ -136,6 +135,7 @@ const Checkout = () => {
             sx={{ pb: { xs: 20, md: 16 } }}
           >
             <Grid
+              alignItems="center"
               container
               columns={{ xs: 5, sm: 8, md: 12 }}
               spacing={{ xs: 0, sm: 4 }}
@@ -160,8 +160,8 @@ const Checkout = () => {
               </Grid>
               <Grid size={{ xs: 2, sm: 2, md: 3 }}>
                 <Typography
+                  fontSize={{ xs: "14", sm: "20px" }}
                   sx={{
-                    fontSize: "20px",
                     fontWeight: "400",
                     color: "#333333",
                   }}
@@ -271,7 +271,6 @@ const Checkout = () => {
               spacing={3}
               sx={{ flexGrow: 1 }}
               paddingX={{ xs: 0, md: 12 }}
-              // py={{ xs: 2, md: 0 }}
               alignItems="center"
             >
               <Grid size={{ xs: 4, md: 1 }} offset={{ xs: 1, md: 0 }}>
