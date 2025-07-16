@@ -22,7 +22,7 @@ const modalStyle = {
   borderRadius: 2,
   boxShadow: 24,
   p: 4,
-  width: 360,
+  width: { xs: 300, sm: 360 },
 };
 
 const ModalUpdatePaymentMethod = ({ onSuccess, id }) => {
@@ -64,7 +64,6 @@ const ModalUpdatePaymentMethod = ({ onSuccess, id }) => {
     const patchDoc = [
       { op: "replace", path: "/payment_method_name", value: name },
       { op: "replace", path: "/payment_method_logo", value: logo },
-      // { op: "replace", path: "/is_active", value: isActive },
     ];
 
     axios
@@ -129,14 +128,6 @@ const ModalUpdatePaymentMethod = ({ onSuccess, id }) => {
               value={logo}
               onChange={(e) => setLogo(e.target.value)}
             />
-            {/* <Stack direction="row" spacing={2} mt={4} alignItems="center">
-              <Typography>Is Active</Typography>
-              <Checkbox
-                checked={isActive}
-                onChange={(e) => setIsActive(e.target.checked)}
-                color="success"
-              />
-            </Stack> */}
           </Stack>
 
           <Stack direction="row" spacing={2} justifyContent="center" mt={4}>

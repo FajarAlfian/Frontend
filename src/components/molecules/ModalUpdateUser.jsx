@@ -23,7 +23,7 @@ const modalStyle = {
   borderRadius: 2,
   boxShadow: 24,
   p: 4,
-  width: 360,
+  width: { xs: 300, sm: 360 },
 };
 
 const ModalUpdateUser = ({ id, onSuccess }) => {
@@ -68,8 +68,8 @@ const ModalUpdateUser = ({ id, onSuccess }) => {
   const handleUpdate = () => {
     const patchDoc = [
       { op: "replace", path: "/username", value: username },
-      { op: "replace", path: "/email",    value: email },
-      { op: "replace", path: "/role",     value: role },
+      { op: "replace", path: "/email", value: email },
+      { op: "replace", path: "/role", value: role },
       { op: "replace", path: "/is_deleted", value: !isActive },
     ];
 
@@ -81,13 +81,19 @@ const ModalUpdateUser = ({ id, onSuccess }) => {
         },
       })
       .then(() => {
-        showSnackbar({ message: "User updated successfully.", severity: "success" });
+        showSnackbar({
+          message: "User updated successfully.",
+          severity: "success",
+        });
         onSuccess?.();
         handleClose();
       })
       .catch((err) => {
         console.error("Error updating user:", err);
-        showSnackbar({ message: "Failed to update user.", severity: "warning" });
+        showSnackbar({
+          message: "Failed to update user.",
+          severity: "warning",
+        });
       });
   };
 
@@ -95,7 +101,13 @@ const ModalUpdateUser = ({ id, onSuccess }) => {
     <>
       <Button
         variant="contained"
-        sx={{ textTransform: "none", borderRadius: 2, backgroundColor: "#EA9E1F", color: "#fff", height: 38 }}
+        sx={{
+          textTransform: "none",
+          borderRadius: 2,
+          backgroundColor: "#EA9E1F",
+          color: "#fff",
+          height: 38,
+        }}
         onClick={handleOpen}
       >
         Update
@@ -120,18 +132,18 @@ const ModalUpdateUser = ({ id, onSuccess }) => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
- <FormControl fullWidth>
-   <InputLabel id="role-label">Role</InputLabel>
-   <Select
-     labelId="role-label"
-     value={role}
-     label="Role"
-     onChange={(e) => setRole(e.target.value)}
-   >
-     <MenuItem value="admin">Admin</MenuItem>
-     <MenuItem value="member">Member</MenuItem>
-   </Select>
- </FormControl>
+            <FormControl fullWidth>
+              <InputLabel id="role-label">Role</InputLabel>
+              <Select
+                labelId="role-label"
+                value={role}
+                label="Role"
+                onChange={(e) => setRole(e.target.value)}
+              >
+                <MenuItem value="admin">Admin</MenuItem>
+                <MenuItem value="member">Member</MenuItem>
+              </Select>
+            </FormControl>
             <Stack direction="row" spacing={1} alignItems="center">
               <Typography>Active</Typography>
               <Checkbox
@@ -143,10 +155,18 @@ const ModalUpdateUser = ({ id, onSuccess }) => {
           </Stack>
 
           <Stack direction="row" spacing={2} justifyContent="center" mt={4}>
-            <Button variant="contained" sx={{ backgroundColor: "#F4A100" }} onClick={handleClose}>
+            <Button
+              variant="contained"
+              sx={{ backgroundColor: "#F4A100" }}
+              onClick={handleClose}
+            >
               Cancel
             </Button>
-            <Button variant="contained" sx={{ backgroundColor: "#006A61" }} onClick={handleUpdate}>
+            <Button
+              variant="contained"
+              sx={{ backgroundColor: "#006A61" }}
+              onClick={handleUpdate}
+            >
               Update
             </Button>
           </Stack>

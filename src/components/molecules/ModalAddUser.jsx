@@ -17,7 +17,7 @@ const modalStyle = {
   borderRadius: 2,
   boxShadow: 24,
   p: 4,
-  width: 360,
+  width: { xs: 300, sm: 360 },
 };
 
 const ModalAddUser = ({ onSuccess }) => {
@@ -29,7 +29,7 @@ const ModalAddUser = ({ onSuccess }) => {
   const showSnackbar = useSnackbar();
 
   const handleClickOpen = () => setOpen(true);
-  const handleClose     = () => setOpen(false);
+  const handleClose = () => setOpen(false);
 
   const handleAdd = () => {
     axios
@@ -41,17 +41,18 @@ const ModalAddUser = ({ onSuccess }) => {
       })
       .then(() => {
         showSnackbar({
-        message: "Success adding user. need to check email for verification",
-        severity: "success",
-      });
+          message: "Success adding user. need to check email for verification",
+          severity: "success",
+        });
         if (typeof onSuccess === "function") {
           onSuccess();
         }
         handleClose();
       })
       .catch((err) => {
-        showSnackbar({ message: "Error adding user.", severity: "error",})
-        console.error("Error add user:", err)});
+        showSnackbar({ message: "Error adding user.", severity: "error" });
+        console.error("Error add user:", err);
+      });
   };
 
   return (

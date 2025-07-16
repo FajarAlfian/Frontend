@@ -22,7 +22,7 @@ const modalStyle = {
   borderRadius: 2,
   boxShadow: 24,
   p: 4,
-  width: 360,
+  width: { xs: 300, sm: 360 },
 };
 
 const ModalAddCourse = ({ onSuccess }) => {
@@ -73,9 +73,9 @@ const ModalAddCourse = ({ onSuccess }) => {
       )
       .then(() => {
         showSnackbar({
-        message: "Success adding course.",
-        severity: "success",
-      });
+          message: "Success adding course.",
+          severity: "success",
+        });
         if (typeof onSuccess === "function") {
           onSuccess();
         }
@@ -84,9 +84,9 @@ const ModalAddCourse = ({ onSuccess }) => {
       .catch((err) => {
         console.error("Error adding course:", err);
         showSnackbar({
-        message: "Error adding course.",
-        severity: "warning",
-      });
+          message: "Error adding course.",
+          severity: "warning",
+        });
       });
   };
 

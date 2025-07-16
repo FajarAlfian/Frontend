@@ -23,6 +23,7 @@ const modalStyle = {
   boxShadow: 24,
   p: 4,
   width: 360,
+  width: { xs: 300, sm: 360 },
 };
 
 const ModalUpdateCourse = ({ id, onSuccess }) => {
@@ -39,7 +40,6 @@ const ModalUpdateCourse = ({ id, onSuccess }) => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [courseDescription, setCourseDescription] = useState("");
   const showSnackbar = useSnackbar();
-
 
   useEffect(() => {
     if (!open) return;
@@ -90,9 +90,9 @@ const ModalUpdateCourse = ({ id, onSuccess }) => {
       })
       .then(() => {
         showSnackbar({
-        message: "Success updating course.",
-        severity: "success",
-      });
+          message: "Success updating course.",
+          severity: "success",
+        });
         if (typeof onSuccess === "function") {
           onSuccess();
         }
@@ -101,9 +101,9 @@ const ModalUpdateCourse = ({ id, onSuccess }) => {
       .catch((err) => {
         console.error("Error updating course:", err);
         showSnackbar({
-        message: "Error updating course.",
-        severity: "warning",
-      });
+          message: "Error updating course.",
+          severity: "warning",
+        });
       });
   };
 

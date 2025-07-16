@@ -31,12 +31,20 @@ const StatusPurchase = () => {
       >
         <img src="../src/assets/success-purchase.png" width="20%" alt="" />
         <Box>
-          <Typography variant="h4" color="dlang.green" fontWeight="bold">
+          <Typography
+            fontSize={{ xs: "h6.fontSize", sm: "h4.fontSize" }}
+            color="dlang.green"
+            fontWeight="bold"
+          >
             Purchase Successfully
           </Typography>
         </Box>
         <Box>
-          <Typography color="dlang.grey" variant="h5">
+          <Typography
+            color="dlang.grey"
+            // variant="h5"
+            fontSize={{ xs: "16px", sm: "h5.fontSize" }}
+          >
             Thanks to buy a course! See u in the class
           </Typography>
         </Box>
@@ -44,6 +52,7 @@ const StatusPurchase = () => {
           <NavLink to="/">
             <Button
               startIcon={<HomeIcon />}
+              fontSize={{ xs: "14px", sm: "18px" }}
               sx={{
                 backgroundColor: "#F4A100",
                 color: "#fff",
@@ -52,7 +61,6 @@ const StatusPurchase = () => {
                 "&:hover": {
                   backgroundColor: "#d89000",
                 },
-                fontSize: "18px",
                 borderRadius: "12px",
                 padding: "20px 30px",
               }}
@@ -63,6 +71,7 @@ const StatusPurchase = () => {
           <NavLink to="/invoice">
             <Button
               startIcon={<ArrowForwardIcon />}
+              fontSize={{ xs: "14px", sm: "18px" }}
               sx={{
                 backgroundColor: "#1E6B5E",
                 color: "#fff",
@@ -71,7 +80,6 @@ const StatusPurchase = () => {
                 "&:hover": {
                   backgroundColor: "#155147",
                 },
-                fontSize: "18px",
                 borderRadius: "12px",
                 padding: "20px 30px",
               }}

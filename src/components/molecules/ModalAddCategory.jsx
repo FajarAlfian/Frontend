@@ -19,7 +19,7 @@ const modalStyle = {
   borderRadius: 2,
   boxShadow: 24,
   p: 4,
-  width: 360,
+  width: { xs: 300, sm: 360 },
 };
 
 const ModalAddCategory = ({ onSuccess }) => {
@@ -57,13 +57,19 @@ const ModalAddCategory = ({ onSuccess }) => {
         { headers: { Authorization: `Bearer ${auth.token}` } }
       )
       .then(() => {
-        showSnackbar({ message: "Kategori berhasil ditambahkan.", severity: "success" });
+        showSnackbar({
+          message: "Kategori berhasil ditambahkan.",
+          severity: "success",
+        });
         onSuccess?.();
         handleClose();
       })
       .catch((err) => {
         console.error("Error adding category:", err);
-        showSnackbar({ message: "Gagal menambahkan kategori.", severity: "warning" });
+        showSnackbar({
+          message: "Gagal menambahkan kategori.",
+          severity: "warning",
+        });
       });
   };
 
@@ -71,7 +77,13 @@ const ModalAddCategory = ({ onSuccess }) => {
     <>
       <Button
         variant="contained"
-        sx={{ textTransform: "none", borderRadius: 2, backgroundColor: "#EA9E1F", color: "#fff", height: 38 }}
+        sx={{
+          textTransform: "none",
+          borderRadius: 2,
+          backgroundColor: "#EA9E1F",
+          color: "#fff",
+          height: 38,
+        }}
         onClick={handleOpen}
       >
         Add Category
@@ -125,10 +137,18 @@ const ModalAddCategory = ({ onSuccess }) => {
           </Stack>
 
           <Stack direction="row" spacing={2} justifyContent="center" mt={4}>
-            <Button variant="contained" sx={{ backgroundColor: "#F4A100" }} onClick={handleClose}>
+            <Button
+              variant="contained"
+              sx={{ backgroundColor: "#F4A100" }}
+              onClick={handleClose}
+            >
               Cancel
             </Button>
-            <Button variant="contained" sx={{ backgroundColor: "#006A61" }} onClick={handleAdd}>
+            <Button
+              variant="contained"
+              sx={{ backgroundColor: "#006A61" }}
+              onClick={handleAdd}
+            >
               Add
             </Button>
           </Stack>

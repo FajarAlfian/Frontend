@@ -19,7 +19,7 @@ const modalStyle = {
   borderRadius: 2,
   boxShadow: 24,
   p: 4,
-  width: 360,
+  width: { xs: 300, sm: 360 },
 };
 
 const ModalUpdateCategory = ({ id, onSuccess }) => {
@@ -82,13 +82,19 @@ const ModalUpdateCategory = ({ id, onSuccess }) => {
         },
       })
       .then(() => {
-        showSnackbar({ message: "Kategori berhasil diperbarui.", severity: "success" });
+        showSnackbar({
+          message: "Kategori berhasil diperbarui.",
+          severity: "success",
+        });
         onSuccess?.();
         handleClose();
       })
       .catch((err) => {
         console.error("Error updating category:", err);
-        showSnackbar({ message: "Gagal memperbarui kategori.", severity: "warning" });
+        showSnackbar({
+          message: "Gagal memperbarui kategori.",
+          severity: "warning",
+        });
       });
   };
 
@@ -96,7 +102,13 @@ const ModalUpdateCategory = ({ id, onSuccess }) => {
     <>
       <Button
         variant="contained"
-        sx={{ textTransform: "none", borderRadius: 2, backgroundColor: "#EA9E1F", color: "#fff", height: 38 }}
+        sx={{
+          textTransform: "none",
+          borderRadius: 2,
+          backgroundColor: "#EA9E1F",
+          color: "#fff",
+          height: 38,
+        }}
         onClick={handleOpen}
       >
         Update
@@ -146,10 +158,18 @@ const ModalUpdateCategory = ({ id, onSuccess }) => {
           </Stack>
 
           <Stack direction="row" spacing={2} justifyContent="center" mt={4}>
-            <Button variant="contained" sx={{ backgroundColor: "#F4A100" }} onClick={handleClose}>
+            <Button
+              variant="contained"
+              sx={{ backgroundColor: "#F4A100" }}
+              onClick={handleClose}
+            >
               Cancel
             </Button>
-            <Button variant="contained" sx={{ backgroundColor: "#006A61" }} onClick={handleUpdate}>
+            <Button
+              variant="contained"
+              sx={{ backgroundColor: "#006A61" }}
+              onClick={handleUpdate}
+            >
               Update
             </Button>
           </Stack>
