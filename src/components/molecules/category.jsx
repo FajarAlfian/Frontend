@@ -21,9 +21,14 @@ const CategoryCourse = () => {
       });
   }, []);
   return (
-    <Box mx={10} textAlign="center">
+    <Box mx={{ xs: 2, sm: 13 }} textAlign="center">
       <Box mb={6}>
-        <Typography variant="h4" color="dlang.green" fontWeight="bold">
+        <Typography
+          // variant="h4"
+          fontSize={{ xs: "h6.fontSize", sm: "h4.fontSize" }}
+          color="dlang.green"
+          fontWeight="bold"
+        >
           Available Language Course
         </Typography>
       </Box>
@@ -44,16 +49,18 @@ const CategoryCourse = () => {
             <Grid
               item
               key={item.category_id}
-              xs={12}
+              xs={4}
               sm={6}
-              md={4} 
+              md={4}
               display="flex"
               justifyContent="center"
             >
               <Card
+                // width={{ xs: 50, sm: 350 }}
+                // maxWidth={{ xs: 200, sm: 300 }}
                 sx={{
-                  width: 350,
-                  maxWidth: 300,
+                  width: { xs: 100, sm: 350 },
+                  maxWidth: { xs: 200, sm: 300 },
                   textAlign: "center",
                   border: "1px solid #ccc",
                   padding: 1,
@@ -65,15 +72,21 @@ const CategoryCourse = () => {
                   component="img"
                   src={item.category_image}
                   alt={item.category_name}
+                  // width={{ xs: "30%", sm: "100%" }}
+                  height={{ xs: 50, sm: 150 }}
                   sx={{
                     width: "100%",
-                    height: 150,
+                    // height: 150,
                     objectFit: "cover",
                     borderRadius: 1,
                   }}
                 />
-                <CardContent sx={{ padding: "8px" }}>
-                  <Typography variant="body1" fontWeight="medium">
+                <CardContent>
+                  <Typography
+                    // variant="body1"
+                    fontSize={{ xs: "12px", sm: "body1.fontSize" }}
+                    fontWeight={{ xs: "600", sm: "medium" }}
+                  >
                     {item.category_name}
                   </Typography>
                 </CardContent>
