@@ -9,49 +9,46 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { AuthContext } from "../../utils/authContext";
 import { useSnackbar } from "./snackbar";
 
-const ModalDeleteCourse = ({ id, onSuccess }) => {
+const ModalDeletePaymentMethod = ({ id, onSuccess }) => {
   const BASE_URL = import.meta.env.VITE_API;
   const { auth } = useContext(AuthContext);
   const [open, setOpen] = useState(false);
   const showSnackbar = useSnackbar();
 
   const handleClickOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose    = () => setOpen(false);
 
-  const handleDeleteCourse = () => {
+  const handleDelete = () => {
+    const patchDoc = [
+      { op: "replace", path: "/is_active",  value: false },
+      { op: "replace", path: "/is_deleted", value: true  }
+    ];
+
     axios
-   const patchDoc = [
-    { op: "replace", path: "/is_active",  value: false },
-    { op: "replace", path: "/is_deleted", value: true  }
-  ];
-
-  axios
-    .patch(
-      `${BASE_URL}/Courses/${id}`,
-      patchDoc,
-      {
-        headers: {
-          "Content-Type": "application/json-patch+json",
-          Authorization: `Bearer ${auth.token}`
+      .patch(
+        `${BASE_URL}/PaymentMethod/${id}`,
+        patchDoc,
+        {
+          headers: {
+            "Content-Type": "application/json-patch+json",
+            Authorization: `Bearer ${auth.token}`,
+          },
         }
-      }
-    )
+      )
       .then(() => {
         showSnackbar({
-        message: "Success deleting course.",
-        severity: "success",
-      });
-        if (typeof onSuccess === "function") {
-          onSuccess();
-        }
+          message: "Success deleting payment method.",
+          severity: "success",
+        });
+        if (typeof onSuccess === "function") onSuccess();
         handleClose();
       })
       .catch((err) => {
-        console.error("Error deleting course:", err);
+        console.error("Error deleting payment method:", err);
         showSnackbar({
-        message: "Error deleting course.",
-        severity: "warning",
-      });
+          message: "Error deleting payment method.",
+          severity: "warning",
+        });
       });
   };
 
@@ -76,20 +73,20 @@ const ModalDeleteCourse = ({ id, onSuccess }) => {
       <Dialog
         open={open}
         onClose={handleClose}
-        aria-labelledby="confirm-delete-title"
-        aria-describedby="confirm-delete-description"
+        aria-labelledby="confirm-delete-paymentmethod-title"
+        aria-describedby="confirm-delete-paymentmethod-description"
       >
-        <DialogTitle id="confirm-delete-title">
-          Confirm Course Deletion
+        <DialogTitle id="confirm-delete-paymentmethod-title">
+          Confirm Payment Method Deletion
         </DialogTitle>
         <DialogContent>
-          <DialogContentText id="confirm-delete-description">
-            Are you sure you want to delete this course?
+          <DialogContentText id="confirm-delete-paymentmethod-description">
+            Are you sure you want to delete this payment method?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button color="error" onClick={handleDeleteCourse} autoFocus>
+          <Button color="error" onClick={handleDelete} autoFocus>
             Confirm
           </Button>
         </DialogActions>
@@ -98,4 +95,4 @@ const ModalDeleteCourse = ({ id, onSuccess }) => {
   );
 };
 
-export default ModalDeleteCourse;
+export default ModalDeletePaymentMethod;

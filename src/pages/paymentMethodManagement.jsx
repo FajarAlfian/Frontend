@@ -25,6 +25,7 @@ import { useRequireRole } from "../utils/useRequireRole";
 import ModalAddPaymentMethod from "../components/molecules/ModalAddPaymentMethod";
 import ModalUpdatePaymentMethod from "../components/molecules/ModalUpdatePaymentmethod";
 import Checkbox from "@mui/material/Checkbox";
+import ModalDeletePaymentMethod from "../components/molecules/ModalDeletePayment";
 const columns = [
   { id: "No", label: "No" },
   { id: "Name", label: "Name" },
@@ -62,6 +63,10 @@ export default function PaymentMethodManagement() {
           action: (
             <Stack direction="row" justifyContent="center" spacing={3}>
               <ModalUpdatePaymentMethod
+                id={paymentMethod.payment_method_id}
+                onSuccess={fetchPaymentMethod}
+              />
+              <ModalDeletePaymentMethod
                 id={paymentMethod.payment_method_id}
                 onSuccess={fetchPaymentMethod}
               />

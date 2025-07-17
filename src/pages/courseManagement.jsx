@@ -26,6 +26,7 @@ import { useRequireRole } from "../utils/useRequireRole";
 import ModalAddCourse from "../components/molecules/ModalAddCourse";
 import ModalUpdateCourse from "../components/molecules/ModalUpdateCourse";
 import ModalManageSchedule from "../components/molecules/ModalCourseSchedule";
+import ModalDeleteCourse from "../components/molecules/ModalDeleteCourse";
 
 const columns = [
   { id: "No", label: "No" },
@@ -74,6 +75,10 @@ export default function CourseManagement() {
                 onSuccess={fetchCourses}
               />
               <ModalUpdateCourse
+                id={course.course_id}
+                onSuccess={fetchCourses}
+              />
+              <ModalDeleteCourse
                 id={course.course_id}
                 onSuccess={fetchCourses}
               />

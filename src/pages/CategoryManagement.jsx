@@ -22,6 +22,7 @@ import { AuthContext } from "../utils/authContext";
 import { useRequireRole } from "../utils/useRequireRole";
 import ModalAddCategory from "../components/molecules/ModalAddCategory";
 import ModalUpdateCategory from "../components/molecules/ModalUpdateCategory";
+import ModalDeleteCategory from "../components/molecules/ModalDeleteCategory";
 
 const columns = [
   { id: "No", label: "No" },
@@ -60,6 +61,10 @@ export default function CategoryManagement() {
           action: (
             <Stack direction="row" justifyContent="center" spacing={2}>
               <ModalUpdateCategory
+                id={cat.category_id}
+                onSuccess={fetchCategories}
+              />
+              <ModalDeleteCategory
                 id={cat.category_id}
                 onSuccess={fetchCategories}
               />
