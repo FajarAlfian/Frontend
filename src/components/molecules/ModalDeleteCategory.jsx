@@ -57,13 +57,12 @@ const ModalDeleteCategory = ({ id, onSuccess }) => {
   return (
     <>
       <Button
-        variant="contained"
-        color="error"
+         variant="contained"
+         color="error"
         sx={{
           borderRadius: 2,
           color: "#fff",
           textTransform: "none",
-          width: 140,
           height: 38,
           fontSize: { xs: 13, md: 15 },
         }}

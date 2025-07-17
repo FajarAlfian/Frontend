@@ -56,12 +56,11 @@ const ModalDeletePaymentMethod = ({ id, onSuccess }) => {
     <>
       <Button
         variant="contained"
-        color="error"
+         color="error"
         sx={{
           borderRadius: 2,
           color: "#fff",
           textTransform: "none",
-          width: 140,
           height: 38,
           fontSize: { xs: 13, md: 15 },
         }}
