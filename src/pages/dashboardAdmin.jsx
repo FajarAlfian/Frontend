@@ -18,8 +18,8 @@ const Dashboard = [
   { title: "User", key: "user" },
   { title: "Course", key: "course" },
   { title: "Payment Method", key: "payment" },
+   { title: "Category", key: "category" },
   { title: "Invoice", key: "invoice" },
-  { title: "Category", key: "category" },
 ];
 
 export default function DashboardAdmin() {
