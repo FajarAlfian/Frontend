@@ -8,8 +8,11 @@ import MenuItem from "@mui/material/MenuItem";
 import Divider from "@mui/material/Divider";
 import axios from "axios";
 import { useNavigate } from "react-router";
-import Cookies from "js-cookie";
-import { ConvertDayDate, formatRupiah } from "../../utils/util";
+import {
+  ConvertDayDate,
+  formatRupiah,
+  isFutureSchedule,
+} from "../../utils/util";
 import { AuthContext } from "../../utils/authContext";
 import { useSnackbar } from "../../components/molecules/snackbar";
 
@@ -179,14 +182,16 @@ const CourseDetail = ({ course }) => {
                 <MenuItem value="" disabled>
                   Select Schedule
                 </MenuItem>
-                {listSchedule.map((item) => (
-                  <MenuItem
-                    key={item.schedule_course_id}
-                    value={item.schedule_course_id}
-                  >
-                    {ConvertDayDate(item.schedule_date)}
-                  </MenuItem>
-                ))}
+                {listSchedule
+                  .filter((item) => isFutureSchedule(item.schedule_date))
+                  .map((item) => (
+                    <MenuItem
+                      key={item.schedule_course_id}
+                      value={item.schedule_course_id}
+                    >
+                      {ConvertDayDate(item.schedule_date)}
+                    </MenuItem>
+                  ))}
               </Select>
 
               <Box

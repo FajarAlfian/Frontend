@@ -22,3 +22,11 @@ export const formatRupiah = (numberString) => {
     minimumFractionDigits: 0,
   }).format(number);
 };
+
+export const isFutureSchedule = (date) => {
+  const scheduleDate = new Date(date);
+  const tomorrow = new Date();
+  tomorrow.setHours(0, 0, 0, 0);
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  return scheduleDate >= tomorrow;
+};
