@@ -1,12 +1,189 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+  
 
-Currently, two official plugins are available:
+# 🌐 Online Course Platform - Group 1 (Fajar Alfian S & Muti Salsabila)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+  
 
-## Expanding the ESLint configuration
+This project is a modern **Online Course Web Application** developed as part of a collaborative assignment by **Group 1: Fajar Alfian S & Muti Salsabila**. The platform provides a seamless experience for users to register, explore various courses, manage their classes, and purchase course access securely.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+  
+
+---
+
+  
+
+## 🚀 Tech Stack
+
+  
+
+-  **Frontend Framework**: [React](https://reactjs.org/) + [Vite](https://vitejs.dev/)
+
+-  **UI Library**: [Material UI (MUI)](https://mui.com/)
+
+-  **Language**: JavaScript (ES6+)
+
+  
+
+---
+
+  
+
+## 📌 Key Features
+
+  
+
+-  **Authentication Flow**
+
+- User registration & login
+
+- Email confirmation
+
+- Password reset
+
+  
+
+-  **Landing Page**
+
+- Public course listings and navigation
+
+  
+
+-  **Course Exploration**
+
+- Browse courses by category
+
+- Detailed course preview pages
+
+  
+
+-  **Enrollment Flow**
+
+- Course checkout system
+
+- Payment method selection
+
+- Invoice & purchase confirmation
+
+  
+
+-  **User Dashboard**
+
+- View purchased courses (My Class)
+
+- Access course schedules
+
+
+---
+
+## 📁 Folder Structure (Frontend)
+
+  
+
+```
+
+src/
+
+├── assets/ # Static assets like images
+
+├── components/ # Reusable React components
+
+├── pages/ # Main route pages (Landing, Login, etc.)
+
+├── services/ # API services and utilities
+
+├── styles/ # Custom MUI styling overrides
+
+├── App.jsx # Root component
+
+└── main.jsx # Entry point (Vite)
+
+```
+
+  
+
+---
+
+  
+
+## 💡 How to Run the Project
+
+  
+
+Make sure you have **Node.js** and **npm** installed.
+
+  
+
+```bash
+
+# Clone the repository
+
+git  clone  https://github.com/FajarAlfian/Frontend.git
+
+cd  Frontend
+
+  
+
+# Install dependencies
+
+npm  install
+
+  
+
+# Run development server
+
+npm  run  dev
+
+```
+
+  
+
+Visit `http://localhost:5173` to explore the app.
+
+  
+
+---
+
+  
+
+## 🎯 Purpose
+
+  
+
+This project was built to demonstrate our understanding of:
+
+  
+
+- SPA development using React and Vite
+
+- Modern UI design using MUI
+
+- Designing intuitive user journeys
+
+- Implementing real-world workflows (authentication, checkout, invoice)
+
+  
+
+---
+
+  
+
+## 🤝 Team Members
+
+  
+
+-  **Fajar Alfian S** 
+
+-  **Muti Salsabila** 
+
+  
+
+---
+
+  
+
+## 📬 Contact
+
+  
+
+For inquiries or feedback, feel free to reach out to us through [GitHub](https://github.com/FajarAlfian).
