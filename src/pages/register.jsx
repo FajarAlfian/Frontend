@@ -18,6 +18,7 @@ const Register = () => {
   const BASE_URL = import.meta.env.VITE_API;
   const navigate = useNavigate();
   const showSnackbar = useSnackbar();
+  const [focusedField, setFocusedField] = useState(null);
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -45,7 +46,10 @@ const Register = () => {
       formValid = false;
       newErrors.username = "username must be at least 4 characters.";
     }
-
+ else if (!/^[a-zA-Z0-9]+$/.test(formData.username)) {
+    formValid = false;
+    newErrors.username = "Username hanya boleh berisi huruf dan angka.";
+  }
     if (!formData.email) {
       formValid = false;
       newErrors.email = "Email is required.";
@@ -148,11 +152,19 @@ const Register = () => {
               <FormLabel
                 name="Name"
                 error={!!errors.username}
-                helperText={errors.username}
+               helperText={
+                  errors.username
+                    ? errors.username
+                    : focusedField === "username"
+                    ? "*Minimal 4 karakter, hanya huruf dan angka."
+                    : ""
+                }
                 inputProps={{
                   name: "username",
                   value: formData.username,
                   onChange: handleChange,
+                  onFocus: () => setFocusedField("username"),
+                  onBlur: () => setFocusedField(null),
                 }}
               />
               <FormLabel
@@ -169,12 +181,20 @@ const Register = () => {
               <FormLabel
                 name="Password"
                 error={!!errors.password}
-                helperText={errors.password}
+                helperText={
+                  errors.password
+                    ? errors.password
+                    : focusedField === "password"
+                    ? "*Minimal 8 karakter"
+                    : ""
+                }
                 inputProps={{
                   name: "password",
                   type: "password",
                   value: formData.password,
                   onChange: handleChange,
+                  onFocus: () => setFocusedField("password"),
+                  onBlur: () => setFocusedField(null),
                 }}
               />
               <FormLabel

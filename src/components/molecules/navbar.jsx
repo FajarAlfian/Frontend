@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -21,40 +21,39 @@ const Navbar = () => {
   const navigate = useNavigate();
   const { auth, setAuth } = useContext(AuthContext);
   const isUserLoggedIn = !!auth.token;
-  const [drawerOpen, setDrawerOpen] = useState(false);
   const isMobile = useMediaQuery("(max-width:900px)");
-  const [anchorAdmin, setAnchorAdmin] = useState(null);
+  const isTooSmall = useMediaQuery("(max-width:380px)");
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
+  useEffect(() => {
+    if (isTooSmall) {
+      alert(
+        "Ukuran layar terlalu kecil"
+      );
+    }
+  }, [isTooSmall]);
 
   const handleLogout = () => {
     setAuth({ id: null, token: null, role: null });
     navigate("/");
   };
 
-  const handleAdminMenuOpen = (e) => {
-    setAnchorAdmin(e.currentTarget);
-  };
-  const handleAdminMenuClose = () => {
-    setAnchorAdmin(null);
-  };
-
   const menuList = (
     <>
       {isUserLoggedIn && auth.role === "admin" && (
-        <>
-          <Button
-            component={Link}
-            to="/dashboard-admin"
-            variant="text"
-            sx={{
-              fontSize: 16,
-              color: "dlang.green",
-              textTransform: "none",
-              mr: 5,
-            }}
-          >
-            Dashboard Admin
-          </Button>
-        </>
+        <Button
+          component={Link}
+          to="/dashboard-admin"
+          variant="text"
+          sx={{
+            fontSize: 16,
+            color: "dlang.green",
+            textTransform: "none",
+            mr: 5,
+          }}
+        >
+          Dashboard Admin
+        </Button>
       )}
 
       <IconButton
@@ -95,7 +94,11 @@ const Navbar = () => {
         flexItem
         sx={{ borderColor: "dlang.green", mr: 5 }}
       />
-      <IconButton component={Link} to="/profile" sx={{ color: "dlang.green", mr: 2 }}>
+      <IconButton
+        component={Link}
+        to="/profile"
+        sx={{ color: "dlang.green", mr: 2 }}
+      >
         <PersonIcon />
       </IconButton>
       <IconButton sx={{ color: "#EB5757" }} onClick={handleLogout}>
