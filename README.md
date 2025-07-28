@@ -138,7 +138,7 @@ npm  run  dev
 
   
 
-Visit `http://localhost:5173` to explore the app.
+Visit `http://localhost:3000` to explore the app.
 
   
 
